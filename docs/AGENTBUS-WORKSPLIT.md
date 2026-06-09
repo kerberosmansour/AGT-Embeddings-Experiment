@@ -25,22 +25,26 @@ This file mirrors the tasks posted on AgentBus for the AGT embeddings migration.
 
 ## Current Status
 
-M0 planning and peer readback are partially complete on branch
-`slo/agt-embeddings-migration-plan`, latest known commit `1d87bd8`.
+Branch: `slo/agt-embeddings-migration-plan`
+
+Latest migration commit: `834da55`
 
 | Task | Status |
 |---|---|
-| `t_mq71r9f5_617_538deaeb` | Mac M0 planning complete |
-| `t_mq71v5mw_336_e47046cc` | Linux M0 audit complete; docs-only evidence-reference hardening landed in `1d87bd8` |
-| `t_mq71v5ox_409_a5bdb2d8` | Windows M0 AGT semantics readback complete |
-| `t_mq71v5tr_583_709fa2d1` | Coworker M0 narrative review open |
-| `t_mq71v5yi_754_f5fe9b34` | Mac M1 migration open, still blocked by coworker M0 review |
-| `t_mq723syj_811_2288a4fe` | Open-source readiness policy task open; separate from M1 corpus migration |
+| `t_mq71r9f5_617_538deaeb` | Mac M0 planning complete. |
+| `t_mq71v5mw_336_e47046cc` | Linux M0 audit complete. |
+| `t_mq71v5ox_409_a5bdb2d8` | Windows M0 AGT semantics readback complete. |
+| `t_mq71v5tr_583_709fa2d1` | Coworker M0 narrative/no-overclaim review complete. |
+| `t_mq71v5yi_754_f5fe9b34` | Mac M1 corpus/rules-baseline migration complete at `ab553ad`. |
+| `t_mq72y2lp_989_ab02723f` | Linux M1 audit PASS; led to provenance hardening at `c85abd1`. |
+| `t_mq72ny6x_713_44a17c25` | Windows M1 readback found moving sibling-checkout reproducibility drift. |
+| `t_mq733glf_403_77a96c7a` | Mac vendored AGT detector source fix complete at `25f8d06`. |
+| `t_mq73coxn_115_37c7fbae` | Linux vendored-source readback PASS. |
+| `t_mq73cowb_67_a8cdaba8` | Windows vendored-source readback PASS. |
+| `t_mq73kl0b_275_d516d4a6` | Mac M2 embedding/kNN evidence migration complete at `834da55`. |
+| `t_mq73npxm_626_160bb634` | Linux M2 audit staged; unblocked by `834da55`. |
+| `t_mq740luk_860_aaa9f8b3` | Mac companion claims/work-split refresh complete. |
+| `t_mq723syj_811_2288a4fe` | Open-source readiness policy task remains separate from migration evidence. |
 
-Mac posted AgentBus messages `869` and `870` asking review owners to complete or
-post blockers. M1 must not start until the coworker M0 narrative/no-overclaim
-review is done.
-
-Linux M0 audit caveat for M1: copy source artifacts from the reviewed source
-snapshot named in `docs/CLAIMS-LEDGER.md`, or first recreate a durable source ref
-before migration.
+M2 scope is intentionally limited to embedding/kNN artifacts, validator harness,
+and reports. AGT policy/value-add artifacts remain M3.

@@ -3,23 +3,27 @@
 This ledger maps the public narrative to the evidence that must be migrated
 into this repository.
 
-Current source evidence is from the reviewed AGT-only source snapshot
-`Embedding_Experiment@baf0bd5` unless a later migration commit updates the
-source reference.
+Current migrated evidence is split across:
+
+- M1 corpus/rules baseline: target commit `25f8d06`.
+- M2 embedding/kNN sweep and Youden's J readout: target commit `834da55`.
+
+AGT policy/value-add evidence is intentionally not migrated yet; it remains a
+future M3 scope item.
 
 ## Narrative Claims And Evidence
 
 | Narrative claim | Current evidence | Source artifact to migrate | Status |
 |---|---|---|---|
-| AGT rules-only detector has low recall on the hard held-out set. | `180 / 17600 = 0.010227` attack recall. | `corpus/round4/rules-baseline-large-metrics.json` | Ready to migrate. |
-| AGT rules-only detector has material false positives on benign examples. | `2136 / 27200 = 0.078529` benign false-positive rate. | `corpus/round4/rules-baseline-large-metrics.json` | Ready to migrate. |
-| The evaluation corpus has 44,800 labelled examples. | `row_count=44800`; split counts `28504 / 6888 / 9408`. | `corpus/round4/manifest-large.json`; `corpus/round4/check-large-summary.json` | Ready to migrate after content audit. |
-| The split avoids family/group leakage. | Family leaks `0`; group leaks `0`; exact normalized cross-split leaks `0`; near-duplicate cross-split leaks `0`. | `corpus/round4/check-large-summary.json` | Ready to migrate. |
-| Embedding/kNN at Youden's J catches about 88% on frozen test. | Test recall `0.882609` at threshold `-0.00609511`. | `experiments/embeddings-knn-security-classification/spk-round4-embedding-sweep/artifacts/youden-j-tuning.json`; `docs/slo/experiments/embeddings-knn-security-classification/handoff/round4-youden-j-tuning.md` | Ready to migrate with plateau caveat. |
-| Embedding/kNN at Youden's J has about 16% false positives. | Test FPR `0.163059`, FP `934 / 5728`. | `experiments/embeddings-knn-security-classification/spk-round4-embedding-sweep/artifacts/youden-j-tuning.json`; `docs/slo/experiments/embeddings-knn-security-classification/handoff/round4-youden-j-tuning.md` | Ready to migrate. |
-| Conservative embedding point has zero observed false positives. | Test recall `0.141848`, FPR `0.0`, FP `0`. | `experiments/embeddings-knn-security-classification/spk-round4-embedding-sweep/artifacts/youden-j-tuning.json`; embedding sweep artifacts | Ready to migrate. |
-| Youden's J is a dial, not a default threshold recommendation. | Linux audit PASS with plateau-midpoint caveat; no production threshold claim. | `docs/slo/experiments/embeddings-knn-security-classification/handoff/round4-youden-j-tuning.md`; AgentBus #861 | Ready to migrate. |
-| Embeddings should augment AGT policy, not replace it. | `policy_plus_embedding` reduced unsafe-action success vs `policy_only_gate` by `0.040761` absolute in synthetic metadata-only readout. | `docs/slo/experiments/embeddings-knn-security-classification/handoff/round4-governance-eval-evidence.md`; `meta/harness/round5-agt-value-add/` | Ready to migrate as research evidence only. |
+| AGT rules-only detector has low recall on the hard held-out set. | `180 / 17600 = 0.010227` attack recall. | `corpus/round4/rules-baseline-large-metrics.json` | Migrated in M1; Linux and Windows readbacks PASS. |
+| AGT rules-only detector has material false positives on benign examples. | `2136 / 27200 = 0.078529` benign false-positive rate. | `corpus/round4/rules-baseline-large-metrics.json` | Migrated in M1; Linux and Windows readbacks PASS. |
+| The evaluation corpus has 44,800 labelled examples. | `row_count=44800`; split counts `28504 / 6888 / 9408`. | `corpus/round4/manifest-large.json`; `corpus/round4/check-large-summary.json` | Migrated in M1; leakage checks PASS. |
+| The split avoids family/group leakage. | Family leaks `0`; group leaks `0`; exact normalized cross-split leaks `0`; near-duplicate cross-split leaks `0`. | `corpus/round4/check-large-summary.json` | Migrated in M1; independent audit PASS. |
+| Embedding/kNN at Youden's J catches about 88% on frozen test. | Test recall `0.882609` at threshold `-0.00609511`. | `artifacts/embedding-sweep/youden-j-tuning.json`; `docs/reports/round4-youden-j-tuning.md` | Migrated in M2 with plateau-midpoint caveat; Linux M2 audit pending. |
+| Embedding/kNN at Youden's J has about 16% false positives. | Test FPR `0.163059`, FP `934 / 5728`. | `artifacts/embedding-sweep/youden-j-tuning.json`; `docs/reports/round4-youden-j-tuning.md` | Migrated in M2; Linux M2 audit pending. |
+| Conservative embedding point has zero observed false positives. | Test recall `0.141848`, FPR `0.0`, FP `0`. | `artifacts/embedding-sweep/test-metrics.json`; `artifacts/embedding-sweep/youden-j-tuning.json`; `docs/reports/round4-mac-embedding-sweep-evidence.md` | Migrated in M2; Linux M2 audit pending. |
+| Youden's J is a dial, not a default threshold recommendation. | Plateau-midpoint caveat recorded; no production threshold claim. | `docs/reports/round4-youden-j-tuning.md` | Migrated in M2; report frames J-max as a review-load stress point. |
+| Embeddings should augment AGT policy, not replace it. | M2 shows embedding-only signal vs rules-only. Outcome-level AGT policy value-add evidence is not migrated yet. | M3 evidence gap. | Pending M3; do not claim AGT policy lift from this repo until migrated and audited. |
 
 ## Wording Guardrails
 
