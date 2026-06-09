@@ -25,4 +25,16 @@ This file mirrors the tasks posted on AgentBus for the AGT embeddings migration.
 
 ## Current Status
 
-M0 planning is in progress on branch `slo/agt-embeddings-migration-plan`.
+M0 Mac planning is complete on branch `slo/agt-embeddings-migration-plan`
+at commit `a30d190`.
+
+| Task | Status |
+|---|---|
+| `t_mq71r9f5_617_538deaeb` | Mac M0 planning complete |
+| `t_mq71v5mw_336_e47046cc` | Linux M0 audit claimed |
+| `t_mq71v5ox_409_a5bdb2d8` | Windows M0 readback claimed |
+| `t_mq71v5tr_583_709fa2d1` | Coworker M0 narrative review open |
+| `t_mq71v5yi_754_f5fe9b34` | Mac M1 migration open, blocked by the three M0 reviews |
+
+Mac posted AgentBus message `869` asking the review owners to complete or post
+blockers. M1 must not start until the M0 review tasks are done.
