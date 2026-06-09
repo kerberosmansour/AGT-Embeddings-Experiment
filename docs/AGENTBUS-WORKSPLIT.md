@@ -27,7 +27,7 @@ This file mirrors the tasks posted on AgentBus for the AGT embeddings migration.
 
 Branch: `slo/agt-embeddings-migration-plan`
 
-Latest migration commit: `834da55`
+Latest M2 evidence commit: `834da55`
 
 | Task | Status |
 |---|---|
@@ -42,8 +42,11 @@ Latest migration commit: `834da55`
 | `t_mq73coxn_115_37c7fbae` | Linux vendored-source readback PASS. |
 | `t_mq73cowb_67_a8cdaba8` | Windows vendored-source readback PASS. |
 | `t_mq73kl0b_275_d516d4a6` | Mac M2 embedding/kNN evidence migration complete at `834da55`. |
-| `t_mq73npxm_626_160bb634` | Linux M2 audit staged; unblocked by `834da55`. |
+| `t_mq73npxm_626_160bb634` | Linux M2 audit PASS at branch head `1612f83`. |
 | `t_mq740luk_860_aaa9f8b3` | Mac companion claims/work-split refresh complete. |
+| `t_mq74ar60_312_af4f2e02` | Mac post-audit docs status flip complete. |
+| `t_mq73yofr_903_4c4745ba` | Windows formal M2 readback unblocked by Linux M2 audit. |
+| `t_mq73t4ms_956_577bd965` | Coworker public-scope/no-overclaim gate unblocked by M2 migration. |
 | `t_mq723syj_811_2288a4fe` | Open-source readiness policy task remains separate from migration evidence. |
 
 M2 scope is intentionally limited to embedding/kNN artifacts, validator harness,
