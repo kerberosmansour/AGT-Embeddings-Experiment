@@ -31,15 +31,18 @@ unless a command explicitly asks for one.
 
 ```bash
 python3 corpus/round4/check-round4.py \
-  --corpus corpus/round4/injection-round4-large.jsonl \
-  --manifest corpus/round4/manifest-large.json
+  --manifest corpus/round4/manifest-large.json \
+  corpus/round4/injection-round4-large.jsonl
 
 cargo check --manifest-path tools/agt-rules-baseline/Cargo.toml
 
 python3 meta/harness/round4-embedding-sweep/validate-embedding-sweep.py \
-  --manifest artifacts/embedding-sweep/provenance.json \
+  --provenance artifacts/embedding-sweep/provenance.json \
+  --freeze artifacts/embedding-sweep/freeze-record.json \
   --validation artifacts/embedding-sweep/validation-per-row.jsonl \
-  --test artifacts/embedding-sweep/test-per-row.jsonl
+  --test artifacts/embedding-sweep/test-per-row.jsonl \
+  --validation-metrics artifacts/embedding-sweep/validation-metrics.json \
+  --test-metrics artifacts/embedding-sweep/test-metrics.json
 
 python3 meta/harness/round4-governance-eval/validate-governance-eval.py \
   --manifest artifacts/governance-eval/manifest.json \
