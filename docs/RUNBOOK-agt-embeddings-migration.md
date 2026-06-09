@@ -4,7 +4,7 @@ Date: 2026-06-09
 Owner: mac-agent
 Branch: `slo/agt-embeddings-migration-plan`
 AgentBus task: `t_mq71r9f5_617_538deaeb`
-Status: planning-only; no bulk migration yet
+Status: M3 in progress; M0-M2 migrated and audited; coworker lane replaced by active-agent gates
 
 ## Phase Contract
 
@@ -68,7 +68,7 @@ artifacts/
 | M1 AGT corpus and rules baseline migration | Mac primary, Linux audit | `corpus/round4/` AGT-only files and Rust baseline runner | Re-run corpus checker and rules baseline; Linux confirms no unrelated material. |
 | M2 Embedding/kNN evidence migration | Mac primary, Linux audit | embedding sweep harness, freeze records, metrics, Youden artifact | Validator passes; Linux recomputes headline numbers. |
 | M3 Governance/value-add evidence migration | Win primary, Mac support, Linux audit | AGT arms and value-add report gate | Native AGT vocabulary preserved; value-add report validator passes. |
-| M4 Narrative packaging and review | Coworker primary, all readback | issue narrative, method docs, reproduction guide | Narrative matches claims ledger; no overclaim language. |
+| M4 Narrative packaging and review | Linux public-scope review, Windows AGT semantics readback, Mac coordination | issue narrative, method docs, reproduction guide | Narrative matches claims ledger; no overclaim language. |
 
 ## M0 Contract
 
@@ -107,5 +107,6 @@ the forbidden-term list in the AgentBus task, not in this repository.
 
 ## Next Step
 
-After M0 is reviewed, M1 should copy only the AGT prompt-injection corpus,
-manifest/check summaries, Rust rules baseline runner, and baseline metrics.
+M3 should migrate only the AGT governance/value-add artifacts and validators.
+After Linux audits M3, the replacement M4 gates should review public-scope
+wording and AGT-native vocabulary before any release-facing narrative lands.
