@@ -28,6 +28,26 @@ detection evidence than the current rules-only detector, while staying optional,
 tunable, and auditable?
 ```
 
+## Evidence Snapshot
+
+The current evidence compares the migrated AGT rules-only detector with
+embedding/kNN operating points on the research corpus:
+
+| Approach | Catch rate | False positive rate | Notes |
+|---|---:|---:|---|
+| AGT rules-only baseline | about `1%` | about `8%` | Current detector catches obvious patterns but misses most held-out attacks. |
+| Embeddings at Youden's J point | about `88%` | about `16%` | Strong separation point, too noisy for default blocking. |
+| Embeddings at zero-FP point | about `14%` | `0%` observed | Conservative high-confidence routing signal. |
+
+The zero-FP operating point is the most conservative comparison: on the frozen
+test split it raises observed attack catch rate from about `1%` to about `14%`
+while keeping observed benign false positives at `0`. That is still research
+evidence, not a guarantee of zero false positives in the wild.
+
+The work is not proposing default auto-blocking. The embedding signal is an
+optional, default-off, auditable layer that can feed downstream policy or review
+routing.
+
 ## Method At A Glance
 
 The experiment uses the existing AGT Rust prompt-injection rules as the
@@ -51,26 +71,6 @@ against the exemplar bank. The committed artifacts store metadata-only
 per-row readouts: row IDs, labels, nearest-neighbour scores, margins,
 threshold decisions, and metrics. They intentionally do not store raw prompt
 text in the embedding/governance readout artifacts.
-
-## Evidence Snapshot
-
-The current evidence compares the migrated AGT rules-only detector with
-embedding/kNN operating points on the research corpus:
-
-| Approach | Catch rate | False positive rate | Notes |
-|---|---:|---:|---|
-| AGT rules-only baseline | about `1%` | about `8%` | Current detector catches obvious patterns but misses most held-out attacks. |
-| Embeddings at Youden's J point | about `88%` | about `16%` | Strong separation point, too noisy for default blocking. |
-| Embeddings at zero-FP point | about `14%` | `0%` observed | Conservative high-confidence routing signal. |
-
-The zero-FP operating point is the most conservative comparison: on the frozen
-test split it raises observed attack catch rate from about `1%` to about `14%`
-while keeping observed benign false positives at `0`. That is still research
-evidence, not a guarantee of zero false positives in the wild.
-
-The work is not proposing default auto-blocking. The embedding signal is an
-optional, default-off, auditable layer that can feed downstream policy or review
-routing.
 
 ## What Is In The Repo
 
