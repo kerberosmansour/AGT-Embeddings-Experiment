@@ -28,10 +28,34 @@ detection evidence than the current rules-only detector, while staying optional,
 tunable, and auditable?
 ```
 
+## Method At A Glance
+
+The experiment uses the existing AGT Rust prompt-injection rules as the
+rules-only baseline, then compares that baseline with a local embedding margin:
+
+- Embedding model: `BAAI/bge-small-en-v1.5`.
+- Runtime: `fastembed/onnxruntime-local`.
+- Model source: `qdrant/bge-small-en-v1.5-onnx-q`.
+- Model license recorded in the artifact: MIT.
+- Embedding dimension: `384`.
+- Model file SHA-256:
+  `51f1bd0addd6e859e42c2c8021a5e5461385bb676a649f4b269aa445449f2431`.
+- Network use: model download/cache only; no hosted inference or provider
+  scoring.
+- Nearest-neighbour setting selected on validation: `k=5`.
+- Conservative threshold selected on validation:
+  `threshold_tau=0.08026763573288917`.
+
+At evaluation time, each validation/test row is embedded locally and compared
+against the exemplar bank. The committed artifacts store metadata-only
+per-row readouts: row IDs, labels, nearest-neighbour scores, margins,
+threshold decisions, and metrics. They intentionally do not store raw prompt
+text in the embedding/governance readout artifacts.
+
 ## Evidence Snapshot
 
 The current evidence compares the migrated AGT rules-only detector with
-embedding/kNN operating points on the Round-4 research corpus:
+embedding/kNN operating points on the research corpus:
 
 | Approach | Catch rate | False positive rate | Notes |
 |---|---:|---:|---|
@@ -72,6 +96,10 @@ routing.
   - `docs/reports/`
   - `docs/OPEN-SOURCE-READINESS.md`
 
+Some paths and reports use `round4` as the internal experiment label. Publicly,
+the important thing is the research corpus, the frozen artifacts, and the
+claim boundaries around them.
+
 ## How To Use This Repo
 
 Start by reading the corpus manifest and the claims ledger:
@@ -110,6 +138,27 @@ For quick orientation, the most useful reports are:
 - `docs/reports/round4-mac-embedding-sweep-evidence.md`
 - `docs/reports/round4-youden-j-tuning.md`
 - `docs/reports/round4-governance-eval-evidence.md`
+
+For deeper details:
+
+- Corpus shape, splits, leakage checks, and hashes:
+  `corpus/round4/manifest-large.json` and
+  `corpus/round4/check-large-summary.json`.
+- Baseline AGT rules-only result:
+  `corpus/round4/rules-baseline-large-metrics.json` and
+  `tools/agt-rules-baseline/README.md`.
+- Embedding model, runtime, threshold freeze, resource usage, and artifact
+  hashes: `artifacts/embedding-sweep/freeze-record.json`,
+  `artifacts/embedding-sweep/provenance.json`, and
+  `docs/reports/round4-mac-embedding-sweep-evidence.md`.
+- Youden's J threshold readout and why it is not a default threshold:
+  `artifacts/embedding-sweep/youden-j-tuning.json` and
+  `docs/reports/round4-youden-j-tuning.md`.
+- Governance/value-add comparison:
+  `artifacts/governance-eval/metrics.json` and
+  `docs/reports/round4-governance-eval-evidence.md`.
+- Claim-to-evidence mapping and stronger-claim gaps:
+  `docs/CLAIMS-LEDGER.md`.
 
 ## What This Repo Does Not Claim
 
