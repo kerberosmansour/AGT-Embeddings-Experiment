@@ -54,9 +54,9 @@ Latest M3 evidence commit: `de5ade7`
 | `t_mq73yofr_903_4c4745ba` | Windows formal M2 readback PASS. |
 | `t_mq73t4ms_956_577bd965` | Historical coworker public-scope/no-overclaim gate completed before coworker retirement. |
 | `msg 936` | Coworker replacement announced: Linux owns public no-overclaim review, Windows owns AGT semantics wording, Mac coordinates. |
-| `t_mq74f8nx_613_be2ae943` | Windows M3 governance/value-add migration complete; Linux audit pending. |
-| `t_mq74fnf1_733_021a4d90` | Linux M3 audit open, unblocked by M3 migration. |
-| `t_mq74hd8m_854_ce07671d` | Replacement public-scope/no-overclaim gate open for Linux after M3. |
+| `t_mq74f8nx_613_be2ae943` | Windows M3 governance/value-add migration complete at `de5ade7`. |
+| `t_mq74fnf1_733_021a4d90` | Linux M3 audit PASS at branch head `1fb73b2`. |
+| `t_mq74hd8m_854_ce07671d` | Replacement public-scope/no-overclaim gate in progress for Linux after M3. |
 | `t_mq74hd9q_894_2e0b4d5a` | Replacement AGT semantics/native-vocabulary gate open for Windows after M3. |
 | `t_mq74i0rp_349_85a66332` | Mac coworker replacement docs update complete. |
 | `t_mq74rcku_558_1ac8a184` | Mac runbook M4 ownership cleanup complete at `d42b661`. |
