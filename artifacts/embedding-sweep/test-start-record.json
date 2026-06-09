@@ -1,0 +1,9 @@
+{
+  "corpus_sha256": "33a02ac2b22e68970b3b808c5ba95bc119dc87dd93ae6dbc90546c074a5980ed",
+  "freeze_record": "artifacts/embedding-sweep/freeze-record.json",
+  "freeze_record_sha256": "72429ea1222c9091c892f707bf326d3b5fda12de7371c39cd563125400934946",
+  "k": 5,
+  "selected_on": "validation",
+  "test_scoring_started_at": "2026-06-09T11:13:16+00:00",
+  "threshold_tau": 0.08026763573288917
+}

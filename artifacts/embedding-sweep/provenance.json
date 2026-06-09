@@ -1,0 +1,225 @@
+{
+  "corpus": "corpus/round4/injection-round4-large.jsonl",
+  "corpus_sha256": "33a02ac2b22e68970b3b808c5ba95bc119dc87dd93ae6dbc90546c074a5980ed",
+  "created_at": "2026-06-09T11:15:49+00:00",
+  "dependency_probe": {
+    "fastembed": "BAAI/bge-small-en-v1.5",
+    "numpy": "2.3.5"
+  },
+  "freeze_record": "artifacts/embedding-sweep/freeze-record.json",
+  "freeze_record_sha256": "72429ea1222c9091c892f707bf326d3b5fda12de7371c39cd563125400934946",
+  "head": "c9d1a5da8e7651e1611e4dbe7e20344f16cfd469",
+  "manifest": "corpus/round4/manifest-large.json",
+  "manifest_output_sha256": "33a02ac2b22e68970b3b808c5ba95bc119dc87dd93ae6dbc90546c074a5980ed",
+  "model_files": {
+    "files": [
+      {
+        "path": "models--qdrant--bge-small-en-v1.5-onnx-q/blobs/0d7726d0cdccb62ee17c03bd1595cff07199b8f8",
+        "sha256": "13582bcf2effc85b7bf3d3f5532e686bc1c9ce86bb009d10f0ec33cbe92299dd",
+        "size_bytes": 706
+      },
+      {
+        "path": "models--qdrant--bge-small-en-v1.5-onnx-q/blobs/51f1bd0addd6e859e42c2c8021a5e5461385bb676a649f4b269aa445449f2431",
+        "sha256": "51f1bd0addd6e859e42c2c8021a5e5461385bb676a649f4b269aa445449f2431",
+        "size_bytes": 66465124
+      },
+      {
+        "path": "models--qdrant--bge-small-en-v1.5-onnx-q/blobs/688882a79f44442ddc1f60d70334a7ff5df0fb47",
+        "sha256": "d241a60d5e8f04cc1b2b3e9ef7a4921b27bf526d9f6050ab90f9267a1f9e5c66",
+        "size_bytes": 711396
+      },
+      {
+        "path": "models--qdrant--bge-small-en-v1.5-onnx-q/blobs/75305659f7795d4549f0e23688b52fa20a32f925",
+        "sha256": "0b29c7bfc889e53b36d9dd3e686dd4300f6525110eaa98c76a5dafceb2029f53",
+        "size_bytes": 1242
+      },
+      {
+        "path": "models--qdrant--bge-small-en-v1.5-onnx-q/blobs/9bbecc17cabbcbd3112c14d6982b51403b264bfa",
+        "sha256": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+        "size_bytes": 695
+      },
+      {
+        "path": "models--qdrant--bge-small-en-v1.5-onnx-q/files_metadata.json",
+        "sha256": "e477ab1c834288ebcb355dba072ff58d42c9df25bb057dd08628454a0eef81a7",
+        "size_bytes": 723
+      },
+      {
+        "path": "models--qdrant--bge-small-en-v1.5-onnx-q/refs/main",
+        "sha256": "89a5786cc0fad0c4d18ddfb01fa32db81d29f681681fcbc290fe68e9c2db87ca",
+        "size_bytes": 40
+      },
+      {
+        "path": "models--qdrant--bge-small-en-v1.5-onnx-q/snapshots/52398278842ec682c6f32300af41344b1c0b0bb2/config.json",
+        "sha256": "13582bcf2effc85b7bf3d3f5532e686bc1c9ce86bb009d10f0ec33cbe92299dd",
+        "size_bytes": 706
+      },
+      {
+        "path": "models--qdrant--bge-small-en-v1.5-onnx-q/snapshots/52398278842ec682c6f32300af41344b1c0b0bb2/model_optimized.onnx",
+        "sha256": "51f1bd0addd6e859e42c2c8021a5e5461385bb676a649f4b269aa445449f2431",
+        "size_bytes": 66465124
+      },
+      {
+        "path": "models--qdrant--bge-small-en-v1.5-onnx-q/snapshots/52398278842ec682c6f32300af41344b1c0b0bb2/special_tokens_map.json",
+        "sha256": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+        "size_bytes": 695
+      },
+      {
+        "path": "models--qdrant--bge-small-en-v1.5-onnx-q/snapshots/52398278842ec682c6f32300af41344b1c0b0bb2/tokenizer.json",
+        "sha256": "d241a60d5e8f04cc1b2b3e9ef7a4921b27bf526d9f6050ab90f9267a1f9e5c66",
+        "size_bytes": 711396
+      },
+      {
+        "path": "models--qdrant--bge-small-en-v1.5-onnx-q/snapshots/52398278842ec682c6f32300af41344b1c0b0bb2/tokenizer_config.json",
+        "sha256": "0b29c7bfc889e53b36d9dd3e686dd4300f6525110eaa98c76a5dafceb2029f53",
+        "size_bytes": 1242
+      }
+    ],
+    "selected_model_file": {
+      "path": "models--qdrant--bge-small-en-v1.5-onnx-q/snapshots/52398278842ec682c6f32300af41344b1c0b0bb2/model_optimized.onnx",
+      "sha256": "51f1bd0addd6e859e42c2c8021a5e5461385bb676a649f4b269aa445449f2431",
+      "size_bytes": 66465124
+    }
+  },
+  "non_claims": [
+    "research-corpus readout, not a certification or production-security assurance.",
+    "no production promotion",
+    "no source-material import",
+    "no AGT detector/rules change",
+    "threshold selected on validation only"
+  ],
+  "outputs": {
+    "validation_per_row": "artifacts/embedding-sweep/validation-per-row.jsonl",
+    "validation_metrics": "artifacts/embedding-sweep/validation-metrics.json",
+    "test_start_record": "artifacts/embedding-sweep/test-start-record.json",
+    "test_per_row": "artifacts/embedding-sweep/test-per-row.jsonl",
+    "test_metrics": "artifacts/embedding-sweep/test-metrics.json"
+  },
+  "resource_actual": {
+    "elapsed_minutes": 11.750576243049,
+    "elapsed_seconds": 705.03457458294,
+    "exceeded_budget": false,
+    "max_rss_bytes": 8780185600,
+    "memory_samples": [
+      {
+        "rss_bytes": 144343040,
+        "rss_gib": 0.1344,
+        "stage": "start",
+        "ts": "2026-06-09T11:04:04+00:00"
+      },
+      {
+        "rss_bytes": 241238016,
+        "rss_gib": 0.2247,
+        "stage": "loaded_exemplar_validation",
+        "ts": "2026-06-09T11:04:04+00:00"
+      },
+      {
+        "rss_bytes": 507232256,
+        "rss_gib": 0.4724,
+        "stage": "model_loaded",
+        "ts": "2026-06-09T11:04:05+00:00"
+      },
+      {
+        "rss_bytes": 1049067520,
+        "rss_gib": 0.977,
+        "stage": "embedded_256",
+        "ts": "2026-06-09T11:04:06+00:00"
+      },
+      {
+        "rss_bytes": 1614790656,
+        "rss_gib": 1.5039,
+        "stage": "embedded_5376",
+        "ts": "2026-06-09T11:04:25+00:00"
+      },
+      {
+        "rss_bytes": 1690058752,
+        "rss_gib": 1.574,
+        "stage": "embedded_10496",
+        "ts": "2026-06-09T11:04:45+00:00"
+      },
+      {
+        "rss_bytes": 7438729216,
+        "rss_gib": 6.9279,
+        "stage": "embedded_15616",
+        "ts": "2026-06-09T11:05:46+00:00"
+      },
+      {
+        "rss_bytes": 8780185600,
+        "rss_gib": 8.1772,
+        "stage": "embedded_20736",
+        "ts": "2026-06-09T11:07:56+00:00"
+      },
+      {
+        "rss_bytes": 7593197568,
+        "rss_gib": 7.0717,
+        "stage": "embedded_25856",
+        "ts": "2026-06-09T11:10:20+00:00"
+      },
+      {
+        "rss_bytes": 4171841536,
+        "rss_gib": 3.8853,
+        "stage": "embedded_256",
+        "ts": "2026-06-09T11:10:59+00:00"
+      },
+      {
+        "rss_bytes": 8777121792,
+        "rss_gib": 8.1743,
+        "stage": "embedded_5376",
+        "ts": "2026-06-09T11:12:24+00:00"
+      },
+      {
+        "rss_bytes": 7301824512,
+        "rss_gib": 6.8004,
+        "stage": "embedded_validation_phase",
+        "ts": "2026-06-09T11:13:12+00:00"
+      },
+      {
+        "rss_bytes": 6728548352,
+        "rss_gib": 6.2664,
+        "stage": "loaded_test_after_freeze",
+        "ts": "2026-06-09T11:13:16+00:00"
+      },
+      {
+        "rss_bytes": 6738264064,
+        "rss_gib": 6.2755,
+        "stage": "embedded_256",
+        "ts": "2026-06-09T11:13:18+00:00"
+      },
+      {
+        "rss_bytes": 6702039040,
+        "rss_gib": 6.2418,
+        "stage": "embedded_5376",
+        "ts": "2026-06-09T11:13:55+00:00"
+      },
+      {
+        "rss_bytes": 5867552768,
+        "rss_gib": 5.4646,
+        "stage": "embedded_test_after_freeze",
+        "ts": "2026-06-09T11:15:47+00:00"
+      },
+      {
+        "rss_bytes": 4102291456,
+        "rss_gib": 3.8206,
+        "stage": "complete",
+        "ts": "2026-06-09T11:15:49+00:00"
+      }
+    ]
+  },
+  "rules_baseline": {
+    "rules_only_attack_recall": 0.010227272727272727,
+    "rules_only_attacks": 17600,
+    "rules_only_attacks_caught": 180,
+    "rules_only_base_rate_precision_100": 0.0013006554283236846,
+    "rules_only_base_rate_precision_1000": 0.00013021797467643385,
+    "rules_only_benign": 27200,
+    "rules_only_benign_flagged": 2136,
+    "rules_only_benign_fp_rate": 0.07852941176470589,
+    "rules_only_fp_per_1k_benign": 78.52941176470588,
+    "source": "corpus/round4/rules-baseline-large-metrics.json"
+  },
+  "script": "meta/harness/round4-embedding-sweep/run_round4_embedding_sweep.py",
+  "script_sha256": "4c657ae62d2779d0deb3cd6e3fa2913f0e12815c29cfcd548f2c72a234e0c855",
+  "test_scoring_started_at": "2026-06-09T11:13:16+00:00",
+  "test_start_record": "artifacts/embedding-sweep/test-start-record.json",
+  "test_start_record_sha256": "9371c84a7461c60b591a555f387dd579c27c0d392e8a32a1a31d4e17c837e26d",
+  "migration_note": "Path-only metadata rehomed for AGT-Embeddings-Experiment; per-row and metric files are unchanged from the reviewed source evidence."
+}

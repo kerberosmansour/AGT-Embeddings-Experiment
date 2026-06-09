@@ -1,0 +1,240 @@
+{
+  "created_from_head": "66712c6",
+  "inputs": {
+    "freeze_record": "artifacts/embedding-sweep/freeze-record.json",
+    "freeze_record_sha256": "72429ea1222c9091c892f707bf326d3b5fda12de7371c39cd563125400934946",
+    "previous_fp_zero_threshold_tau": 0.08026763573288917,
+    "test_per_row": "artifacts/embedding-sweep/test-per-row.jsonl",
+    "test_per_row_sha256": "b32cb78cbc4fd0352d59ed2b4e8a9fa94a32400dda6717e8a7c08e6ca6fe50fb",
+    "test_start_record": "artifacts/embedding-sweep/test-start-record.json",
+    "test_start_record_sha256": "9371c84a7461c60b591a555f387dd579c27c0d392e8a32a1a31d4e17c837e26d",
+    "validation_per_row": "artifacts/embedding-sweep/validation-per-row.jsonl",
+    "validation_per_row_sha256": "ad031b5cef9cc6992d104e480265e390feff86a51f3b3bc9bb8462a2b42d9354"
+  },
+  "method": {
+    "objective": "max_youden_j_on_validation",
+    "score_field": "margin",
+    "selected_on": "validation",
+    "test_policy": "apply validation-selected tau once to frozen test rows",
+    "threshold_predicate": "pred_attack = margin > threshold_tau",
+    "tie_break": "max J, then lower benign FP rate, then higher attack recall, then higher threshold_tau",
+    "youden_j_formula": "attack_recall - benign_fp_rate"
+  },
+  "non_claims": [
+    "PROVISIONAL synthetic Round-4 research-corpus tuning only.",
+    "No detector change, production threshold, AGT rule change, source import, or safety/certification claim.",
+    "Threshold chosen on validation only and applied once to frozen test rows.",
+    "Must be re-run on future realistic public examples before promotion language.",
+    "Linux audit required before any claim beyond internal coordination."
+  ],
+  "operating_points": {
+    "auc_ceiling": {
+      "label": "threshold_free_ranking_signal_not_an_operating_point",
+      "test": {
+        "pr_auc_average_precision": 0.8568929231104437,
+        "roc_auc": 0.9244536990299369
+      },
+      "threshold_tau": null,
+      "validation": {
+        "pr_auc_average_precision": 0.8398777669432101,
+        "roc_auc": 0.9185323278283339
+      }
+    },
+    "fp_zero_current": {
+      "label": "current_fp_zero_validation_threshold",
+      "test": {
+        "adjacent_security_benign_false_positives": {
+          "by_subclass": {},
+          "total": 0
+        },
+        "attack_recall": 0.14184782608695654,
+        "attack_recall_wilson_95": {
+          "estimate": 0.14184782608695654,
+          "lower": 0.13094855923234922,
+          "successes": 522,
+          "total": 3680,
+          "upper": 0.15349404518856385
+        },
+        "attack_total": 3680,
+        "base_rate_precision_1000_benign_per_attack": 1,
+        "base_rate_precision_100_benign_per_attack": 1,
+        "base_rate_precision_wilson_95": {
+          "1_attack_per_1000_benign": {
+            "estimate": 1,
+            "lower": 0.16345179160206236,
+            "upper": 1
+          },
+          "1_attack_per_100_benign": {
+            "estimate": 1,
+            "lower": 0.6614626374699801,
+            "upper": 1
+          }
+        },
+        "benign_fp_rate": 0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0,
+          "lower": 0,
+          "successes": 0,
+          "total": 5728,
+          "upper": 0.0006701962795538472
+        },
+        "benign_total": 5728,
+        "false_positives_per_1k_benign": 0,
+        "fn": 3158,
+        "fp": 0,
+        "tn": 5728,
+        "tp": 522,
+        "youden_j": 0.14184782608695654
+      },
+      "threshold_tau": 0.08026763573288917,
+      "validation": {
+        "adjacent_security_benign_false_positives": {
+          "by_subclass": {},
+          "total": 0
+        },
+        "attack_recall": 0.2184782608695652,
+        "attack_recall_wilson_95": {
+          "estimate": 0.2184782608695652,
+          "lower": 0.20345942039605378,
+          "successes": 603,
+          "total": 2760,
+          "upper": 0.23427967457248414
+        },
+        "attack_total": 2760,
+        "base_rate_precision_1000_benign_per_attack": 1,
+        "base_rate_precision_100_benign_per_attack": 1,
+        "base_rate_precision_wilson_95": {
+          "1_attack_per_1000_benign": {
+            "estimate": 1,
+            "lower": 0.17954727959753175,
+            "upper": 1
+          },
+          "1_attack_per_100_benign": {
+            "estimate": 1,
+            "lower": 0.6863623542544396,
+            "upper": 1
+          }
+        },
+        "benign_fp_rate": 0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0,
+          "lower": 0,
+          "successes": 0,
+          "total": 4128,
+          "upper": 0.0009297207695356613
+        },
+        "benign_total": 4128,
+        "false_positives_per_1k_benign": 0,
+        "fn": 2157,
+        "fp": 0,
+        "tn": 4128,
+        "tp": 603,
+        "youden_j": 0.2184782608695652
+      }
+    },
+    "youden_j_max": {
+      "label": "provisional_synthetic_youden_j_max_validation_threshold",
+      "test": {
+        "adjacent_security_benign_false_positives": {
+          "by_subclass": {
+            "benign_compact_obfuscation_control": 600,
+            "benign_obfuscation_control": 149,
+            "tool_policy_documentation": 185
+          },
+          "total": 934
+        },
+        "attack_recall": 0.8826086956521739,
+        "attack_recall_wilson_95": {
+          "estimate": 0.8826086956521739,
+          "lower": 0.8718076558742318,
+          "successes": 3248,
+          "total": 3680,
+          "upper": 0.8926117773392388
+        },
+        "attack_total": 3680,
+        "base_rate_precision_1000_benign_per_attack": 0.00538368835916107,
+        "base_rate_precision_100_benign_per_attack": 0.051348866917873895,
+        "base_rate_precision_wilson_95": {
+          "1_attack_per_1000_benign": {
+            "estimate": 0.00538368835916107,
+            "lower": 0.005018391478277901,
+            "upper": 0.005773280573158122
+          },
+          "1_attack_per_100_benign": {
+            "estimate": 0.051348866917873895,
+            "lower": 0.0480152795550627,
+            "upper": 0.05488120441029971
+          }
+        },
+        "benign_fp_rate": 0.1630586592178771,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.1630586592178771,
+          "lower": 0.15371823140414134,
+          "successes": 934,
+          "total": 5728,
+          "upper": 0.17285072069765292
+        },
+        "benign_total": 5728,
+        "false_positives_per_1k_benign": 163.0586592178771,
+        "fn": 432,
+        "fp": 934,
+        "tn": 4794,
+        "tp": 3248,
+        "youden_j": 0.7195500364342968
+      },
+      "threshold_tau": -0.00609511,
+      "validation": {
+        "adjacent_security_benign_false_positives": {
+          "by_subclass": {
+            "benign_compact_obfuscation_control": 200,
+            "benign_obfuscation_control": 162,
+            "high_entropy_structured_data": 1,
+            "tool_policy_documentation": 400
+          },
+          "total": 763
+        },
+        "attack_recall": 0.9974637681159421,
+        "attack_recall_wilson_95": {
+          "estimate": 0.9974637681159421,
+          "lower": 0.994773786682625,
+          "successes": 2753,
+          "total": 2760,
+          "upper": 0.9987709013588135
+        },
+        "attack_total": 2760,
+        "base_rate_precision_1000_benign_per_attack": 0.00536753531424174,
+        "base_rate_precision_100_benign_per_attack": 0.05120190103477331,
+        "base_rate_precision_wilson_95": {
+          "1_attack_per_1000_benign": {
+            "estimate": 0.00536753531424174,
+            "lower": 0.005025066398569683,
+            "upper": 0.005730584105887502
+          },
+          "1_attack_per_100_benign": {
+            "estimate": 0.05120190103477331,
+            "lower": 0.048076380928384295,
+            "upper": 0.05449523529578157
+          }
+        },
+        "benign_fp_rate": 0.18483527131782945,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.18483527131782945,
+          "lower": 0.17328902994126275,
+          "successes": 763,
+          "total": 4128,
+          "upper": 0.1969675430825579
+        },
+        "benign_total": 4128,
+        "false_positives_per_1k_benign": 184.83527131782947,
+        "fn": 7,
+        "fp": 763,
+        "tn": 3365,
+        "tp": 2753,
+        "youden_j": 0.8126284967981126
+      }
+    }
+  },
+  "schema_version": 1,
+  "status": "provisional_synthetic_metadata_only",
+  "task_id": "t_mq6vttc9_49_b40c9d32"
+}
