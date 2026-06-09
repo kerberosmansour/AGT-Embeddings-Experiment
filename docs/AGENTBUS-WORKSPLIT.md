@@ -33,7 +33,7 @@ migrates artifacts, but does not self-approve release-facing claims it wrote.
 Branch: `slo/agt-embeddings-migration-plan`
 
 Latest M2 evidence commit: `834da55`
-Latest M3 evidence commit: this M3 migration commit
+Latest M3 evidence commit: `de5ade7`
 
 | Task | Status |
 |---|---|
@@ -59,8 +59,13 @@ Latest M3 evidence commit: this M3 migration commit
 | `t_mq74hd8m_854_ce07671d` | Replacement public-scope/no-overclaim gate open for Linux after M3. |
 | `t_mq74hd9q_894_2e0b4d5a` | Replacement AGT semantics/native-vocabulary gate open for Windows after M3. |
 | `t_mq74i0rp_349_85a66332` | Mac coworker replacement docs update complete. |
+| `t_mq74rcku_558_1ac8a184` | Mac runbook M4 ownership cleanup complete at `d42b661`. |
+| `t_mq74ujpr_775_f09cbf2e` | Mac M3 source-map support complete at `0daeee5`; used as migration checklist for M3. |
 | `t_mq723syj_811_2288a4fe` | Open-source readiness policy task remains separate from migration evidence. |
 
 M2 scope is intentionally limited to embedding/kNN artifacts, validator harness,
 and reports. M3 adds governance metadata/value-add evidence as research-only
 readout and does not create a default-blocking or production-readiness claim.
+The M3 source map lives at
+`docs/methodology/m3-governance-value-add-source-map.md` and is a migration
+checklist, not migrated evidence.
