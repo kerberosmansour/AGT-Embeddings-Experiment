@@ -14,7 +14,7 @@
       "tools/round4/agt-rules-baseline": "tools/agt-rules-baseline"
     },
     "target_repository": "AGT-Embeddings-Experiment",
-    "validation": "Recomputed corpus hygiene and AGT Rust rules baseline in target repo; only path metadata changed from the source baseline summary/metrics."
+    "validation": "Recomputed corpus hygiene and AGT Rust rules baseline in target repo; only path metadata changed from the source baseline summary/metrics. The provenance file is not included in its own target_artifacts hash map because that would be self-referential; validate it via the Git commit/blob hash."
   },
   "non_claims": [
     "This is a rules-only AGT baseline readout, not detector promotion.",
@@ -48,7 +48,6 @@
     "corpus/round4/injection-round4-large.jsonl": "33a02ac2b22e68970b3b808c5ba95bc119dc87dd93ae6dbc90546c074a5980ed",
     "corpus/round4/manifest-large.json": "6532ddd1ff8487147cbdb451f9d280775c7f2ccf49fd700434c5f6cba745f078",
     "corpus/round4/rules-baseline-large-metrics.json": "a082e99bde0eab841987e99bae264b1310a9c6cb8621ad1ada222cde3a5ceab3",
-    "corpus/round4/rules-baseline-large-provenance.json": "845d179de4b6bac7834c5518daf12ab7f320ea21faaa9e10c7f04e8a928e2467",
     "corpus/round4/rules-baseline-large-summary.json": "5284051deb59da57f0e717bb4a8a39565ec642513724a4299691504b76ae3b82",
     "corpus/round4/rules-baseline-large.jsonl": "12b1897e83059d58209b3557aeeb4a1fc036c5d622fa5143fe2065a1db7bd23b",
     "corpus/round4/run-smoke.sh": "0f6ff816361db8264304593bfb12fe1e3e374d33fc5445944f96761b9f4b8b33",
