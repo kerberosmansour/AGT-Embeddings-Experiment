@@ -3,10 +3,10 @@
 Rust scratch harness for scoring Round-4 JSONL rows with the real AGT Rust
 prompt-injection detector.
 
-This crate path-includes the sibling AGT checkout's
-`agent-governance-rust/agentmesh/src/prompt_injection.rs`, matching the
-Windows Round-3 harness pattern. It is for experiment evidence only; production
-integration belongs in AGT.
+This crate vendors the exact AGT `prompt_injection.rs` source used for the
+committed Round-4 rules baseline, so recomputation does not depend on a local
+sibling checkout. It is for experiment evidence only; production integration
+belongs in AGT.
 
 ```bash
 cargo run --manifest-path tools/agt-rules-baseline/Cargo.toml -- \

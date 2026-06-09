@@ -4,17 +4,25 @@
     "prompt_injection_rs_sha256": "92ac1f855e03502886fffdfb8cf9eece8ce7c2bea268ecacb4ff6386cb345ab3",
     "repository": "agent-governance-toolkit",
     "rust_entrypoint": "PromptInjectionDetector::new / Sensitivity::Balanced / default config",
-    "source_path": "agent-governance-rust/agentmesh/src/prompt_injection.rs"
+    "source_mode": "vendored_exact_source",
+    "source_origin": {
+      "also_observed_at_commit": "7c895824",
+      "commit": "1379f6da2b7cf4124e69c6067b7ecb9820b96ff7",
+      "original_path": "agent-governance-rust/agentmesh/src/prompt_injection.rs",
+      "repository": "agent-governance-toolkit"
+    },
+    "source_path": "tools/agt-rules-baseline/vendor/agent-governance-toolkit/prompt_injection.rs"
   },
   "migration": {
     "path_rehomes": {
+      "agent-governance-rust/agentmesh/src/prompt_injection.rs": "tools/agt-rules-baseline/vendor/agent-governance-toolkit/prompt_injection.rs",
       "corpus/round4/manifest-large.json.output": "corpus/round4/injection-round4-large.jsonl",
       "corpus/round4/rules-baseline-large-metrics.json.source_summary": "corpus/round4/injection-round4-large.jsonl",
       "corpus/round4/rules-baseline-large-summary.json.corpus": "corpus/round4/injection-round4-large.jsonl",
       "tools/round4/agt-rules-baseline": "tools/agt-rules-baseline"
     },
     "target_repository": "AGT-Embeddings-Experiment",
-    "validation": "Recomputed corpus hygiene and AGT Rust rules baseline in target repo; only path metadata changed from the source baseline summary/metrics. The provenance file is not included in its own target_artifacts hash map because that would be self-referential; validate it via the Git commit/blob hash."
+    "validation": "Recomputed corpus hygiene and AGT Rust rules baseline in target repo; rules runner now includes vendored exact detector source so recomputation does not depend on a moving sibling checkout."
   },
   "non_claims": [
     "This is a rules-only AGT baseline readout, not detector promotion.",
@@ -51,6 +59,11 @@
     "corpus/round4/rules-baseline-large-summary.json": "5284051deb59da57f0e717bb4a8a39565ec642513724a4299691504b76ae3b82",
     "corpus/round4/rules-baseline-large.jsonl": "12b1897e83059d58209b3557aeeb4a1fc036c5d622fa5143fe2065a1db7bd23b",
     "corpus/round4/run-smoke.sh": "0f6ff816361db8264304593bfb12fe1e3e374d33fc5445944f96761b9f4b8b33",
-    "corpus/round4/summarize-baseline.py": "51ee133a4c10f4b2a9371e8e9d811f34cea45187084350ecced7a56370a8e6e2"
+    "corpus/round4/summarize-baseline.py": "51ee133a4c10f4b2a9371e8e9d811f34cea45187084350ecced7a56370a8e6e2",
+    "tools/agt-rules-baseline/Cargo.lock": "b6880bd39a721622416dc6025246c587b5c6dd4582dd149eab2b2b02d8aa0929",
+    "tools/agt-rules-baseline/Cargo.toml": "519d3ebc81c432c3b9d3f2113a0f1d900cf9e9d78d0491575f828ffe9fcc3b17",
+    "tools/agt-rules-baseline/README.md": "db38bdbb71265d7ef7ab63a299e3b20ec3cde1a271283a163d0d53b181b0fcba",
+    "tools/agt-rules-baseline/src/main.rs": "0a925304130e34a2f310060de61876f45acd20e7d1e60a08399e799827fb862f",
+    "tools/agt-rules-baseline/vendor/agent-governance-toolkit/prompt_injection.rs": "92ac1f855e03502886fffdfb8cf9eece8ce7c2bea268ecacb4ff6386cb345ab3"
   }
 }

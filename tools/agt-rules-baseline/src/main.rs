@@ -1,4 +1,4 @@
-#[path = "../../../../agent-governance-toolkit/agent-governance-rust/agentmesh/src/prompt_injection.rs"]
+#[path = "../vendor/agent-governance-toolkit/prompt_injection.rs"]
 mod prompt_injection;
 
 use prompt_injection::{DetectionOptions, PromptInjectionDetector};
