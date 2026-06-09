@@ -4,7 +4,7 @@ Date: 2026-06-09
 Owner: mac-agent
 Branch: `slo/agt-embeddings-migration-plan`
 AgentBus task: `t_mq71r9f5_617_538deaeb`
-Status: M3 in progress; M0-M2 migrated and audited; coworker lane replaced by active-agent gates
+Status: M4 in progress; M0-M3 migrated and audited; Linux public-scope gate PASS; Windows AGT semantics gate pending
 
 ## Phase Contract
 
@@ -107,6 +107,7 @@ the forbidden-term list in the AgentBus task, not in this repository.
 
 ## Next Step
 
-M3 should migrate only the AGT governance/value-add artifacts and validators.
-After Linux audits M3, the replacement M4 gates should review public-scope
-wording and AGT-native vocabulary before any release-facing narrative lands.
+M3 is migrated and audited as research-only governance/value-add evidence.
+Linux has passed the replacement public-scope/no-overclaim gate. The remaining
+M4 gate is Windows AGT semantics/native-vocabulary readback before any final
+narrative packaging lands.

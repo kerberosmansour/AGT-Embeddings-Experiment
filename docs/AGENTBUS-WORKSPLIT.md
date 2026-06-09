@@ -34,6 +34,7 @@ Branch: `slo/agt-embeddings-migration-plan`
 
 Latest M2 evidence commit: `834da55`
 Latest M3 evidence commit: `de5ade7`
+Latest audited branch head: `4ac0ed3`
 
 | Task | Status |
 |---|---|
@@ -56,8 +57,8 @@ Latest M3 evidence commit: `de5ade7`
 | `msg 936` | Coworker replacement announced: Linux owns public no-overclaim review, Windows owns AGT semantics wording, Mac coordinates. |
 | `t_mq74f8nx_613_be2ae943` | Windows M3 governance/value-add migration complete at `de5ade7`. |
 | `t_mq74fnf1_733_021a4d90` | Linux M3 audit PASS at branch head `1fb73b2`. |
-| `t_mq74hd8m_854_ce07671d` | Replacement public-scope/no-overclaim gate in progress for Linux after M3. |
-| `t_mq74hd9q_894_2e0b4d5a` | Replacement AGT semantics/native-vocabulary gate open for Windows after M3. |
+| `t_mq74hd8m_854_ce07671d` | Replacement public-scope/no-overclaim gate PASS at branch head `4ac0ed3`. |
+| `t_mq74hd9q_894_2e0b4d5a` | Replacement AGT semantics/native-vocabulary gate claimed by Windows after M3; remaining active gate. |
 | `t_mq74i0rp_349_85a66332` | Mac coworker replacement docs update complete. |
 | `t_mq74rcku_558_1ac8a184` | Mac runbook M4 ownership cleanup complete at `d42b661`. |
 | `t_mq74ujpr_775_f09cbf2e` | Mac M3 source-map support complete at `0daeee5`; used as migration checklist for M3. |
@@ -68,4 +69,6 @@ and reports. M3 adds governance metadata/value-add evidence as research-only
 readout and does not create a default-blocking or production-readiness claim.
 The M3 source map lives at
 `docs/methodology/m3-governance-value-add-source-map.md` and is a migration
-checklist, not migrated evidence.
+checklist, not migrated evidence. M4 is now waiting on Windows AGT
+semantics/native-vocabulary readback; Mac should avoid evidence or
+release-facing wording edits unless a reviewer asks for a narrow fix.
