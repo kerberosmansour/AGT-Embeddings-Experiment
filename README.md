@@ -42,11 +42,21 @@ routing.
 - raw secrets, live credentials, or customer data;
 - production safety, certification, or benchmark-coverage claims.
 
-## Migration Status
+## Migration And Packaging Status
 
-Migration is being planned in:
+Migration status and claim mapping live in:
 
 - [`docs/RUNBOOK-agt-embeddings-migration.md`](docs/RUNBOOK-agt-embeddings-migration.md)
 - [`docs/CLAIMS-LEDGER.md`](docs/CLAIMS-LEDGER.md)
 - [`docs/AGENTBUS-WORKSPLIT.md`](docs/AGENTBUS-WORKSPLIT.md)
 
+The AGT-only migration gates are complete through M4. The remaining work is
+public-repo packaging and any future experiment follow-up, not promotion to a
+production/default-blocking detector.
+
+## Community And Security
+
+- [`CONTRIBUTING.md`](CONTRIBUTING.md)
+- [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md)
+- [`SECURITY.md`](SECURITY.md)
+- [`CITATION.cff`](CITATION.cff)

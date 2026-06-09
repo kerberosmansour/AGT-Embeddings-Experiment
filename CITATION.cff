@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite it as below."
+title: "AGT Embeddings Experiment"
+type: dataset
+authors:
+  - name: "AGT Embeddings Experiment contributors"
+repository-code: "https://github.com/kerberosmansour/AGT-Embeddings-Experiment"
+date-released: "2026-06-09"
+license: MIT
+abstract: >
+  Research artifacts for evaluating an optional, default-off embedding and
+  nearest-neighbour signal for AGT prompt-injection classification.
+keywords:
+  - prompt-injection
+  - embeddings
+  - nearest-neighbour
+  - AGT
+  - security-research
