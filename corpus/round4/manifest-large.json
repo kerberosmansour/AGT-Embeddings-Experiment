@@ -1,0 +1,151 @@
+{
+  "counts": {
+    "attack_class": {
+      "benign": 27200,
+      "data_boundary_abuse": 2200,
+      "direct_override": 2800,
+      "indirect_injection": 1600,
+      "memory_poisoning": 2200,
+      "output_exfiltration": 2200,
+      "prompt_leakage": 2200,
+      "tool_abuse": 2200,
+      "tool_result_injection": 2200
+    },
+    "benign_subclass": {
+      "benign_compact_obfuscation_control": 4800,
+      "benign_obfuscation_control": 1600,
+      "benign_security_discussion": 1600,
+      "benign_tool_use": 1600,
+      "detector_code_fixture": 1600,
+      "docs_code_comment": 1600,
+      "high_entropy_structured_data": 1600,
+      "legitimate_imperative_request": 1600,
+      "not_applicable": 17600,
+      "owasp_ncsc_guidance": 1600,
+      "quoted_injection_example": 1600,
+      "research_blog_excerpt": 1600,
+      "security_changelog": 1600,
+      "security_training_material": 1600,
+      "support_urgency": 1600,
+      "tool_policy_documentation": 1600
+    },
+    "bypass_class": {
+      "chunked_leet": 1600,
+      "compact_leet": 1600,
+      "compact_plain": 1600,
+      "diacritics": 1440,
+      "encoding": 4320,
+      "homoglyph": 1440,
+      "leet_letter_spaced": 1600,
+      "leet_spacing": 2880,
+      "letter_spaced": 1600,
+      "multilingual": 1440,
+      "none": 20800,
+      "plain": 1440,
+      "rot13": 1440,
+      "separator_spaced": 1600
+    },
+    "expected_action": {
+      "allow": 27200,
+      "block": 10400,
+      "quarantine": 2200,
+      "require_approval": 5000
+    },
+    "source_type": {
+      "document": 12800,
+      "memory": 2200,
+      "rag_chunk": 6400,
+      "ticket": 4800,
+      "tool_result": 2200,
+      "user": 16400
+    },
+    "split": {
+      "exemplar_bank": 28504,
+      "test": 9408,
+      "validation": 6888
+    },
+    "trust_level": {
+      "authenticated_user": 9600,
+      "tool_output": 2200,
+      "untrusted": 33000
+    }
+  },
+  "created_round": "round4",
+  "duplicate_check": {
+    "exact_cross_split_duplicate_count": 0,
+    "exact_cross_split_duplicates": [],
+    "near_cross_split_duplicates": [],
+    "near_duplicate_cross_split_count": 0,
+    "near_duplicate_ngram": 7,
+    "near_duplicate_threshold": 0.92,
+    "normalized_hash_count": 43380,
+    "passed": true
+  },
+  "gates": {
+    "placement": "corpus/round4 only; never corpus/contrib",
+    "production_claim": "prohibited until real/realistic benign FP validation",
+    "split_unit": "family_id first, group_id second",
+    "tau_policy": "fit on validation only, freeze before final test"
+  },
+  "generator": "corpus/round4/generate-round4.py",
+  "generator_sha256": "b9352f159c6bdbe4b380754e595e00fe873a4d1702555b800de96e0016e2694b",
+  "leakage_check": {
+    "family_count": 125,
+    "family_split_leaks": [],
+    "group_count": 390,
+    "group_split_leaks": [],
+    "passed": true
+  },
+  "normalized_text_check": {
+    "exact_normalized_hash_cross_split_count": 0,
+    "exact_normalized_hash_cross_split_examples": [],
+    "near_duplicate_cross_split_count": 0,
+    "near_duplicate_examples": [],
+    "near_duplicate_ngram": 7,
+    "near_duplicate_threshold": 0.92,
+    "normalized_hash_count": 43380,
+    "passed": true
+  },
+  "output": "corpus/round4/injection-round4-large.jsonl",
+  "output_sha256": "33a02ac2b22e68970b3b808c5ba95bc119dc87dd93ae6dbc90546c074a5980ed",
+  "profile": "large",
+  "repo_head": "b74bb11cccfb22d991ec089b28cbbdde7fbb2a95",
+  "required_eval_arms": [
+    "rules_only",
+    "gate_alone",
+    "embeddings_only",
+    "gate_plus_embeddings"
+  ],
+  "required_metrics": [
+    "ROC-AUC",
+    "PR-AUC",
+    "Wilson CI",
+    "bootstrap CI",
+    "FP per 1k benign",
+    "base-rate precision 100:1",
+    "base-rate precision 1000:1",
+    "unsafe_action_success",
+    "critical_allow",
+    "leak_allow"
+  ],
+  "row_count": 44800,
+  "seed": 1337,
+  "split_label_coverage_check": {
+    "by_split": {
+      "exemplar_bank": {
+        "attack": 11160,
+        "benign": 17344
+      },
+      "test": {
+        "attack": 3680,
+        "benign": 5728
+      },
+      "validation": {
+        "attack": 2760,
+        "benign": 4128
+      }
+    },
+    "missing": [],
+    "passed": true
+  }
+}

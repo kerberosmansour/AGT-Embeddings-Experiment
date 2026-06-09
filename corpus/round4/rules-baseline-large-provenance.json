@@ -1,0 +1,57 @@
+{
+  "agt_detector": {
+    "local_validation_head": "1379f6da2b7cf4124e69c6067b7ecb9820b96ff7",
+    "prompt_injection_rs_sha256": "92ac1f855e03502886fffdfb8cf9eece8ce7c2bea268ecacb4ff6386cb345ab3",
+    "repository": "agent-governance-toolkit",
+    "rust_entrypoint": "PromptInjectionDetector::new / Sensitivity::Balanced / default config",
+    "source_path": "agent-governance-rust/agentmesh/src/prompt_injection.rs"
+  },
+  "migration": {
+    "path_rehomes": {
+      "corpus/round4/manifest-large.json.output": "corpus/round4/injection-round4-large.jsonl",
+      "corpus/round4/rules-baseline-large-metrics.json.source_summary": "corpus/round4/injection-round4-large.jsonl",
+      "corpus/round4/rules-baseline-large-summary.json.corpus": "corpus/round4/injection-round4-large.jsonl",
+      "tools/round4/agt-rules-baseline": "tools/agt-rules-baseline"
+    },
+    "target_repository": "AGT-Embeddings-Experiment",
+    "validation": "Recomputed corpus hygiene and AGT Rust rules baseline in target repo; only path metadata changed from the source baseline summary/metrics."
+  },
+  "non_claims": [
+    "This is a rules-only AGT baseline readout, not detector promotion.",
+    "No embedding sweep was run in M1.",
+    "No source-material import was run in M1.",
+    "No threshold tuning or candidate detector comparison was run in M1.",
+    "Candidate AGT detector results must be recorded in separate artifacts and not mixed with this rules-only baseline."
+  ],
+  "profile": "large",
+  "source_snapshot": {
+    "artifact_sha256": {
+      "corpus/round4/check-large-summary.json": "d209f134034497834b7769db9b7e4e86967ed385cdd07e6097953f5094cf9cf0",
+      "corpus/round4/check-round4.py": "78c92c757997f782374f51a27fa3ed070f6d94754fe956c329ffffbf32853050",
+      "corpus/round4/generate-round4.py": "b9352f159c6bdbe4b380754e595e00fe873a4d1702555b800de96e0016e2694b",
+      "corpus/round4/injection-round4-large.jsonl": "33a02ac2b22e68970b3b808c5ba95bc119dc87dd93ae6dbc90546c074a5980ed",
+      "corpus/round4/manifest-large.json": "1454b75bae604da32502340d9d8719068cbffd09b1270132fea81af667941f32",
+      "corpus/round4/rules-baseline-large-metrics.json": "f08d1d19bee83b0a3c820a9802615f4019d372d33189f266f5230ef7f68ebe1e",
+      "corpus/round4/rules-baseline-large-summary.json": "e38d3a27de86ac0ad3f9b9dbf47ffd86b2d59046614eafbac847980f85b196a0",
+      "corpus/round4/rules-baseline-large.jsonl": "12b1897e83059d58209b3557aeeb4a1fc036c5d622fa5143fe2065a1db7bd23b",
+      "corpus/round4/run-smoke.sh": "7af038444858cff56d5cdb6b81405f0f4cf391e368d66f8d80a4ddb0fe69921e",
+      "corpus/round4/summarize-baseline.py": "51ee133a4c10f4b2a9371e8e9d811f34cea45187084350ecced7a56370a8e6e2"
+    },
+    "commit": "baf0bd5ab744d92044e7ba32f1418067be053b4d",
+    "repository": "Embedding_Experiment"
+  },
+  "status": "evidence_only_not_promotion",
+  "target_artifacts": {
+    "corpus/round4/check-large-summary.json": "d209f134034497834b7769db9b7e4e86967ed385cdd07e6097953f5094cf9cf0",
+    "corpus/round4/check-round4.py": "78c92c757997f782374f51a27fa3ed070f6d94754fe956c329ffffbf32853050",
+    "corpus/round4/generate-round4.py": "b9352f159c6bdbe4b380754e595e00fe873a4d1702555b800de96e0016e2694b",
+    "corpus/round4/injection-round4-large.jsonl": "33a02ac2b22e68970b3b808c5ba95bc119dc87dd93ae6dbc90546c074a5980ed",
+    "corpus/round4/manifest-large.json": "6532ddd1ff8487147cbdb451f9d280775c7f2ccf49fd700434c5f6cba745f078",
+    "corpus/round4/rules-baseline-large-metrics.json": "a082e99bde0eab841987e99bae264b1310a9c6cb8621ad1ada222cde3a5ceab3",
+    "corpus/round4/rules-baseline-large-provenance.json": "845d179de4b6bac7834c5518daf12ab7f320ea21faaa9e10c7f04e8a928e2467",
+    "corpus/round4/rules-baseline-large-summary.json": "5284051deb59da57f0e717bb4a8a39565ec642513724a4299691504b76ae3b82",
+    "corpus/round4/rules-baseline-large.jsonl": "12b1897e83059d58209b3557aeeb4a1fc036c5d622fa5143fe2065a1db7bd23b",
+    "corpus/round4/run-smoke.sh": "0f6ff816361db8264304593bfb12fe1e3e374d33fc5445944f96761b9f4b8b33",
+    "corpus/round4/summarize-baseline.py": "51ee133a4c10f4b2a9371e8e9d811f34cea45187084350ecced7a56370a8e6e2"
+  }
+}
