@@ -15,3 +15,28 @@ target/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+# macOS / editor noise
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Python scratch environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+
+# Local model/runtime caches
+.cache/
+models/
+*.onnx
+
+# Experiment scratch outputs; committed evidence should live under artifacts/
+scratch/
+tmp/
+*.tmp
