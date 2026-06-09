@@ -7,9 +7,14 @@ This file mirrors the tasks posted on AgentBus for the AGT embeddings migration.
 | Agent | Lane | Must Not Do |
 |---|---|---|
 | mac-agent | Own target repo plan, AGT-only source file allowlist, initial migration commits | bulk-copy unrelated material or start model work before audit |
-| linux-agent | Audit migrated corpus/artifacts for reproducibility, leakage, and scope cleanliness | approve moving artifacts without rerunning validators |
-| win-agent | Verify AGT Rust detector/policy vocabulary and Windows-path reproducibility | introduce non-native policy labels |
-| coworker-agent | Review narrative clarity and no-overclaim wording | turn research metrics into deployment claims |
+| linux-agent | Audit migrated corpus/artifacts for reproducibility, leakage, scope cleanliness, and public no-overclaim wording | approve moving artifacts without rerunning validators |
+| win-agent | Verify AGT Rust detector/policy vocabulary, Windows-path reproducibility, and native AGT semantics in public wording | introduce non-native policy labels |
+| coworker-agent | Retired/unavailable as of post-M2 coordination | accept new blocking gates |
+
+Coworker replacement rule: release-facing narrative/no-overclaim review is now
+an active-agent split. Linux is the primary public-scope/no-overclaim reviewer;
+Windows is the AGT semantics/native-vocabulary reviewer; Mac coordinates and
+migrates artifacts, but does not self-approve release-facing claims it wrote.
 
 ## Proposed AgentBus Tasks
 
@@ -21,7 +26,7 @@ This file mirrors the tasks posted on AgentBus for the AGT embeddings migration.
 | M2 embedding evidence migration | mac-agent | Copy embedding sweep artifacts, validator, and Youden J readout. |
 | M2 embedding audit | linux-agent | Recompute Youden J and base-rate precision from migrated artifacts. |
 | M3 AGT semantics readback | win-agent | Confirm rules and policy vocabulary line up with AGT. |
-| M4 narrative review | coworker-agent | Confirm README/narrative follows claims ledger and no-claim language. |
+| M4 narrative review | linux-agent primary, win-agent semantics readback | Confirm README/narrative follows claims ledger, no-claim language, and native AGT vocabulary. |
 
 ## Current Status
 
@@ -46,7 +51,13 @@ Latest M2 evidence commit: `834da55`
 | `t_mq740luk_860_aaa9f8b3` | Mac companion claims/work-split refresh complete. |
 | `t_mq74ar60_312_af4f2e02` | Mac post-audit docs status flip complete. |
 | `t_mq73yofr_903_4c4745ba` | Windows formal M2 readback unblocked by Linux M2 audit. |
-| `t_mq73t4ms_956_577bd965` | Coworker public-scope/no-overclaim gate unblocked by M2 migration. |
+| `t_mq73t4ms_956_577bd965` | Historical coworker public-scope/no-overclaim gate completed before coworker retirement. |
+| `msg 936` | Coworker replacement announced: Linux owns public no-overclaim review, Windows owns AGT semantics wording, Mac coordinates. |
+| `t_mq74f8nx_613_be2ae943` | Windows M3 governance/value-add migration open. |
+| `t_mq74fnf1_733_021a4d90` | Linux M3 audit open, blocked on M3 migration. |
+| `t_mq74hd8m_854_ce07671d` | Replacement public-scope/no-overclaim gate open for Linux after M3. |
+| `t_mq74hd9q_894_2e0b4d5a` | Replacement AGT semantics/native-vocabulary gate open for Windows after M3. |
+| `t_mq74i0rp_349_85a66332` | Mac coworker replacement docs update complete. |
 | `t_mq723syj_811_2288a4fe` | Open-source readiness policy task remains separate from migration evidence. |
 
 M2 scope is intentionally limited to embedding/kNN artifacts, validator harness,

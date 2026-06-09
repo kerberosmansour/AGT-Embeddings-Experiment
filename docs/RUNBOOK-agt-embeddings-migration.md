@@ -90,7 +90,7 @@ artifacts/
 | `m0_claims_are_mapped` | the narrative contains metric claims | a reviewer opens `docs/CLAIMS-LEDGER.md` | each metric points to a source artifact or a named evidence gap |
 | `m0_scope_is_agt_only` | source repo contains unrelated work | target repo docs are scanned | only AGT prompt-injection material is referenced |
 | `m0_no_production_claim` | embedding metrics look strong | README and ledger are reviewed | default-off and no-production wording remains visible |
-| `m0_agentbus_split_exists` | multiple agents will migrate work | AgentBus tasks are read | Mac/Linux/Windows/coworker lanes are explicit |
+| `m0_agentbus_split_exists` | multiple agents will migrate work | AgentBus tasks are read | Mac/Linux/Windows lanes are explicit, with coworker retirement covered by active-agent replacement gates |
 
 ## Verification Commands
 
