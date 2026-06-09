@@ -33,6 +33,7 @@ migrates artifacts, but does not self-approve release-facing claims it wrote.
 Branch: `slo/agt-embeddings-migration-plan`
 
 Latest M2 evidence commit: `834da55`
+Latest M3 evidence commit: this M3 migration commit
 
 | Task | Status |
 |---|---|
@@ -50,15 +51,16 @@ Latest M2 evidence commit: `834da55`
 | `t_mq73npxm_626_160bb634` | Linux M2 audit PASS at branch head `1612f83`. |
 | `t_mq740luk_860_aaa9f8b3` | Mac companion claims/work-split refresh complete. |
 | `t_mq74ar60_312_af4f2e02` | Mac post-audit docs status flip complete. |
-| `t_mq73yofr_903_4c4745ba` | Windows formal M2 readback unblocked by Linux M2 audit. |
+| `t_mq73yofr_903_4c4745ba` | Windows formal M2 readback PASS. |
 | `t_mq73t4ms_956_577bd965` | Historical coworker public-scope/no-overclaim gate completed before coworker retirement. |
 | `msg 936` | Coworker replacement announced: Linux owns public no-overclaim review, Windows owns AGT semantics wording, Mac coordinates. |
-| `t_mq74f8nx_613_be2ae943` | Windows M3 governance/value-add migration open. |
-| `t_mq74fnf1_733_021a4d90` | Linux M3 audit open, blocked on M3 migration. |
+| `t_mq74f8nx_613_be2ae943` | Windows M3 governance/value-add migration complete; Linux audit pending. |
+| `t_mq74fnf1_733_021a4d90` | Linux M3 audit open, unblocked by M3 migration. |
 | `t_mq74hd8m_854_ce07671d` | Replacement public-scope/no-overclaim gate open for Linux after M3. |
 | `t_mq74hd9q_894_2e0b4d5a` | Replacement AGT semantics/native-vocabulary gate open for Windows after M3. |
 | `t_mq74i0rp_349_85a66332` | Mac coworker replacement docs update complete. |
 | `t_mq723syj_811_2288a4fe` | Open-source readiness policy task remains separate from migration evidence. |
 
 M2 scope is intentionally limited to embedding/kNN artifacts, validator harness,
-and reports. AGT policy/value-add artifacts remain M3.
+and reports. M3 adds governance metadata/value-add evidence as research-only
+readout and does not create a default-blocking or production-readiness claim.

@@ -1,0 +1,31 @@
+{
+  "agt_policy_file_sha256": "92ac1f855e03502886fffdfb8cf9eece8ce7c2bea268ecacb4ff6386cb345ab3",
+  "agt_repo_commit": "1379f6da2b7cf4124e69c6067b7ecb9820b96ff7",
+  "artifacts": {
+    "metrics.json": "3f9fe972135965c745ef43f904a1526b32f8e5df12ea3e512e92c6ed44094807",
+    "policy-profile.json": "1516456de2e4fb95cf23c6133cabc3e681b1fefc31130c4f849f55cc969f6d07",
+    "stub-tool-sink-catalog.json": "2f76505f41473bce91ed170a69c2f0c0983a737a317e0d9ebbaacc05fa38fc6d",
+    "test.jsonl": "c8903036f3982ade61e6777f57c60b19cd856d02d0905dd343a77889bf7f306f",
+    "validation.jsonl": "9dbd0a600cb0adda87f2b499aed45130ddb25a5ffc926513485c0b73db372409"
+  },
+  "embedding_freeze_sha256": "8415a291f90e1922886a90a7aad503d2e482fa9391434d0b4b1bdf27da2daa8d",
+  "expected_action_mapping_version": "round4-native-policy-v1",
+  "inputs": {
+    "embedding_test": "artifacts/embedding-sweep/test-per-row.jsonl",
+    "embedding_validation": "artifacts/embedding-sweep/validation-per-row.jsonl",
+    "rules_baseline": "corpus/round4/rules-baseline-large.jsonl",
+    "rules_provenance": "corpus/round4/rules-baseline-large-provenance.json"
+  },
+  "non_claims": [
+    "research-corpus readout only",
+    "no source import",
+    "no AGT detector or policy change",
+    "no production/security assurance",
+    "no ASI/AIVSS/Promptfoo coverage or certification claim"
+  ],
+  "policy_profile_sha256": "1516456de2e4fb95cf23c6133cabc3e681b1fefc31130c4f849f55cc969f6d07",
+  "raw_field_deny_list_version": "round4-governance-eval-v1",
+  "round": "round4",
+  "schema_version": 1,
+  "stub_tool_sink_catalog_sha256": "2f76505f41473bce91ed170a69c2f0c0983a737a317e0d9ebbaacc05fa38fc6d"
+}

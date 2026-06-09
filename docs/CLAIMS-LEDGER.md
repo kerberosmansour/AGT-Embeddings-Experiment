@@ -7,9 +7,7 @@ Current migrated evidence is split across:
 
 - M1 corpus/rules baseline: target commit `25f8d06`.
 - M2 embedding/kNN sweep and Youden's J readout: target commit `834da55`.
-
-AGT policy/value-add evidence is intentionally not migrated yet; it remains a
-future M3 scope item.
+- M3 governance metadata/value-add readout: this M3 migration commit.
 
 ## Narrative Claims And Evidence
 
@@ -23,7 +21,7 @@ future M3 scope item.
 | Embedding/kNN at Youden's J has about 16% false positives. | Test FPR `0.163059`, FP `934 / 5728`. | `artifacts/embedding-sweep/youden-j-tuning.json`; `docs/reports/round4-youden-j-tuning.md` | Migrated in M2; Linux M2 audit PASS. |
 | Conservative embedding point has zero observed false positives. | Test recall `0.141848`, FPR `0.0`, FP `0`. | `artifacts/embedding-sweep/test-metrics.json`; `artifacts/embedding-sweep/youden-j-tuning.json`; `docs/reports/round4-mac-embedding-sweep-evidence.md` | Migrated in M2; Linux M2 audit PASS. |
 | Youden's J is a dial, not a default threshold recommendation. | Plateau-midpoint caveat recorded; no production threshold claim. | `docs/reports/round4-youden-j-tuning.md` | Migrated in M2; report frames J-max as a review-load stress point. |
-| Embeddings should augment AGT policy, not replace it. | M2 shows embedding-only signal vs rules-only. Outcome-level AGT policy value-add evidence is not migrated yet. | M3 evidence gap. | Pending M3; do not claim AGT policy lift from this repo until migrated and audited. |
+| Embeddings should augment AGT policy, not replace it. | On frozen test, `policy_plus_embedding` reduced unsafe-action success vs `policy_only_gate` by `0.040761` absolute with unchanged hard-block FP `0.139665` and approval-load FP `0.0`. Validation still has `80` critical allows. | `artifacts/governance-eval/metrics.json`; `docs/reports/round4-governance-eval-evidence.md` | Migrated in M3; pending Linux audit. Research readout only; not default blocking or production evidence. |
 
 ## Wording Guardrails
 
@@ -43,4 +41,4 @@ future M3 scope item.
 | Validated on real traffic. | Real traffic sample, privacy review, and false-positive audit. |
 | Source-derived public examples are folded in. | Reviewed source-derived pilot artifacts and independent audit. |
 | Ready for default blocking. | Review-load budget, policy evaluation, and false-positive proof at realistic prevalence. |
-| Governance integration is ready. | AGT semantics readback plus outcome-level audit on the migrated artifacts. |
+| Governance integration is ready. | Validation split still has critical allows; needs policy/harness iteration plus independent audit. |

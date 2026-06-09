@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "round": "round5",
+  "status": "schema_example_not_evidence",
+  "scope": {
+    "raw_payloads_in_report": false,
+    "metadata_only": true,
+    "data_source": "schema fixture; not evaluation evidence"
+  },
+  "provenance": {
+    "corpus_manifest_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "embedding_freeze_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "agt_policy_file_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+    "policy_profile_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+    "report_inputs_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+    "agt_repo_commit": "example-not-evidence"
+  },
+  "arm_aliases": {
+    "policy_only_gate": "rules_plus_governance",
+    "policy_plus_embedding": "rules_plus_governance_plus_embedding"
+  },
+  "arms": {
+    "rules_only": {
+      "description": "Existing AGT rules baseline before embeddings.",
+      "metrics": {
+        "attack_total": 100,
+        "attack_true_positive": 20,
+        "attack_false_negative": 80,
+        "benign_total": 1000,
+        "benign_false_positive": 120,
+        "attack_recall": 0.2,
+        "benign_fp_rate": 0.12,
+        "fp_per_1k_benign": 120.0,
+        "adjacent_security_benign_total": 200,
+        "adjacent_security_false_positive": 50,
+        "adjacent_security_fp_rate": 0.25,
+        "unsafe_action_total": 100,
+        "unsafe_action_success": 80,
+        "unsafe_action_success_rate": 0.8,
+        "critical_allows": 30,
+        "hard_block_fp_rate": 0.12,
+        "approval_load_fp_rate": 0.0,
+        "leak_allows": 3
+      }
+    },
+    "embedding_only": {
+      "description": "Embedding margin alone; control arm, not authority.",
+      "metrics": {
+        "attack_total": 100,
+        "attack_true_positive": 35,
+        "attack_false_negative": 65,
+        "benign_total": 1000,
+        "benign_false_positive": 0,
+        "attack_recall": 0.35,
+        "benign_fp_rate": 0.0,
+        "fp_per_1k_benign": 0.0,
+        "adjacent_security_benign_total": 200,
+        "adjacent_security_false_positive": 0,
+        "adjacent_security_fp_rate": 0.0,
+        "unsafe_action_total": 100,
+        "unsafe_action_success": 65,
+        "unsafe_action_success_rate": 0.65,
+        "critical_allows": 15,
+        "hard_block_fp_rate": 0.0,
+        "approval_load_fp_rate": 0.0,
+        "leak_allows": 2
+      }
+    },
+    "policy_only_gate": {
+      "description": "Existing AGT rules plus native governance metadata, no embeddings.",
+      "metrics": {
+        "attack_total": 100,
+        "attack_true_positive": 70,
+        "attack_false_negative": 30,
+        "benign_total": 1000,
+        "benign_false_positive": 120,
+        "attack_recall": 0.7,
+        "benign_fp_rate": 0.12,
+        "fp_per_1k_benign": 120.0,
+        "adjacent_security_benign_total": 200,
+        "adjacent_security_false_positive": 0,
+        "adjacent_security_fp_rate": 0.0,
+        "unsafe_action_total": 100,
+        "unsafe_action_success": 30,
+        "unsafe_action_success_rate": 0.3,
+        "critical_allows": 0,
+        "hard_block_fp_rate": 0.12,
+        "approval_load_fp_rate": 0.0,
+        "leak_allows": 0
+      }
+    },
+    "policy_plus_embedding": {
+      "description": "Existing AGT rules/governance plus embedding margin routing.",
+      "metrics": {
+        "attack_total": 100,
+        "attack_true_positive": 75,
+        "attack_false_negative": 25,
+        "benign_total": 1000,
+        "benign_false_positive": 120,
+        "attack_recall": 0.75,
+        "benign_fp_rate": 0.12,
+        "fp_per_1k_benign": 120.0,
+        "adjacent_security_benign_total": 200,
+        "adjacent_security_false_positive": 0,
+        "adjacent_security_fp_rate": 0.0,
+        "unsafe_action_total": 100,
+        "unsafe_action_success": 25,
+        "unsafe_action_success_rate": 0.25,
+        "critical_allows": 0,
+        "hard_block_fp_rate": 0.12,
+        "approval_load_fp_rate": 0.0,
+        "leak_allows": 0
+      }
+    },
+    "rules_plus_embedding_no_gate": {
+      "description": "Rules OR embeddings without governance; negative-control arm.",
+      "metrics": {
+        "attack_total": 100,
+        "attack_true_positive": 40,
+        "attack_false_negative": 60,
+        "benign_total": 1000,
+        "benign_false_positive": 120,
+        "attack_recall": 0.4,
+        "benign_fp_rate": 0.12,
+        "fp_per_1k_benign": 120.0,
+        "adjacent_security_benign_total": 200,
+        "adjacent_security_false_positive": 50,
+        "adjacent_security_fp_rate": 0.25,
+        "unsafe_action_total": 100,
+        "unsafe_action_success": 60,
+        "unsafe_action_success_rate": 0.6,
+        "critical_allows": 15,
+        "hard_block_fp_rate": 0.12,
+        "approval_load_fp_rate": 0.0,
+        "leak_allows": 2
+      }
+    }
+  },
+  "embedding_operating_points": {
+    "fp_zero": {
+      "threshold": 0.08,
+      "selection_split": "validation",
+      "test_split_frozen": true,
+      "base_rate_precision": {
+        "benign_to_attack_100": {
+          "precision": 1.0,
+          "wilson_low": 0.75,
+          "wilson_high": 1.0
+        },
+        "benign_to_attack_1000": {
+          "precision": 1.0,
+          "wilson_low": 0.75,
+          "wilson_high": 1.0
+        }
+      }
+    },
+    "youden_j": {
+      "threshold": -0.01,
+      "selection_split": "validation",
+      "test_split_frozen": true,
+      "youden_j": 0.72,
+      "base_rate_precision": {
+        "benign_to_attack_100": {
+          "precision": 0.05,
+          "wilson_low": 0.04,
+          "wilson_high": 0.06
+        },
+        "benign_to_attack_1000": {
+          "precision": 0.005,
+          "wilson_low": 0.004,
+          "wilson_high": 0.006
+        }
+      }
+    }
+  },
+  "deltas": {
+    "policy_plus_embedding_vs_policy_only_gate": {
+      "attack_recall_delta": 0.05,
+      "unsafe_action_success_rate_delta": -0.05,
+      "critical_allows_delta": 0,
+      "hard_block_fp_rate_delta": 0.0,
+      "approval_load_fp_rate_delta": 0.0,
+      "leak_allows_delta": 0
+    },
+    "policy_plus_embedding_vs_rules_only": {
+      "attack_recall_delta": 0.55,
+      "unsafe_action_success_rate_delta": -0.55,
+      "critical_allows_delta": -30,
+      "hard_block_fp_rate_delta": 0.0,
+      "approval_load_fp_rate_delta": 0.0,
+      "leak_allows_delta": -3
+    },
+    "rules_plus_embedding_no_gate_vs_rules_only": {
+      "attack_recall_delta": 0.2,
+      "unsafe_action_success_rate_delta": -0.2,
+      "critical_allows_delta": -15,
+      "hard_block_fp_rate_delta": 0.0,
+      "approval_load_fp_rate_delta": 0.0,
+      "leak_allows_delta": -1
+    }
+  },
+  "recommendation": {
+    "net_value_add": "worth_pursuing",
+    "recommended_use": "routing_signal_only",
+    "default_block_threshold_recommended": false,
+    "human_review_required_before_claim": true
+  },
+  "audit": {
+    "linux_required_before_claim": true,
+    "agentbus_tasks": []
+  },
+  "no_claims": [
+    "asi_aivss_coverage",
+    "benchmark_coverage",
+    "certification",
+    "detector_promotion",
+    "production_safety",
+    "promptfoo_coverage"
+  ]
+}
+

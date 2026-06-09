@@ -1,0 +1,30 @@
+{
+  "arms": [
+    "rules_only",
+    "embedding_only",
+    "policy_only_gate",
+    "policy_plus_embedding",
+    "rules_plus_embedding_no_gate"
+  ],
+  "decision_vocabulary": [
+    "allow",
+    "deny",
+    "requires_approval",
+    "rate_limited"
+  ],
+  "non_claims": [
+    "scratch governance metadata evaluation only",
+    "does not change AGT policy code",
+    "does not use source-derived rows",
+    "does not prove production safety"
+  ],
+  "policy_profile_id": "round4-governance-metadata-stub-v1",
+  "rules": [
+    "rules_only denies when the audited Rust rules baseline predicted attack",
+    "embedding_only denies when the validation-frozen embedding margin predicted attack",
+    "policy_only_gate denies untrusted sensitive sinks and routes untrusted tool calls to approval",
+    "policy_plus_embedding keeps policy_only_gate denies, denies untrusted sensitive-sink embedding hits, and routes other untrusted embedding hits to approval",
+    "rules_plus_embedding_no_gate denies on rules OR embedding and is a false-positive negative control"
+  ],
+  "schema_version": 1
+}
