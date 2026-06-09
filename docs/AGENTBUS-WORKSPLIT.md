@@ -25,16 +25,22 @@ This file mirrors the tasks posted on AgentBus for the AGT embeddings migration.
 
 ## Current Status
 
-M0 Mac planning is complete on branch `slo/agt-embeddings-migration-plan`
-at commit `a30d190`.
+M0 planning and peer readback are partially complete on branch
+`slo/agt-embeddings-migration-plan`, latest known commit `1d87bd8`.
 
 | Task | Status |
 |---|---|
 | `t_mq71r9f5_617_538deaeb` | Mac M0 planning complete |
-| `t_mq71v5mw_336_e47046cc` | Linux M0 audit claimed |
-| `t_mq71v5ox_409_a5bdb2d8` | Windows M0 readback claimed |
+| `t_mq71v5mw_336_e47046cc` | Linux M0 audit complete; docs-only evidence-reference hardening landed in `1d87bd8` |
+| `t_mq71v5ox_409_a5bdb2d8` | Windows M0 AGT semantics readback complete |
 | `t_mq71v5tr_583_709fa2d1` | Coworker M0 narrative review open |
-| `t_mq71v5yi_754_f5fe9b34` | Mac M1 migration open, blocked by the three M0 reviews |
+| `t_mq71v5yi_754_f5fe9b34` | Mac M1 migration open, still blocked by coworker M0 review |
+| `t_mq723syj_811_2288a4fe` | Open-source readiness policy task open; separate from M1 corpus migration |
 
-Mac posted AgentBus message `869` asking the review owners to complete or post
-blockers. M1 must not start until the M0 review tasks are done.
+Mac posted AgentBus messages `869` and `870` asking review owners to complete or
+post blockers. M1 must not start until the coworker M0 narrative/no-overclaim
+review is done.
+
+Linux M0 audit caveat for M1: copy source artifacts from the reviewed source
+snapshot named in `docs/CLAIMS-LEDGER.md`, or first recreate a durable source ref
+before migration.
