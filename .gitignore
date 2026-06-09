@@ -40,3 +40,9 @@ models/
 scratch/
 tmp/
 *.tmp
+
+# Round-4 smoke reproduction outputs
+corpus/round4/*-smoke.json
+corpus/round4/*-smoke.jsonl
+corpus/round4/*-smoke-summary.json
+corpus/round4/*-smoke-metrics.json

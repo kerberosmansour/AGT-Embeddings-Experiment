@@ -33,6 +33,7 @@ Run these before tagging or making the repository public:
 
 ```bash
 git diff --check
+bash corpus/round4/run-smoke.sh
 python3 meta/harness/round4-embedding-sweep/validate-embedding-sweep.py \
   --provenance artifacts/embedding-sweep/provenance.json \
   --freeze artifacts/embedding-sweep/freeze-record.json \

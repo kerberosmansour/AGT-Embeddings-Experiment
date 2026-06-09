@@ -1,0 +1,46 @@
+name: readiness
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  public-repo-readiness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Diff hygiene
+        run: git diff --check
+
+      - name: Round-4 smoke reproduction
+        run: bash corpus/round4/run-smoke.sh
+
+      - name: Validate embedding sweep artifacts
+        run: |
+          python3 meta/harness/round4-embedding-sweep/validate-embedding-sweep.py \
+            --provenance artifacts/embedding-sweep/provenance.json \
+            --freeze artifacts/embedding-sweep/freeze-record.json \
+            --validation artifacts/embedding-sweep/validation-per-row.jsonl \
+            --test artifacts/embedding-sweep/test-per-row.jsonl \
+            --validation-metrics artifacts/embedding-sweep/validation-metrics.json \
+            --test-metrics artifacts/embedding-sweep/test-metrics.json
+
+      - name: Validate governance eval artifacts
+        run: |
+          python3 meta/harness/round4-governance-eval/validate-governance-eval.py \
+            --manifest artifacts/governance-eval/manifest.json \
+            --validation artifacts/governance-eval/validation.jsonl \
+            --test artifacts/governance-eval/test.jsonl \
+            --metrics artifacts/governance-eval/metrics.json
+
+      - name: Validate value-add report schema
+        run: |
+          python3 meta/harness/round5-agt-value-add/validate-round5-agt-value-add-report.py \
+            meta/harness/round5-agt-value-add/round5-agt-value-add-report.example.json
