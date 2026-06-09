@@ -16,8 +16,12 @@ evidence and must not change artifact claims.
 
 Before public release, verify that:
 
+- the upstream AGT path is described as two PRs: fixture first, optional
+  embedding signal second;
 - the embedding signal is described as optional, default-off, additive, and
   auditable;
+- the rules-only baseline number is tied to the exact corpus, AGT commit, and
+  detector hash;
 - governance/value-add evidence remains `needs_more_play` research evidence;
 - no production safety, default-blocking, certification, benchmark coverage,
   governance-readiness, detector-promotion, policy-promotion, source-import, or
@@ -52,3 +56,14 @@ python3 meta/harness/round5-agt-value-add/validate-round5-agt-value-add-report.p
 
 If any check changes metrics or claim strength, treat it as new evidence work
 and route it through the AgentBus audit split before publishing.
+
+## Upstream PR Readiness
+
+Before opening an AGT PR:
+
+- rerun the rules-only baseline against fresh AGT upstream `main`;
+- record AGT commit SHA and detector file SHA-256;
+- keep PR 1 to corpus, manifest, validators, baseline harness, and docs;
+- keep PR 2 blocked until methodology review is complete;
+- ensure PR 2, if opened later, is disabled by default and evidence-only unless
+  a policy profile explicitly routes it.

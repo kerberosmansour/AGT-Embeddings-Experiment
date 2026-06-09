@@ -23,6 +23,24 @@ Current migrated evidence is split across:
 | Youden's J is a dial, not a default threshold recommendation. | Plateau-midpoint caveat recorded; no production threshold claim. | `docs/reports/round4-youden-j-tuning.md` | Migrated in M2; report frames J-max as a review-load stress point. |
 | Embeddings should augment AGT policy, not replace it. | On frozen test, `policy_plus_embedding` reduced unsafe-action success vs `policy_only_gate` by `0.040761` absolute with unchanged hard-block FP `0.139665` and approval-load FP `0.0`. Validation still has `80` critical allows. | `artifacts/governance-eval/metrics.json`; `docs/reports/round4-governance-eval-evidence.md` | Migrated in M3; Linux M3 audit PASS. Research readout only; not default blocking or production evidence. |
 
+## Baseline Pinning Requirement
+
+The "about 1%" rules-only catch-rate claim is the most important number to
+anchor before upstreaming. It means:
+
+```text
+AGT Rust prompt-injection detector at a specific commit and detector-file hash,
+scored on this synthetic hard held-out corpus, caught 180 of 17,600 attack rows.
+```
+
+It does not mean AGT generally catches only 1% of prompt-injection attacks.
+Before any AGT PR is opened, rerun the rules-only harness against fresh AGT
+upstream `main` and record the commit SHA, detector SHA-256, command, corpus
+manifest hash, and resulting TP/FP rates. Current local cross-check:
+`prompt_injection.rs` matches AGT commit
+`1bf359397df64aeb5285bdf5d609ade291c329b9` with SHA-256
+`92ac1f855e03502886fffdfb8cf9eece8ce7c2bea268ecacb4ff6386cb345ab3`.
+
 ## Wording Guardrails
 
 - Say "labelled examples" or "technique-labelled examples" unless reviewed
@@ -42,3 +60,4 @@ Current migrated evidence is split across:
 | Source-derived public examples are folded in. | Reviewed source-derived pilot artifacts and independent audit. |
 | Ready for default blocking. | Review-load budget, policy evaluation, and false-positive proof at realistic prevalence. |
 | Governance integration is ready. | Validation split still has critical allows; needs policy/harness iteration plus independent audit. |
+| Upstream optional embedding feature is ready. | PR 1 benchmark fixture review plus documented generation methodology and fresh AGT baseline pin. |

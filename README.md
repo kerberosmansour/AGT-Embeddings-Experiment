@@ -160,6 +160,18 @@ For deeper details:
 - Claim-to-evidence mapping and stronger-claim gaps:
   `docs/CLAIMS-LEDGER.md`.
 
+## Upstream AGT Path
+
+The intended AGT upstream path is two PRs:
+
+1. Add the corpus and benchmark harness as a standalone evaluation fixture,
+   with no runtime behavior change.
+2. After methodology review, add the embedding signal as an optional,
+   default-off evidence layer behind an explicit flag.
+
+See [`docs/UPSTREAM-PR-PLAN.md`](docs/UPSTREAM-PR-PLAN.md) for the concrete
+scope, baseline pinning requirements, and PR boundaries.
+
 ## What This Repo Does Not Claim
 
 - unrelated product research tracks;

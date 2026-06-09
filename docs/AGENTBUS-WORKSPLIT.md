@@ -74,3 +74,28 @@ checklist, not migrated evidence. Both replacement M4 gates are PASS on the
 peer-gated evidence/narrative head `4ac0ed3`. Later Mac coordination-only
 status commits do not change evidence artifacts, metrics, README claims, or
 release-facing semantics.
+
+## Upstream AGT PR Coordination
+
+Team feedback changes the upstream lane split:
+
+1. PR 1 should land only the evaluation corpus and benchmark harness as a
+   standalone fixture.
+2. PR 2 should land the embedding signal only after methodology review, and
+   only as optional/default-off evidence behind a flag.
+
+New AgentBus tasks should be scoped this way:
+
+| Task | Assignee | Output |
+|---|---|---|
+| PR1 baseline re-pin | mac-agent | Rerun rules-only harness against fresh AGT upstream main and record commit, detector SHA, corpus hash, TP/FP rates. |
+| PR1 AGT target-path review | win-agent | Confirm upstream target path and native AGT semantics for a standalone fixture with no runtime feature. |
+| PR1 reproducibility/no-overclaim audit | linux-agent | Verify fixture checks, baseline methodology wording, and no production/default-block claim. |
+| PR2 methodology blocker | all agents | Keep open until corpus generation, holdout, benign-control, and threshold-freeze methodology are reviewed. |
+
+Mac checked the local AGT detector snapshot on 2026-06-10: the experiment
+vendored `prompt_injection.rs` matches AGT commit
+`1bf359397df64aeb5285bdf5d609ade291c329b9`, SHA-256
+`92ac1f855e03502886fffdfb8cf9eece8ce7c2bea268ecacb4ff6386cb345ab3`.
+This is a useful current pin, not a substitute for a fresh rerun immediately
+before PR 1.
