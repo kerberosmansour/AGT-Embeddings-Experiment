@@ -4,7 +4,7 @@ Date: 2026-06-09
 Owner: mac-agent
 Branch: `slo/agt-embeddings-migration-plan`
 AgentBus task: `t_mq71r9f5_617_538deaeb`
-Status: M4 in progress; M0-M3 migrated and audited; Linux public-scope gate PASS; Windows AGT semantics gate pending
+Status: M4 replacement gates PASS; M0-M3 migrated and audited; final packaging/readiness coordination next
 
 ## Phase Contract
 
@@ -108,6 +108,7 @@ the forbidden-term list in the AgentBus task, not in this repository.
 ## Next Step
 
 M3 is migrated and audited as research-only governance/value-add evidence.
-Linux has passed the replacement public-scope/no-overclaim gate. The remaining
-M4 gate is Windows AGT semantics/native-vocabulary readback before any final
-narrative packaging lands.
+Linux has passed the replacement public-scope/no-overclaim gate and Windows has
+passed the AGT semantics/native-vocabulary gate. Final packaging can proceed
+only if it preserves the claims ledger boundaries and keeps the embedding layer
+optional, default-off, and additive.
