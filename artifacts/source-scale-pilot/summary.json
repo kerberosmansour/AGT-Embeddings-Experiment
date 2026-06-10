@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "round": "round5",
+  "status": "sanitized_source_scale_pilot_summary",
+  "source_workspace": "Embedding_Experiment",
+  "source_path": "experiments/embeddings-knn-security-classification/spk-round5-source-scale-up/",
+  "created_from_source_head": "dda3a59c25c2fbdaed6df4d3c2fc509aa948d528",
+  "scope": {
+    "purpose": "methodology evidence for source-reviewed prompt-injection fixture generation",
+    "source_scope": "Promptfoo-mapped AGT prompt-injection taxonomy, synthetic descriptors only",
+    "raw_rows_included": false,
+    "raw_source_records_included": false,
+    "external_provider_run": false,
+    "runtime_feature_change": false
+  },
+  "source_review": {
+    "source_record_count": 72,
+    "source_family_count": 72,
+    "review_status": "all reviewed for scratch adapter use",
+    "expected_action_review": "all approved",
+    "source_import_allowed": false,
+    "source_license": "synthetic internal fixture; no external source text copied"
+  },
+  "corpus_shape": {
+    "row_count": 72,
+    "attack_families": 36,
+    "adjacent_security_benign_families": 18,
+    "plain_benign_control_families": 18,
+    "splits": {
+      "exemplar_bank": {
+        "rows": 24,
+        "attack": 12,
+        "benign": 12
+      },
+      "validation": {
+        "rows": 24,
+        "attack": 12,
+        "benign": 12
+      },
+      "test": {
+        "rows": 24,
+        "attack": 12,
+        "benign": 12
+      }
+    },
+    "attack_class_counts": {
+      "data_boundary_abuse": 3,
+      "direct_override": 6,
+      "indirect_injection": 3,
+      "memory_poisoning": 3,
+      "output_exfiltration": 3,
+      "prompt_leakage": 3,
+      "tool_abuse": 12,
+      "tool_result_injection": 3
+    },
+    "benign_rows": 36
+  },
+  "hygiene_checks": {
+    "family_split_leaks": 0,
+    "group_split_leaks": 0,
+    "exact_normalized_cross_split_leaks": 0,
+    "near_duplicate_cross_split_leaks": 0,
+    "near_duplicate_ngram": 7,
+    "near_duplicate_threshold": 0.92,
+    "split_label_coverage_passed": true,
+    "metadata_only_embedding_outputs": true
+  },
+  "embedding_freeze": {
+    "model_id": "BAAI/bge-small-en-v1.5",
+    "runtime": "fastembed/onnxruntime-local",
+    "embedding_dimension": 384,
+    "model_sha256": "51f1bd0addd6e859e42c2c8021a5e5461385bb676a649f4b269aa445449f2431",
+    "selected_on": "validation",
+    "k": 1,
+    "threshold_tau": -0.1526973271369937,
+    "threshold_objective": "pilot_max_validation_base_rate_f1_100_with_min_tp"
+  },
+  "pilot_metrics": {
+    "validation": {
+      "attack_total": 12,
+      "benign_total": 12,
+      "tp": 12,
+      "fn": 0,
+      "fp": 0,
+      "tn": 12,
+      "attack_recall": 1.0,
+      "attack_recall_wilson_95_lower": 0.7575059933447592,
+      "benign_fp_rate": 0.0,
+      "benign_fp_rate_wilson_95_upper": 0.24249400665524085
+    },
+    "test": {
+      "attack_total": 12,
+      "benign_total": 12,
+      "tp": 12,
+      "fn": 0,
+      "fp": 0,
+      "tn": 12,
+      "attack_recall": 1.0,
+      "attack_recall_wilson_95_lower": 0.7575059933447592,
+      "benign_fp_rate": 0.0,
+      "benign_fp_rate_wilson_95_upper": 0.24249400665524085
+    }
+  },
+  "source_hashes": {
+    "source_records_jsonl": "d3cf69c48f18affb053cb825d7b66f38375db6ff90b6f5fb3ade02fa37bc6347",
+    "source_rows_jsonl": "a72dda5d9c040a04aa39aa846f20b4613f4cf1d40c5cbede09a73d0c2cc0f069",
+    "source_manifest_json": "d7c606716e910ac5cef1c08076ba2a82c05ff0b5a85ba2b5396dd2576f8ed606",
+    "source_check_summary_json": "a691b02a135035acc37290b067b0cf38ae3392e555fb80768603d9a1462a966b",
+    "freeze_record_json": "a08ca59efa4bccdf6d02fb30758962323193bcfb36d707ca97b8d0a938e31037",
+    "validation_metrics_json": "558df9cfbc125a2266df0a1deb69564489c34509a469be19e1630d4486082c58",
+    "test_metrics_json": "7b6a8c88f2337c38fe39fc0b01cb984900b06719c9817e23edc7e1fbd6205151",
+    "embedding_provenance_json": "2929c31b4cd6bd35a2207e4f3193321056abf23399942099dbf5891ba6eef0c8"
+  },
+  "interpretation": {
+    "useful_for": [
+      "documenting source-reviewed generation methodology",
+      "demonstrating matched control and leakage gates",
+      "informing AGT PR 1 benchmark fixture structure"
+    ],
+    "not_useful_for": [
+      "standalone detector performance claims",
+      "default blocking decisions",
+      "runtime feature enablement",
+      "production safety claims"
+    ],
+    "reason": "The 72-row pilot is intentionally small. Its 12-attack/12-benign test split is useful as a gate smoke, not as statistically strong evidence."
+  }
+}

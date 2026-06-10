@@ -52,6 +52,7 @@ python3 meta/harness/round4-governance-eval/validate-governance-eval.py \
   --metrics artifacts/governance-eval/metrics.json
 python3 meta/harness/round5-agt-value-add/validate-round5-agt-value-add-report.py \
   meta/harness/round5-agt-value-add/round5-agt-value-add-report.example.json
+python3 -m json.tool artifacts/source-scale-pilot/summary.json >/dev/null
 ```
 
 If any check changes metrics or claim strength, treat it as new evidence work
@@ -64,6 +65,8 @@ Before opening an AGT PR:
 - rerun the rules-only baseline against fresh AGT upstream `main`;
 - record AGT commit SHA and detector file SHA-256;
 - keep PR 1 to corpus, manifest, validators, baseline harness, and docs;
+- use Round-5 source-scale material as methodology guidance, not as a headline
+  detector metric;
 - keep PR 2 blocked until methodology review is complete;
 - ensure PR 2, if opened later, is disabled by default and evidence-only unless
   a policy profile explicitly routes it.

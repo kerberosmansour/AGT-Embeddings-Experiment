@@ -44,3 +44,6 @@ jobs:
         run: |
           python3 meta/harness/round5-agt-value-add/validate-round5-agt-value-add-report.py \
             meta/harness/round5-agt-value-add/round5-agt-value-add-report.example.json
+
+      - name: Validate source-scale pilot summary
+        run: python3 -m json.tool artifacts/source-scale-pilot/summary.json >/dev/null

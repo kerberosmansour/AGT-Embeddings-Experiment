@@ -78,6 +78,8 @@ Allowed contents:
 - synthetic labelled prompt-injection corpus;
 - manifest, split, leakage, and duplicate checks;
 - baseline harness for AGT's existing Rust detector;
+- source-review and matched-control gates informed by the Round-5
+  source-scale pilot;
 - metrics scripts for recall, false-positive rate, Wilson intervals, base-rate
   precision, and adjacent-security benign false positives;
 - documentation that says this is research/evaluation evidence only.
@@ -143,6 +145,38 @@ embedding signal -> risk/margin evidence -> AGT policy/review routing
 Do not frame PR 2 as "embeddings replace rules." The evidence says the useful
 path is additive: deterministic AGT controls remain the authority; embeddings
 surface semantic cases that current rules miss.
+
+## Round-5 Source-Scale Material
+
+Round 5 is useful for PR 1 methodology, not PR 2 runtime behavior.
+
+The sanitized migrated evidence is:
+
+- `artifacts/source-scale-pilot/summary.json`;
+- `docs/methodology/round5-source-scale-methodology.md`;
+- `docs/reports/round5-source-scale-pilot.md`.
+
+It records a 72-row source-scale pilot with 36 attack families, 18
+adjacent-security benign families, 18 plain benign control families, zero
+family/group/exact/near-duplicate cross-split leakage, and validation-only
+threshold freeze before test scoring.
+
+The pilot's embedding smoke result is intentionally not a headline claim: the
+test split has only 12 attacks and 12 benign controls. Use it to show how AGT
+could structure source-reviewed fixture generation; do not use it to claim
+detector readiness.
+
+For upstream AGT, the Round-5 pieces that belong in PR 1 are:
+
+- source-record review schema;
+- source-to-AGT expected-action mapping;
+- matched-control requirement;
+- family/group/near-duplicate leakage gates;
+- sanitized manifest and summary hashes;
+- no-runtime-change documentation.
+
+The raw scratch rows, internal audit notes, and embedding per-row outputs should
+stay in this research repository unless maintainers explicitly request them.
 
 ## Methodology Blocker
 

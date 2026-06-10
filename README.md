@@ -91,6 +91,10 @@ text in the embedding/governance readout artifacts.
   - `artifacts/governance-eval/`
   - `meta/harness/round4-governance-eval/`
   - `meta/harness/round5-agt-value-add/`
+- Source-scale methodology evidence:
+  - `artifacts/source-scale-pilot/summary.json`
+  - `docs/methodology/round5-source-scale-methodology.md`
+  - `docs/reports/round5-source-scale-pilot.md`
 - Claim and methodology notes:
   - `docs/CLAIMS-LEDGER.md`
   - `docs/reports/`
@@ -157,6 +161,9 @@ For deeper details:
 - Governance/value-add comparison:
   `artifacts/governance-eval/metrics.json` and
   `docs/reports/round4-governance-eval-evidence.md`.
+- Source-scale methodology pilot:
+  `artifacts/source-scale-pilot/summary.json` and
+  `docs/methodology/round5-source-scale-methodology.md`.
 - Claim-to-evidence mapping and stronger-claim gaps:
   `docs/CLAIMS-LEDGER.md`.
 

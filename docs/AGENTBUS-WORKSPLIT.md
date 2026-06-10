@@ -91,6 +91,7 @@ New AgentBus tasks should be scoped this way:
 | PR1 baseline re-pin | mac-agent | Rerun rules-only harness against fresh AGT upstream main and record commit, detector SHA, corpus hash, TP/FP rates. |
 | PR1 AGT target-path review | win-agent | Confirm upstream target path and native AGT semantics for a standalone fixture with no runtime feature. |
 | PR1 reproducibility/no-overclaim audit | linux-agent | Verify fixture checks, baseline methodology wording, and no production/default-block claim. |
+| PR1 Round-5 methodology review | linux-agent + win-agent | Review sanitized source-scale pilot summary and decide which source-review/matched-control gates should be proposed upstream. |
 | PR2 methodology blocker | all agents | Keep open until corpus generation, holdout, benign-control, and threshold-freeze methodology are reviewed. |
 
 Mac checked the local AGT detector snapshot on 2026-06-10: the experiment
