@@ -57,12 +57,11 @@ evaluation set and to give future detector changes a reproducible baseline.
 Before merge, this baseline should be pinned to the exact AGT commit, detector
 file hash, corpus manifest hash, and command used to reproduce it.
 
-## Current Staged Snapshot
+## Current Baseline Snapshot
 
 | Item | Value |
 |---|---|
-| AGT commit checked | `730ffbb060c44362485b786c63aa08439c49d7e1` |
-| Local staging commit | `df898735 Add prompt-injection evaluation fixture` |
+| AGT base commit checked | `730ffbb060c44362485b786c63aa08439c49d7e1` |
 | Detector file | `agent-governance-rust/agentmesh/src/prompt_injection.rs` |
 | Detector SHA-256 | `92ac1f855e03502886fffdfb8cf9eece8ce7c2bea268ecacb4ff6386cb345ab3` |
 | Smoke manifest SHA-256 | `e3f13f6de459391952b00b14ebaae3d83510581265ac3099b62af565a14753f6` |
@@ -81,8 +80,6 @@ fixture is regenerated, refresh this table before opening or merging.
 ```bash
 bash benchmarks/prompt-injection/run-smoke.sh
 git diff --check
-rg -n "RUNBOOK|task id|owner:|local checkout|/Users/|private branch|coordination log|internal coordination|Codex|Claude|AgentBus|SunLit" \
-  benchmarks/prompt-injection docs/benchmarks
 find benchmarks/prompt-injection docs/benchmarks \
   -type f \( -name '*.pyc' -o -path '*/target/*' -o -path '*/__pycache__/*' \) -print
 ```
