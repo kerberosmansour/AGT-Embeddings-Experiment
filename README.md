@@ -164,6 +164,8 @@ For deeper details:
 - Source-scale methodology pilot:
   `artifacts/source-scale-pilot/summary.json` and
   `docs/methodology/round5-source-scale-methodology.md`.
+- Source-to-AGT expected-action mapping:
+  `docs/methodology/source-to-agt-expected-action-mapping.md`.
 - Claim-to-evidence mapping and stronger-claim gaps:
   `docs/CLAIMS-LEDGER.md`.
 
