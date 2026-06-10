@@ -1,6 +1,6 @@
 # Upstream PR1 Issue And PR Linking
 
-Status: pre-open checklist; PR1 staged locally
+Status: pre-open checklist; PR1 staged locally; peer delta ACKs complete
 Date: 2026-06-10
 
 This note prepares the issue/PR cross-linking step for the future upstream AGT
@@ -34,6 +34,11 @@ No upstream issue, upstream PR, or AGT branch push has been performed yet.
     `t_mq7t9c5g_596_f69cf150`;
   - Windows path/native-semantics readback:
     `t_mq7t9c7j_671_b4a9d3b6`.
+- The post-amend delta readbacks have also passed or their caveats are recorded:
+  - Linux delta ACK:
+    `t_mq7vvaj8_164_5e665234`;
+  - Windows delta ACK:
+    `t_mq7vvaky_226_4175f6c1`.
 
 ## Suggested Issue Title
 
@@ -103,7 +108,7 @@ Tracking PR: #PR_NUMBER
 
 ## Order Of Operations
 
-1. Wait for final readback tasks to pass or record caveats.
+1. Confirm the recorded readback caveats remain acceptable for publication.
 2. Refresh `origin/main` in the upstream AGT checkout.
 3. If `origin/main` moved, rebase or recreate the PR branch from current
    `origin/main` and rerun the smoke fixture.

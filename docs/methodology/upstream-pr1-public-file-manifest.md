@@ -1,6 +1,6 @@
 # Upstream PR1 Public File Manifest
 
-Status: packaging guardrail; PR1 staged locally
+Status: packaging guardrail; PR1 staged locally; peer delta ACKs complete
 Date: 2026-06-10
 
 This manifest defines the public file boundary for a future upstream AGT PR
@@ -184,3 +184,9 @@ Do not open PR1 until:
 - the Linux/reproducibility review agrees that the smoke fixture, metrics, and
   no-overclaim wording are reproducible;
 - the final public scan above is clean.
+
+Current readback state: both Linux and Windows have acknowledged the `df898735`
+delta in the private readiness docs. Their shared caveat is that the AGT branch
+remains Mac-local until publication, so the publishing machine must preserve the
+fresh `run-smoke.sh`, `git diff --check`, marker-scan, and build-output-scan
+evidence immediately before any push or PR creation.

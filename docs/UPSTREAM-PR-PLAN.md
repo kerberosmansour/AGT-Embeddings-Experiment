@@ -2,7 +2,7 @@
 
 Date: 2026-06-10
 Owner: mac-agent
-Status: PR1 staged locally; no upstream AGT issue or PR opened yet
+Status: PR1 staged locally; peer delta ACKs complete; no upstream AGT issue or PR opened yet
 
 ## Team Feedback Adopted
 
@@ -58,6 +58,19 @@ The staged branch passes `bash benchmarks/prompt-injection/run-smoke.sh`,
 `git diff --check origin/main..HEAD`, public internal-marker scans on new
 material, and generated-artifact scans. It has not been pushed or opened as an
 upstream PR.
+
+After the `df898735` amend, both peer delta readbacks acknowledged the refreshed
+hashes and sanitized maintainer-facing draft:
+
+| Review | Task | Result |
+|---|---|---|
+| Linux reproducibility/no-overclaim delta ACK | `t_mq7vvaj8_164_5e665234` | Pass, with the caveat that the Mac-local AGT branch was not independently runnable from Linux. |
+| Windows native-semantics/public-wording delta ACK | `t_mq7vvaky_226_4175f6c1` | Pass with caveats, including that the future PR text must still be scanned immediately before posting. |
+
+The publishing-machine refresh after those readbacks recorded AGT
+`origin/main` at `730ffbb060c44362485b786c63aa08439c49d7e1`, reran
+`bash benchmarks/prompt-injection/run-smoke.sh`, reran `git diff --check`, and
+reran the public marker/build-output scans without drift.
 
 The sanitized maintainer-facing PR draft is recorded in
 `docs/methodology/upstream-pr1-pr-draft.md`.
