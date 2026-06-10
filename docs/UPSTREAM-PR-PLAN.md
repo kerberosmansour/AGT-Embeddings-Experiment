@@ -169,7 +169,8 @@ detector readiness.
 For upstream AGT, the Round-5 pieces that belong in PR 1 are:
 
 - source-record review schema;
-- source-to-AGT expected-action mapping;
+- source-to-AGT expected-action mapping
+  (`docs/methodology/source-to-agt-expected-action-mapping.md`);
 - matched-control requirement;
 - family/group/near-duplicate leakage gates;
 - sanitized manifest and summary hashes;

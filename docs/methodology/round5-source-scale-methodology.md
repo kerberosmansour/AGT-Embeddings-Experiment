@@ -53,7 +53,8 @@ metrics.
 For AGT PR 1, Round 5 should inform the benchmark fixture design:
 
 - a source-record schema with reviewer-approved expected action;
-- a source-to-AGT action mapping document;
+- a source-to-AGT action mapping document
+  (`docs/methodology/source-to-agt-expected-action-mapping.md`);
 - a matched-control requirement for every attack family;
 - family/group split checks;
 - exact and near-duplicate cross-split leakage checks;
