@@ -1,6 +1,6 @@
 # Upstream PR1 Public File Manifest
 
-Status: packaging guardrail; PR1 staged locally; peer delta ACKs complete
+Status: PR1 published to fork and opened upstream
 Date: 2026-06-10
 
 This manifest defines the public file boundary for a future upstream AGT PR
@@ -44,6 +44,14 @@ The staged public docs label these as smoke-fixture numbers only.
 
 The smoke manifest intentionally does not embed the current git `HEAD`; otherwise
 rerunning the generator after committing the fixture would dirty the worktree.
+
+Publication record:
+
+| Item | Value |
+|---|---|
+| Fork branch | `kerberosmansour:pr1/prompt-injection-evaluation-fixture` |
+| Upstream issue | `https://github.com/microsoft/agent-governance-toolkit/issues/2923` |
+| Upstream PR | `https://github.com/microsoft/agent-governance-toolkit/pull/2924` |
 
 ## Public PR Shape
 

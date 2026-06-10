@@ -2,7 +2,7 @@
 
 Date: 2026-06-10
 Owner: mac-agent
-Status: PR1 staged locally; peer delta ACKs complete; no upstream AGT issue or PR opened yet
+Status: PR1 upstream issue/PR opened and cross-linked
 
 ## Team Feedback Adopted
 
@@ -56,8 +56,15 @@ PR 1 has now been staged in a clean AGT worktree:
 
 The staged branch passes `bash benchmarks/prompt-injection/run-smoke.sh`,
 `git diff --check origin/main..HEAD`, public internal-marker scans on new
-material, and generated-artifact scans. It has not been pushed or opened as an
-upstream PR.
+material, and generated-artifact scans. It has now been pushed to the fork and
+opened as an upstream PR.
+
+| Publication item | Value |
+|---|---|
+| Fork branch | `kerberosmansour:pr1/prompt-injection-evaluation-fixture` |
+| Upstream issue | `https://github.com/microsoft/agent-governance-toolkit/issues/2923` |
+| Upstream PR | `https://github.com/microsoft/agent-governance-toolkit/pull/2924` |
+| Issue-to-PR link | `https://github.com/microsoft/agent-governance-toolkit/issues/2923#issuecomment-4668896972` |
 
 After the `df898735` amend, both peer delta readbacks acknowledged the refreshed
 hashes and sanitized maintainer-facing draft:

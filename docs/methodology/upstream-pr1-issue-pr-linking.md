@@ -1,6 +1,6 @@
 # Upstream PR1 Issue And PR Linking
 
-Status: pre-open checklist; PR1 staged locally; peer delta ACKs complete
+Status: issue/PR opened and cross-linked
 Date: 2026-06-10
 
 This note prepares the issue/PR cross-linking step for the future upstream AGT
@@ -19,7 +19,14 @@ The AGT PR1 fixture has been staged as a local commit only:
 | Local commit | `df898735 Add prompt-injection evaluation fixture` |
 | Base commit | `730ffbb060c44362485b786c63aa08439c49d7e1` |
 
-No upstream issue, upstream PR, or AGT branch push has been performed yet.
+The upstream issue, upstream PR, and fork branch push have been performed.
+
+| Item | Value |
+|---|---|
+| Fork branch | `kerberosmansour:pr1/prompt-injection-evaluation-fixture` |
+| Upstream issue | `https://github.com/microsoft/agent-governance-toolkit/issues/2923` |
+| Upstream PR | `https://github.com/microsoft/agent-governance-toolkit/pull/2924` |
+| Issue-to-PR comment | `https://github.com/microsoft/agent-governance-toolkit/issues/2923#issuecomment-4668896972` |
 
 ## Preconditions
 
@@ -106,20 +113,18 @@ Closes #ISSUE_NUMBER
 Tracking PR: #PR_NUMBER
 ```
 
-## Order Of Operations
+## Completed Order Of Operations
 
-1. Confirm the recorded readback caveats remain acceptable for publication.
-2. Refresh `origin/main` in the upstream AGT checkout.
-3. If `origin/main` moved, rebase or recreate the PR branch from current
-   `origin/main` and rerun the smoke fixture.
-4. Confirm the branch still contains only the public PR 1 fixture files.
-5. Run the fixture validation and final public scan.
-6. Create or identify the issue.
-7. Push the AGT fixture branch only after human approval to publish.
-8. Open the PR with `Refs #ISSUE_NUMBER` unless maintainers explicitly want
-   auto-close semantics.
-9. Comment on the issue with `Tracking PR: #PR_NUMBER`.
-10. Confirm the PR body and issue comment link each other correctly.
+1. Recorded readback caveats were accepted for publication.
+2. Refreshed `origin/main` in the upstream AGT checkout.
+3. Confirmed `origin/main` had not moved from the staged base.
+4. Confirmed the branch still contains only the public PR 1 fixture files.
+5. Ran the fixture validation and final public scan.
+6. Created upstream issue `#2923`.
+7. Pushed the AGT fixture branch after human approval to publish.
+8. Opened PR `#2924` with `Refs #2923`.
+9. Commented on the issue with `Tracking PR: #2924`.
+10. Confirmed the PR body and issue comment link each other correctly.
 
 ## Final Check
 

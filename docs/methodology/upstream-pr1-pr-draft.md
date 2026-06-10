@@ -1,6 +1,6 @@
 # Upstream PR1 Draft
 
-Status: maintainer-facing draft; peer delta ACKs complete
+Status: used for upstream PR #2924
 Date: 2026-06-10
 
 This draft is a sanitized starting point for a future upstream AGT pull request.
@@ -8,6 +8,8 @@ It should be rechecked against fresh upstream `main` before use. The
 target-path/native-semantics and reproducibility/no-overclaim reviews have
 passed with caveats recorded in the private readiness notes; do not open the
 pull request until the final publish-time scans also pass.
+
+Published PR: `https://github.com/microsoft/agent-governance-toolkit/pull/2924`
 
 ## Suggested Title
 
