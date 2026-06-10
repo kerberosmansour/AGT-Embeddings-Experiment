@@ -57,29 +57,34 @@ evaluation set and to give future detector changes a reproducible baseline.
 Before merge, this baseline should be pinned to the exact AGT commit, detector
 file hash, corpus manifest hash, and command used to reproduce it.
 
-## Current Preflight Snapshot
+## Current Staged Snapshot
 
 | Item | Value |
 |---|---|
 | AGT commit checked | `730ffbb060c44362485b786c63aa08439c49d7e1` |
+| Local staging commit | `295c7087 Add prompt-injection evaluation fixture` |
 | Detector file | `agent-governance-rust/agentmesh/src/prompt_injection.rs` |
 | Detector SHA-256 | `92ac1f855e03502886fffdfb8cf9eece8ce7c2bea268ecacb4ff6386cb345ab3` |
-| Corpus manifest SHA-256 | `6532ddd1ff8487147cbdb451f9d280775c7f2ccf49fd700434c5f6cba745f078` |
-| Corpus rows | `44,800` |
-| Attack rows | `17,600` |
-| Benign rows | `27,200` |
-| Rules-only attack recall | `180 / 17,600 = 0.010227` |
-| Rules-only benign false-positive rate | `2,136 / 27,200 = 0.078529` |
+| Smoke manifest SHA-256 | `d2aff82a64392a15a5d804e9811e8261971345c7a196ffefb99739298228c0c1` |
+| Smoke corpus SHA-256 | `238636ed671f1909f0610ef62b4bb438f801670cdadfd681ab8d9a7397b8bbc1` |
+| Corpus rows | `280` |
+| Attack rows | `110` |
+| Benign rows | `170` |
+| Rules-only attack recall | `7 / 110 = 0.063636` |
+| Rules-only benign false-positive rate | `16 / 170 = 0.094118` |
 
-If upstream `main` has moved, refresh this table before opening or merging.
+These are smoke-fixture numbers only. If upstream `main` has moved or the
+fixture is regenerated, refresh this table before opening or merging.
 
 ## Validation
 
 ```bash
 bash benchmarks/prompt-injection/run-smoke.sh
-python3 benchmarks/prompt-injection/harness/check-corpus.py
-python3 benchmarks/prompt-injection/harness/summarize-baseline.py
 git diff --check
+rg -n "RUNBOOK|task id|owner:|local checkout|/Users/|private branch|coordination log|internal coordination|Codex|Claude|AgentBus|SunLit" \
+  benchmarks/prompt-injection docs/benchmarks
+find benchmarks/prompt-injection docs/benchmarks \
+  -type f \( -name '*.pyc' -o -path '*/target/*' -o -path '*/__pycache__/*' \) -print
 ```
 
 ## Review Questions
@@ -106,7 +111,8 @@ from this fixture PR and should not change default AGT behavior.
 - Rewrite paths to upstream-relative locations.
 - Remove local checkout paths and private branch names.
 - Regenerate corpus manifests and summaries after the upstream path rewrite.
-- Rerun the rules-only baseline against fresh upstream `main`.
+- Rerun `bash benchmarks/prompt-injection/run-smoke.sh` against fresh upstream
+  `main`.
 - Replace the preflight table if any commit, hash, artifact, or metric changed.
 - Keep large corpus artifacts out of the first PR unless maintainers want them.
 - Do not include internal runbooks, coordination notes, task identifiers, owner
@@ -117,7 +123,7 @@ from this fixture PR and should not change default AGT behavior.
 Run these checks on the future upstream PR branch before pushing:
 
 ```bash
-rg -n "RUNBOOK|task id|owner:|local checkout|/Users/|private branch|coordination log|internal coordination" \
+rg -n "RUNBOOK|task id|owner:|local checkout|/Users/|private branch|coordination log|internal coordination|Codex|Claude|AgentBus|SunLit" \
   benchmarks/prompt-injection docs/benchmarks
 find benchmarks/prompt-injection docs/benchmarks \
   -type f \( -name '*.pyc' -o -path '*/target/*' -o -path '*/__pycache__/*' \) -print

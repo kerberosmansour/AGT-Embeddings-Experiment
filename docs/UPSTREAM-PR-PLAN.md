@@ -2,7 +2,7 @@
 
 Date: 2026-06-10
 Owner: mac-agent
-Status: planning contract; no upstream AGT code changes yet
+Status: PR1 staged locally; no upstream AGT issue or PR opened yet
 
 ## Team Feedback Adopted
 
@@ -43,6 +43,21 @@ artifact drift.
 
 The public file boundary for PR 1 is recorded in
 `docs/methodology/upstream-pr1-public-file-manifest.md`.
+
+PR 1 has now been staged in a clean AGT worktree:
+
+| Item | Value |
+|---|---|
+| Worktree | `agent-governance-toolkit-pr1-evaluation-fixture` |
+| Branch | `pr1/prompt-injection-evaluation-fixture` |
+| Commit | `295c7087 Add prompt-injection evaluation fixture` |
+| Base | `730ffbb060c44362485b786c63aa08439c49d7e1` |
+| Scope | smoke fixture only; no runtime behavior change |
+
+The staged branch passes `bash benchmarks/prompt-injection/run-smoke.sh`,
+`git diff --check origin/main..HEAD`, public internal-marker scans on new
+material, and generated-artifact scans. It has not been pushed or opened as an
+upstream PR.
 
 The sanitized maintainer-facing PR draft is recorded in
 `docs/methodology/upstream-pr1-pr-draft.md`.
@@ -92,10 +107,10 @@ If maintainers prefer existing paths, the same fixture can live under
 under `docs/benchmarks/`. The important property is independence from runtime
 feature code.
 
-The current dry run found no root-level `benchmarks/` directory in AGT. That
-means the preferred standalone path introduces a new repository convention;
-Windows/native-semantics review should explicitly approve that choice or redirect
-the fixture under an existing package benchmark path before PR staging.
+The target-path dry run found no root-level `benchmarks/` directory in AGT, but
+Windows/native-semantics review explicitly approved Option A for PR1 staging:
+`benchmarks/prompt-injection/**` plus
+`docs/benchmarks/prompt-injection-evaluation.md`.
 
 Allowed contents:
 
@@ -121,9 +136,11 @@ Exit gate:
 
 ```bash
 bash benchmarks/prompt-injection/run-smoke.sh
-python3 benchmarks/prompt-injection/harness/check-corpus.py
-python3 benchmarks/prompt-injection/harness/summarize-baseline.py
 git diff --check
+rg -n "RUNBOOK|task id|owner:|local checkout|/Users/|private branch|coordination log|internal coordination|Codex|Claude|AgentBus|SunLit" \
+  benchmarks/prompt-injection docs/benchmarks
+find benchmarks/prompt-injection docs/benchmarks \
+  -type f \( -name '*.pyc' -o -path '*/target/*' -o -path '*/__pycache__/*' \) -print
 ```
 
 The PR summary should lead with the baseline-methodology boundary:

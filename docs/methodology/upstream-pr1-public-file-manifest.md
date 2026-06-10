@@ -1,6 +1,6 @@
 # Upstream PR1 Public File Manifest
 
-Status: packaging guardrail
+Status: packaging guardrail; PR1 staged locally
 Date: 2026-06-10
 
 This manifest defines the public file boundary for a future upstream AGT PR
@@ -10,6 +10,37 @@ fixture, harness, manifests, validators, and maintainer-facing documentation
 needed to reproduce the baseline.
 
 Do not copy this research repository wholesale into AGT.
+
+## Staged PR1 Snapshot
+
+A clean upstream worktree now has the fixture staged as a local commit, but no
+upstream issue or PR has been opened yet.
+
+| Item | Value |
+|---|---|
+| Staging worktree | `agent-governance-toolkit-pr1-evaluation-fixture` |
+| Branch | `pr1/prompt-injection-evaluation-fixture` |
+| Local commit | `295c7087 Add prompt-injection evaluation fixture` |
+| AGT base commit | `730ffbb060c44362485b786c63aa08439c49d7e1` |
+| Detector SHA-256 | `92ac1f855e03502886fffdfb8cf9eece8ce7c2bea268ecacb4ff6386cb345ab3` |
+| Smoke manifest SHA-256 | `d2aff82a64392a15a5d804e9811e8261971345c7a196ffefb99739298228c0c1` |
+| Smoke corpus SHA-256 | `238636ed671f1909f0610ef62b4bb438f801670cdadfd681ab8d9a7397b8bbc1` |
+| Rules summary SHA-256 | `4a7d152c33befea3147cc726575ab23aa65761d91430758f030850d65ddd89cb` |
+| Rules metrics SHA-256 | `c382f268cf62a10b478d3544a07b9178b719265de94fc53621176052f1d7c066` |
+
+Smoke baseline recorded by the staged branch:
+
+| Measure | Value |
+|---|---:|
+| Total rows | 280 |
+| Attack rows | 110 |
+| Benign rows | 170 |
+| Attacks caught by existing Rust rules | 7 |
+| Benign rows flagged by existing Rust rules | 16 |
+| Attack recall | 0.063636 |
+| Benign false-positive rate | 0.094118 |
+
+The staged public docs label these as smoke-fixture numbers only.
 
 ## Public PR Shape
 
@@ -52,14 +83,17 @@ benchmarks/prompt-injection/artifacts/rules-baseline-large-summary.json
 benchmarks/prompt-injection/artifacts/rules-baseline-large-metrics.json
 ```
 
-The current sizes are approximately:
+The staged public smoke fixture sizes are approximately:
 
 | File | Size |
 |---|---:|
-| `corpus/round4/injection-round4-smoke.jsonl` | 208K |
-| `corpus/round4/rules-baseline-smoke.jsonl` | 196K |
-| `corpus/round4/injection-round4-large.jsonl` | 32M |
-| `corpus/round4/rules-baseline-large.jsonl` | 23M |
+| `benchmarks/prompt-injection/corpus/injection-smoke.jsonl` | 216K |
+| `benchmarks/prompt-injection/corpus/manifest-smoke.json` | 4.0K |
+| `benchmarks/prompt-injection/corpus/check-smoke-summary.json` | 4.0K |
+| `benchmarks/prompt-injection/artifacts/rules-baseline-smoke-summary.json` | 12K |
+| `benchmarks/prompt-injection/artifacts/rules-baseline-smoke-metrics.json` | 12K |
+| `benchmarks/prompt-injection/harness/agt-rules-baseline/Cargo.lock` | 48K |
+| `benchmarks/prompt-injection/harness/generate-corpus.py` | 40K |
 
 Do not include per-row large baseline output unless maintainers explicitly want
 it. The summary and metrics files are usually enough for a baseline PR.
@@ -112,9 +146,8 @@ performance claim.
 
 ## Required Rewrite Rules
 
-- Replace research-internal names like `round4` in public headings with
-  `prompt-injection evaluation fixture`; internal IDs may remain only inside
-  stable row IDs if changing them would break manifests.
+- Replace research-internal names like `round4` in public headings and generated
+  labels with `prompt-injection evaluation fixture` or neutral fixture IDs.
 - Replace local absolute paths with upstream-relative paths.
 - Remove owner, task, coordination, and local checkout fields from public docs.
 - Keep the rules-only baseline tied to exact corpus, detector hash, and command.
@@ -129,7 +162,7 @@ performance claim.
 Run a final scan on the AGT PR branch before pushing:
 
 ```bash
-rg -n "RUNBOOK|task id|owner:|local checkout|/Users/|private branch|coordination log|assistant|tooling reference" \
+rg -n "RUNBOOK|task id|owner:|local checkout|/Users/|private branch|coordination log|internal coordination|Codex|Claude|AgentBus|SunLit" \
   benchmarks/prompt-injection docs/benchmarks
 find benchmarks/prompt-injection docs/benchmarks \
   -type f \( -name '*.pyc' -o -path '*/target/*' -o -path '*/__pycache__/*' \) -print
