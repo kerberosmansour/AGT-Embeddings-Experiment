@@ -43,6 +43,9 @@ prompt-injection detector blob still matches the vendored experiment scorer.
 The public file boundary for PR 1 is recorded in
 `docs/methodology/upstream-pr1-public-file-manifest.md`.
 
+The sanitized maintainer-facing PR draft is recorded in
+`docs/methodology/upstream-pr1-pr-draft.md`.
+
 Before opening PR 1, rerun the rules-only baseline against a fresh AGT upstream
 main and record:
 
@@ -139,7 +142,9 @@ Before opening an upstream PR:
 - run a final text scan for internal markers before pushing or opening the PR.
 
 Use `docs/methodology/upstream-pr1-public-file-manifest.md` as the file allowlist
-and rewrite checklist for this step.
+and rewrite checklist for this step. Use
+`docs/methodology/upstream-pr1-pr-draft.md` as a starting point for the PR
+title/body only after the review gates pass and the baseline table is refreshed.
 
 ## PR 2: Optional Embedding Signal
 
