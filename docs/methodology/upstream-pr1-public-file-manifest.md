@@ -20,10 +20,10 @@ upstream issue or PR has been opened yet.
 |---|---|
 | Staging worktree | `agent-governance-toolkit-pr1-evaluation-fixture` |
 | Branch | `pr1/prompt-injection-evaluation-fixture` |
-| Local commit | `295c7087 Add prompt-injection evaluation fixture` |
+| Local commit | `df898735 Add prompt-injection evaluation fixture` |
 | AGT base commit | `730ffbb060c44362485b786c63aa08439c49d7e1` |
 | Detector SHA-256 | `92ac1f855e03502886fffdfb8cf9eece8ce7c2bea268ecacb4ff6386cb345ab3` |
-| Smoke manifest SHA-256 | `d2aff82a64392a15a5d804e9811e8261971345c7a196ffefb99739298228c0c1` |
+| Smoke manifest SHA-256 | `e3f13f6de459391952b00b14ebaae3d83510581265ac3099b62af565a14753f6` |
 | Smoke corpus SHA-256 | `238636ed671f1909f0610ef62b4bb438f801670cdadfd681ab8d9a7397b8bbc1` |
 | Rules summary SHA-256 | `4a7d152c33befea3147cc726575ab23aa65761d91430758f030850d65ddd89cb` |
 | Rules metrics SHA-256 | `c382f268cf62a10b478d3544a07b9178b719265de94fc53621176052f1d7c066` |
@@ -41,6 +41,9 @@ Smoke baseline recorded by the staged branch:
 | Benign false-positive rate | 0.094118 |
 
 The staged public docs label these as smoke-fixture numbers only.
+
+The smoke manifest intentionally does not embed the current git `HEAD`; otherwise
+rerunning the generator after committing the fixture would dirty the worktree.
 
 ## Public PR Shape
 

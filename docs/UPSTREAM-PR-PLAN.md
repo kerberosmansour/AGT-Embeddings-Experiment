@@ -50,7 +50,7 @@ PR 1 has now been staged in a clean AGT worktree:
 |---|---|
 | Worktree | `agent-governance-toolkit-pr1-evaluation-fixture` |
 | Branch | `pr1/prompt-injection-evaluation-fixture` |
-| Commit | `295c7087 Add prompt-injection evaluation fixture` |
+| Commit | `df898735 Add prompt-injection evaluation fixture` |
 | Base | `730ffbb060c44362485b786c63aa08439c49d7e1` |
 | Scope | smoke fixture only; no runtime behavior change |
 

@@ -62,10 +62,10 @@ file hash, corpus manifest hash, and command used to reproduce it.
 | Item | Value |
 |---|---|
 | AGT commit checked | `730ffbb060c44362485b786c63aa08439c49d7e1` |
-| Local staging commit | `295c7087 Add prompt-injection evaluation fixture` |
+| Local staging commit | `df898735 Add prompt-injection evaluation fixture` |
 | Detector file | `agent-governance-rust/agentmesh/src/prompt_injection.rs` |
 | Detector SHA-256 | `92ac1f855e03502886fffdfb8cf9eece8ce7c2bea268ecacb4ff6386cb345ab3` |
-| Smoke manifest SHA-256 | `d2aff82a64392a15a5d804e9811e8261971345c7a196ffefb99739298228c0c1` |
+| Smoke manifest SHA-256 | `e3f13f6de459391952b00b14ebaae3d83510581265ac3099b62af565a14753f6` |
 | Smoke corpus SHA-256 | `238636ed671f1909f0610ef62b4bb438f801670cdadfd681ab8d9a7397b8bbc1` |
 | Corpus rows | `280` |
 | Attack rows | `110` |

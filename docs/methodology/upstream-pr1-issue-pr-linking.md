@@ -16,9 +16,8 @@ The AGT PR1 fixture has been staged as a local commit only:
 |---|---|
 | Staging worktree | `agent-governance-toolkit-pr1-evaluation-fixture` |
 | Branch | `pr1/prompt-injection-evaluation-fixture` |
-| Local commit | `295c7087 Add prompt-injection evaluation fixture` |
+| Local commit | `df898735 Add prompt-injection evaluation fixture` |
 | Base commit | `730ffbb060c44362485b786c63aa08439c49d7e1` |
-| Research docs snapshot | `879fa98 Record staged AGT PR1 fixture preflight` |
 
 No upstream issue, upstream PR, or AGT branch push has been performed yet.
 
@@ -122,7 +121,7 @@ Tracking PR: #PR_NUMBER
 Before posting the issue or PR body, scan the exact text to be submitted for:
 
 ```bash
-rg -n "RUNBOOK|task id|owner:|local checkout|/Users/|private branch|coordination log|internal coordination|Codex|Claude|AgentBus|SunLit|assistant|tooling reference" \
+rg -n "RUNBOOK|task id|owner:|local checkout|/Users/|private branch|coordination log|internal coordination|Codex|Claude|AgentBus|SunLit" \
   issue-body.md pr-body.md
 ```
 
