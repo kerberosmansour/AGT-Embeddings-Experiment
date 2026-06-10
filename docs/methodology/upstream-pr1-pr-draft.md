@@ -10,6 +10,11 @@ passed with caveats recorded in the private readiness notes; do not open the
 pull request until the final publish-time scans also pass.
 
 Published PR: `https://github.com/microsoft/agent-governance-toolkit/pull/2924`
+Published title: `test: add prompt-injection evaluation fixture`
+
+After opening, the PR body was repaired to include the complete validation,
+review-question, and follow-up sections. The initial extraction had stopped at
+the inner validation code fence in this draft.
 
 ## Suggested Title
 

@@ -64,6 +64,7 @@ opened as an upstream PR.
 | Fork branch | `kerberosmansour:pr1/prompt-injection-evaluation-fixture` |
 | Upstream issue | `https://github.com/microsoft/agent-governance-toolkit/issues/2923` |
 | Upstream PR | `https://github.com/microsoft/agent-governance-toolkit/pull/2924` |
+| Upstream PR title | `test: add prompt-injection evaluation fixture` |
 | Issue-to-PR link | `https://github.com/microsoft/agent-governance-toolkit/issues/2923#issuecomment-4668896972` |
 
 After the `df898735` amend, both peer delta readbacks acknowledged the refreshed

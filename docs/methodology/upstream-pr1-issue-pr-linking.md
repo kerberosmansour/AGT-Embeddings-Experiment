@@ -26,6 +26,7 @@ The upstream issue, upstream PR, and fork branch push have been performed.
 | Fork branch | `kerberosmansour:pr1/prompt-injection-evaluation-fixture` |
 | Upstream issue | `https://github.com/microsoft/agent-governance-toolkit/issues/2923` |
 | Upstream PR | `https://github.com/microsoft/agent-governance-toolkit/pull/2924` |
+| Upstream PR title | `test: add prompt-injection evaluation fixture` |
 | Issue-to-PR comment | `https://github.com/microsoft/agent-governance-toolkit/issues/2923#issuecomment-4668896972` |
 
 ## Preconditions
@@ -122,7 +123,9 @@ Tracking PR: #PR_NUMBER
 5. Ran the fixture validation and final public scan.
 6. Created upstream issue `#2923`.
 7. Pushed the AGT fixture branch after human approval to publish.
-8. Opened PR `#2924` with `Refs #2923`.
+8. Opened PR `#2924` with `Refs #2923`, then retitled it to
+   `test: add prompt-injection evaluation fixture` to satisfy the upstream
+   semantic-title check.
 9. Commented on the issue with `Tracking PR: #2924`.
 10. Confirmed the PR body and issue comment link each other correctly.
 

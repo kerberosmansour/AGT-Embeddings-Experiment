@@ -52,6 +52,7 @@ Publication record:
 | Fork branch | `kerberosmansour:pr1/prompt-injection-evaluation-fixture` |
 | Upstream issue | `https://github.com/microsoft/agent-governance-toolkit/issues/2923` |
 | Upstream PR | `https://github.com/microsoft/agent-governance-toolkit/pull/2924` |
+| Upstream PR title | `test: add prompt-injection evaluation fixture` |
 
 ## Public PR Shape
 
