@@ -84,6 +84,12 @@ Team feedback changes the upstream lane split:
 2. PR 2 should land the embedding signal only after methodology review, and
    only as optional/default-off evidence behind a flag.
 
+Public-facing upstream work must be sanitized. The PR branch, commits, PR body,
+and issue comments should contain only maintainer-facing fixture and benchmark
+context. Internal runbooks, coordination logs, task IDs, owner labels, local
+paths, private branch names, and assistant/tooling references stay out of the
+Microsoft-facing PR.
+
 New AgentBus tasks should be scoped this way:
 
 | Task | Assignee | Output |

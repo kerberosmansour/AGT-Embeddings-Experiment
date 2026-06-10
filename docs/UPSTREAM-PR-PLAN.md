@@ -117,6 +117,24 @@ number is a corpus-specific baseline for this fixture, not a global claim about
 AGT detection quality.
 ```
 
+## Public Upstream Hygiene
+
+This planning repository contains internal coordination notes. Do not copy this
+document verbatim into an upstream Microsoft PR or issue.
+
+Before opening an upstream PR:
+
+- stage the change from a clean upstream branch/worktree;
+- include only public fixture files, benchmark harness files, manifests,
+  validators, and maintainer-facing documentation;
+- exclude internal runbooks, coordination logs, task IDs, owner fields, local
+  machine paths, and private branch names;
+- write the PR title, PR body, commit messages, and issue comments as if they
+  were authored directly by the project contributor, with no references to
+  internal assistants, tooling, or coordination channels;
+- use upstream-relative paths only;
+- run a final text scan for internal markers before pushing or opening the PR.
+
 ## PR 2: Optional Embedding Signal
 
 Goal: add an optional, auditable embedding evidence signal that can feed

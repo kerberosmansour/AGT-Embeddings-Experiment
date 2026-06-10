@@ -62,6 +62,11 @@ and route it through the AgentBus audit split before publishing.
 
 Before opening an AGT PR:
 
+- stage from a clean upstream worktree and copy only the intended public fixture
+  files;
+- exclude internal runbooks, coordination notes, task IDs, owner metadata, local
+  paths, private branch names, and assistant/tooling references from commits,
+  PR text, and issue comments;
 - rerun the rules-only baseline against fresh AGT upstream `main`;
 - record AGT commit SHA and detector file SHA-256;
 - keep PR 1 to corpus, manifest, validators, baseline harness, and docs;
