@@ -27,7 +27,7 @@ AGT checkout:
 
 | Item | Value |
 |---|---|
-| AGT checkout | `/Users/sherifmansour/Dev/GitHub/agent-governance-toolkit` |
+| AGT checkout | local AGT checkout |
 | Fresh AGT `origin/main` observed | `10a1cceb1bda63bc126fe054f0a13ff2ab93a42c` |
 | Local checkout HEAD during read | `1bf359397df64aeb5285bdf5d609ade291c329b9` |
 | Last detector-touching commit | `7c895824 feat(rust): configure prompt guard corpora and thresholds (#2440)` |
@@ -48,6 +48,9 @@ The sanitized maintainer-facing PR draft is recorded in
 
 The issue/PR cross-linking checklist is recorded in
 `docs/methodology/upstream-pr1-issue-pr-linking.md`.
+
+A read-only target-path dry run against current AGT `origin/main` is recorded in
+`docs/methodology/upstream-pr1-target-path-dry-run.md`.
 
 Before opening PR 1, rerun the rules-only baseline against a fresh AGT upstream
 main and record:
@@ -87,6 +90,11 @@ If maintainers prefer existing paths, the same fixture can live under
 `agent-governance-python/benchmarks/prompt_injection_eval/` with a docs page
 under `docs/benchmarks/`. The important property is independence from runtime
 feature code.
+
+The current dry run found no root-level `benchmarks/` directory in AGT. That
+means the preferred standalone path introduces a new repository convention;
+Windows/native-semantics review should explicitly approve that choice or redirect
+the fixture under an existing package benchmark path before PR staging.
 
 Allowed contents:
 
