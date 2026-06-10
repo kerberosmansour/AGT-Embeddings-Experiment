@@ -63,7 +63,7 @@ and route it through the AgentBus audit split before publishing.
 Before opening an AGT PR:
 
 - stage from a clean upstream worktree and copy only the intended public fixture
-  files;
+  files listed in `docs/methodology/upstream-pr1-public-file-manifest.md`;
 - exclude internal runbooks, coordination notes, task IDs, owner metadata, local
   paths, private branch names, and assistant/tooling references from commits,
   PR text, and issue comments;

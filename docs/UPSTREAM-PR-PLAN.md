@@ -40,6 +40,9 @@ The fresh upstream baseline preflight is recorded in
 one non-detector dependency commit after the local checkout pin, but the
 prompt-injection detector blob still matches the vendored experiment scorer.
 
+The public file boundary for PR 1 is recorded in
+`docs/methodology/upstream-pr1-public-file-manifest.md`.
+
 Before opening PR 1, rerun the rules-only baseline against a fresh AGT upstream
 main and record:
 
@@ -134,6 +137,9 @@ Before opening an upstream PR:
   internal assistants, tooling, or coordination channels;
 - use upstream-relative paths only;
 - run a final text scan for internal markers before pushing or opening the PR.
+
+Use `docs/methodology/upstream-pr1-public-file-manifest.md` as the file allowlist
+and rewrite checklist for this step.
 
 ## PR 2: Optional Embedding Signal
 
