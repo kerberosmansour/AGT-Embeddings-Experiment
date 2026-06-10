@@ -28,11 +28,17 @@ AGT checkout:
 | Item | Value |
 |---|---|
 | AGT checkout | `/Users/sherifmansour/Dev/GitHub/agent-governance-toolkit` |
-| AGT commit checked | `1bf359397df64aeb5285bdf5d609ade291c329b9` |
+| Fresh AGT `origin/main` observed | `10a1cceb1bda63bc126fe054f0a13ff2ab93a42c` |
+| Local checkout HEAD during read | `1bf359397df64aeb5285bdf5d609ade291c329b9` |
 | Last detector-touching commit | `7c895824 feat(rust): configure prompt guard corpora and thresholds (#2440)` |
 | Detector file | `agent-governance-rust/agentmesh/src/prompt_injection.rs` |
 | Detector SHA-256 | `92ac1f855e03502886fffdfb8cf9eece8ce7c2bea268ecacb4ff6386cb345ab3` |
 | Vendored experiment snapshot | same SHA-256 |
+
+The fresh upstream baseline preflight is recorded in
+`docs/methodology/agt-upstream-baseline-refresh.md`. Upstream `main` moved by
+one non-detector dependency commit after the local checkout pin, but the
+prompt-injection detector blob still matches the vendored experiment scorer.
 
 Before opening PR 1, rerun the rules-only baseline against a fresh AGT upstream
 main and record:

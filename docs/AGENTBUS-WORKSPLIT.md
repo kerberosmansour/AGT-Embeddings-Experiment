@@ -94,9 +94,11 @@ New AgentBus tasks should be scoped this way:
 | PR1 Round-5 methodology review | linux-agent + win-agent | Review sanitized source-scale pilot summary and decide which source-review/matched-control gates should be proposed upstream. |
 | PR2 methodology blocker | all agents | Keep open until corpus generation, holdout, benign-control, and threshold-freeze methodology are reviewed. |
 
-Mac checked the local AGT detector snapshot on 2026-06-10: the experiment
-vendored `prompt_injection.rs` matches AGT commit
-`1bf359397df64aeb5285bdf5d609ade291c329b9`, SHA-256
+Mac refreshed the AGT detector baseline preflight on 2026-06-10: fresh AGT
+`origin/main` was `10a1cceb1bda63bc126fe054f0a13ff2ab93a42c`, while the
+prompt-injection detector's last-touch commit remained
+`7c89582420b667fa93b3030180b618b7c208a02f` and its SHA-256 remained
 `92ac1f855e03502886fffdfb8cf9eece8ce7c2bea268ecacb4ff6386cb345ab3`.
-This is a useful current pin, not a substitute for a fresh rerun immediately
-before PR 1.
+The experiment vendored `prompt_injection.rs` matches that detector blob. See
+`docs/methodology/agt-upstream-baseline-refresh.md`. This is a useful current
+pin, not a substitute for a final fresh rerun immediately before PR 1.
