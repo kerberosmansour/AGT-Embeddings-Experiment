@@ -46,6 +46,9 @@ The public file boundary for PR 1 is recorded in
 The sanitized maintainer-facing PR draft is recorded in
 `docs/methodology/upstream-pr1-pr-draft.md`.
 
+The issue/PR cross-linking checklist is recorded in
+`docs/methodology/upstream-pr1-issue-pr-linking.md`.
+
 Before opening PR 1, rerun the rules-only baseline against a fresh AGT upstream
 main and record:
 
@@ -145,6 +148,8 @@ Use `docs/methodology/upstream-pr1-public-file-manifest.md` as the file allowlis
 and rewrite checklist for this step. Use
 `docs/methodology/upstream-pr1-pr-draft.md` as a starting point for the PR
 title/body only after the review gates pass and the baseline table is refreshed.
+Use `docs/methodology/upstream-pr1-issue-pr-linking.md` for the issue text and
+the issue-to-PR cross-link sequence.
 
 ## PR 2: Optional Embedding Signal
 

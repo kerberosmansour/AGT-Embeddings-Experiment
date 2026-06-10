@@ -66,6 +66,8 @@ Before opening an AGT PR:
   files listed in `docs/methodology/upstream-pr1-public-file-manifest.md`;
 - use `docs/methodology/upstream-pr1-pr-draft.md` as a sanitized title/body
   starting point only after refreshing the baseline pin;
+- use `docs/methodology/upstream-pr1-issue-pr-linking.md` for the issue draft
+  and issue-to-PR cross-link sequence;
 - exclude internal runbooks, coordination notes, task IDs, owner metadata, local
   paths, private branch names, and assistant/tooling references from commits,
   PR text, and issue comments;
