@@ -28,7 +28,7 @@ AGT checkout:
 | Item | Value |
 |---|---|
 | AGT checkout | local AGT checkout |
-| Fresh AGT `origin/main` observed | `10a1cceb1bda63bc126fe054f0a13ff2ab93a42c` |
+| Fresh AGT `origin/main` observed | `730ffbb060c44362485b786c63aa08439c49d7e1` |
 | Local checkout HEAD during read | `1bf359397df64aeb5285bdf5d609ade291c329b9` |
 | Last detector-touching commit | `7c895824 feat(rust): configure prompt guard corpora and thresholds (#2440)` |
 | Detector file | `agent-governance-rust/agentmesh/src/prompt_injection.rs` |
@@ -36,9 +36,10 @@ AGT checkout:
 | Vendored experiment snapshot | same SHA-256 |
 
 The fresh upstream baseline preflight is recorded in
-`docs/methodology/agt-upstream-baseline-refresh.md`. Upstream `main` moved by
-one non-detector dependency commit after the local checkout pin, but the
-prompt-injection detector blob still matches the vendored experiment scorer.
+`docs/methodology/agt-upstream-baseline-refresh.md`. Upstream `main` moved after
+the local checkout pin, but the prompt-injection detector blob still matches the
+vendored experiment scorer and the large rules-only baseline rerun produced no
+artifact drift.
 
 The public file boundary for PR 1 is recorded in
 `docs/methodology/upstream-pr1-public-file-manifest.md`.

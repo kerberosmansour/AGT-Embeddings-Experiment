@@ -3,6 +3,7 @@
 Status: PR 1 preflight evidence
 Date: 2026-06-10
 AgentBus task: `t_mq7bhzm8_168_3e583d5e`
+Freshness follow-up: `t_mq7s8pwk_148_c5892b65`
 
 This note records the current AGT upstream anchor for the rules-only baseline
 used by the prompt-injection evaluation fixture. It is a benchmark preflight,
@@ -13,23 +14,24 @@ not a runtime change and not an embedding feature proposal.
 | Item | Value |
 |---|---|
 | AGT repository | `https://github.com/microsoft/agent-governance-toolkit` |
-| Fresh `origin/main` observed | `10a1cceb1bda63bc126fe054f0a13ff2ab93a42c` |
+| Fresh `origin/main` observed | `730ffbb060c44362485b786c63aa08439c49d7e1` |
 | Local checkout HEAD during read | `1bf359397df64aeb5285bdf5d609ade291c329b9` |
-| Local checkout state | Behind `origin/main` by one non-detector dependency commit; unrelated untracked local SLO docs present. |
+| Local checkout state | Behind `origin/main` by two commits; unrelated untracked local docs present. |
 | Detector file | `agent-governance-rust/agentmesh/src/prompt_injection.rs` |
 | Last detector-touching commit | `7c89582420b667fa93b3030180b618b7c208a02f` |
 | Detector SHA-256 at fresh `origin/main` | `92ac1f855e03502886fffdfb8cf9eece8ce7c2bea268ecacb4ff6386cb345ab3` |
 | Vendored experiment detector SHA-256 | `92ac1f855e03502886fffdfb8cf9eece8ce7c2bea268ecacb4ff6386cb345ab3` |
 
 The upstream branch moved after the earlier local pin, but the prompt-injection
-detector file did not change. The experiment's vendored Rust scorer still
+detector file still did not change. The experiment's vendored Rust scorer still
 matches the detector blob at fresh upstream `origin/main`.
 
 ## Commands
 
 ```bash
-git -C /Users/sherifmansour/Dev/GitHub/agent-governance-toolkit fetch origin main
-git -C /Users/sherifmansour/Dev/GitHub/agent-governance-toolkit \
+git -C <local-agt-checkout> fetch origin main --prune
+git -C <local-agt-checkout> rev-parse origin/main
+git -C <local-agt-checkout> \
   show origin/main:agent-governance-rust/agentmesh/src/prompt_injection.rs \
   | shasum -a 256
 
@@ -55,7 +57,8 @@ The Rust scorer emitted existing vendored dead-code warnings only.
 | `corpus/round4/rules-baseline-large-summary.json` | `5284051deb59da57f0e717bb4a8a39565ec642513724a4299691504b76ae3b82` |
 | `corpus/round4/rules-baseline-large-metrics.json` | `a082e99bde0eab841987e99bae264b1310a9c6cb8621ad1ada222cde3a5ceab3` |
 
-The large baseline rerun produced no git diff in the committed artifacts.
+The large baseline rerun against the current detector-equivalent snapshot
+produced no git diff in the committed artifacts.
 
 ## Rules-Only Result
 

@@ -39,7 +39,7 @@ Before any AGT PR is opened, rerun the rules-only harness against fresh AGT
 upstream `main` and record the commit SHA, detector SHA-256, command, corpus
 manifest hash, and resulting TP/FP rates. Current preflight:
 fresh AGT `origin/main` was
-`10a1cceb1bda63bc126fe054f0a13ff2ab93a42c`, and `prompt_injection.rs`
+`730ffbb060c44362485b786c63aa08439c49d7e1`, and `prompt_injection.rs`
 matched the experiment vendored snapshot with SHA-256
 `92ac1f855e03502886fffdfb8cf9eece8ce7c2bea268ecacb4ff6386cb345ab3`.
 See `docs/methodology/agt-upstream-baseline-refresh.md`.
