@@ -19,8 +19,10 @@ from __future__ import annotations
 import base64
 import binascii
 import codecs
+import html
 import re
 import unicodedata
+import urllib.parse
 from dataclasses import dataclass, field
 
 # ---- Closed transform-tag enum (F-SEC-2) -----------------------------------
@@ -37,6 +39,9 @@ TAGS = frozenset(
         "rot13",
         "base64",
         "hex",
+        "percent",
+        "unicode_escape",
+        "html_entity",
         "decode_depth_capped",
         "decode_rejected",
         "whitespace_canonicalized",
@@ -207,10 +212,30 @@ def _try_decode_once(s: str) -> tuple[str | None, str | None]:
     # test — rot13 preserves length/printability, so only a dictionary-style
     # benefit signal distinguishes a real rot13 payload from plain text).
     alpha = sum(c.isalpha() for c in stripped)
-    if alpha >= 16 and alpha / max(1, len(stripped)) > 0.6:
+    if alpha >= 12 and alpha / max(1, len(stripped)) > 0.6:
         dec = codecs.decode(stripped, "rot_13")
         if _english_score(dec) > _english_score(stripped) + 1:
             return dec, "rot13"
+    # percent / URL-encoding: only fire on a RUN of %XX (>=4) so a stray "50%" in
+    # benign prose is never decoded. Accept on printable + English-benefit.
+    if len(re.findall(r"%[0-9A-Fa-f]{2}", stripped)) >= 4:
+        dec = urllib.parse.unquote(stripped)
+        if dec != stripped and _printable_ratio(dec) >= PRINTABLE_MIN_RATIO and _english_score(dec) > _english_score(stripped):
+            return dec, "percent"
+    # \uXXXX / \xNN unicode escapes: targeted replace (not whole-string
+    # unicode_escape, which would touch unrelated backslashes). >=2 markers.
+    esc = re.findall(r"\\u[0-9A-Fa-f]{4}|\\x[0-9A-Fa-f]{2}", stripped)
+    if len(esc) >= 2:
+        dec = re.sub(r"\\u[0-9A-Fa-f]{4}|\\x[0-9A-Fa-f]{2}",
+                     lambda m: chr(int(m.group(0)[2:], 16)), stripped)
+        if dec != stripped and _printable_ratio(dec) >= PRINTABLE_MIN_RATIO and _english_score(dec) > _english_score(stripped):
+            return dec, "unicode_escape"
+    # HTML entities (&#NN; / &#xNN; / named): >=2 markers, accept on benefit so a
+    # lone "&amp;" in benign text is left alone.
+    if len(re.findall(r"&#x?[0-9A-Fa-f]+;|&[a-zA-Z][a-zA-Z0-9]{1,12};", stripped)) >= 2:
+        dec = html.unescape(stripped)
+        if dec != stripped and _printable_ratio(dec) >= PRINTABLE_MIN_RATIO and _english_score(dec) > _english_score(stripped):
+            return dec, "html_entity"
     # base64 / hex: only attempt on a CONTIGUOUS blob (no internal spaces) so
     # ordinary prose -- which always contains spaces -- is never treated as an
     # encoded payload. Acceptance is the printable-ratio guard (F-ENG-2); we do
