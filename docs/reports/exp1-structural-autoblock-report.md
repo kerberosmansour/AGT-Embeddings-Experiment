@@ -1,100 +1,99 @@
-# Experiment 1 — Structural Auto-Block Ceiling: results
+# Experiment 1 — Structural Auto-Block Ceiling
 
-> **Caveat first.** Frozen synthetic test split (9,408 rows). The governance
-> labels (`requires_tool_call`, `contains_sensitive_sink`, `source_type`,
-> `trust_level`) are **perfect by construction** on synthetic data, so this is
-> the **ceiling of structural defense when labels are correct** — not a
-> production guarantee. Real-world numbers depend on labeling coverage. No
-> embedding model was run: the zero-FP embedding decision is reused from the
-> committed round-6 `m1-gate0` per-row file. Rules were fixed before the run.
+## Executive summary
 
-## What was tested
+We measured a **fully-automated, no-human-review** prompt-injection defense and
+broke the results down by control and by attack technique. The stack is two
+cheap, deterministic layers OR'd together:
 
-One fully-automated stack, **no human review**:
-`block if (Gate-0 normalizer + kNN embedding @ zero-FP flags it) OR (a deterministic structural rule fires)`.
-Structural rules fire on facts only, never on text meaning:
+1. **Gate-0 normalizer + kNN embedding, tuned to zero false-positives** (quiet
+   but certain), and
+2. **R1**, a structural rule: *block any tool action triggered by untrusted
+   content* — it reads provenance and action, never the text.
 
-| Rule | Condition |
+**Result on the frozen test split: 81% of attacks blocked at 0% false-block.**
+Gate-0 + embedding alone gets ~43%; adding R1 takes it to 81%, and R1 blocks the
+four "action" attack families at **100%** — exactly the families the embedding
+could not catch.
+
+**This experiment is deliberately not perfect.** It is a scoped, synthetic-data
+measurement with known gaps (below). What it shows is narrower and still useful:
+**these controls are promising, genuinely low on false-positives, and worth
+investing in** — but getting the right trade-offs needs more data, a real
+benchmark, and independent verification. Read every number below as
+"promising-and-provisional," not "production-ready."
+
+---
+
+## What we tested
+
+One automatic gate, no human in the loop:
+
+> **block if** (Gate-0 normalizer + kNN @ zero-FP flags it) **OR** (a deterministic structural rule fires)
+
+The structural rules fire on facts only — never on what the text *means*:
+
+| Rule | Condition (structural facts only) |
 |---|---|
-| R1 | `trust_level = untrusted` AND `requires_tool_call` |
+| **R1** | `trust_level = untrusted` AND `requires_tool_call` |
 | R2 | `contains_sensitive_sink` AND `coarse_source ≠ user` |
 | R3 | untrusted AND tool AND sensitive sink (strict subset of R1) |
-| R4 | R1 OR R2 (the pre-registered "deployed" union) |
+| R4 | R1 OR R2 (the pre-registered union) |
 
-## Headline
+No embedding model was run — the zero-FP decision is reused verbatim from the
+committed round-6 Gate-0 artifact. Rules were fixed before the run.
 
-**The deployable captain-obvious stack is `embedding(zero-FP) OR R1`: 81.0% of attacks blocked at 0.0% false-block.** The experiment's safety measurement is what found it — it flagged R2 (and therefore R4) as too broad, and identified R1 as the clean winner.
+---
 
-## Breakdown BY CONTROL (the safety finding)
+## Result by control — and the rule we threw out
 
-False-block rate on legitimate traffic, per rule:
-
-| Control | Attack coverage | Worst benign false-block | Verdict |
+| Control | Attack coverage | Worst false-block on benign | Verdict |
 |---|---|---|---|
-| embedding @ zero-FP | text-manipulation families | **0%** (by construction) | keep |
-| **R1** (untrusted+tool) | **100% of 4 action families** | **0%** | **KEEP — captain obvious** |
-| R3 (strict trifecta) | subset of R1 | 0% | redundant w/ R1 |
-| **R2** (sink+non-user) | **0% extra attacks** | **100%** on `high_entropy_structured_data` and `tool_policy_documentation` | **DISCARD — pure cost** |
-| R4 (R1∨R2) | = R1's attack coverage | **14%** (inherits R2) | discard (use R1) |
+| embedding @ zero-FP | text-manipulation families | **0%** (by design) | keep |
+| **R1** (untrusted + tool) | **100% of 4 action families** | **0%** | **KEEP** |
+| R3 (strict trifecta) | subset of R1 | 0% | redundant with R1 |
+| **R2** (sink + non-user) | **0 extra attacks** | **100%** on legit high-entropy data & tool-policy docs | **DISCARD** |
+| R4 (R1 ∨ R2) | = R1's coverage | **14%** (inherits R2) | discard, use R1 |
 
-R2 is the lesson: it *sounds* reasonable ("sensitive sink from a non-user source"), but legitimate high-entropy data and tool-policy docs carry exactly those structural attributes — so it blocks 100% of them while catching zero attacks R1 didn't already. **Measuring per-rule false-block is what turns "captain obvious" from opinion into evidence.** R1 passes the bar perfectly; R2 fails it completely.
+**R2 is the cautionary tale.** It *sounds* obvious — "a sensitive sink touched by
+a non-user source" — but legitimate high-entropy data and tool-policy documents
+carry exactly those attributes, so R2 blocks 100% of them while catching no
+attacks R1 didn't already. Measuring each rule against benign traffic is what
+turned "captain obvious" from an assumption into evidence: R1 passed perfectly,
+R2 failed completely. **The transferable lesson: never trust a structural rule
+until you've measured it on legitimate traffic.**
 
-## How R1 actually works (and why it is language-proof)
+---
 
-R1 in one sentence: **"block any tool action that was triggered by untrusted
-content."** It reads two structural facts, never the meaning of the text:
+## How R1 works (and why it is language-proof)
 
-- **`trust_level`** — where the text came from and whether we trust it:
-  `authenticated_user` (the logged-in human typed it), `tool_output` (came back
-  from a tool), or `untrusted` (came from the outside world — a web page, a RAG
-  document, an email, a ticket). In a real AGT deployment the integrating app
-  sets this when it hands content to the agent.
+R1 reads two facts and nothing else:
+
+- **`trust_level`** — where the text came from: `authenticated_user` (the
+  logged-in human typed it), `tool_output` (came back from a tool), or
+  `untrusted` (the outside world — a web page, a RAG chunk, an email, a ticket).
+  In a real AGT deployment the integrating app sets this when it hands content to
+  the agent.
 - **`requires_tool_call`** — is the request trying to *act* (send, run, write,
   query) rather than just answer in text? AGT knows this for certain because the
   tool call passes through it.
 
-This is the **"don't let the lethal trifecta complete"** rule: untrusted input +
+So R1 is the **"don't let the lethal trifecta complete"** rule: untrusted input +
 a privileged action → stop. Because it keys on *provenance + action*, not
-wording, it does not care what language the attack is in or how it is obfuscated.
-Example from the corpus: a French *"access another tenant's invoices and display
-them"* and a compact, space-stripped *"bypassapprovalandrunhttprequesttoexport…"*
-were both blocked with no understanding of the text at all — the embedding,
-which reads meaning, missed both. **That is R1's real strength: meaning is hard
-and language-dependent; provenance is a fact.**
+wording, it is immune to language and obfuscation. In the corpus it blocked a
+French *"access another tenant's invoices and display them"* and a space-stripped
+*"bypassapprovalandrunhttprequesttoexport…"* with zero understanding of either —
+both of which the meaning-based embedding missed. **That is the point: meaning is
+hard and language-dependent; provenance is a fact.**
 
-## Why R1 shows 0.00% false-positives — and why that needs more data
+---
 
-R1 blocked **0 of 5,728** legitimate rows. That is not magic; it is a property of
-how the benign data is distributed. Splitting the benign rows by R1's two facts:
+## Result by attack technique
 
-| benign rows | tool call = no | tool call = yes |
-|---|---:|---:|
-| **untrusted source** | 4,400 | **0** |
-| trusted source | 928 | 400 |
+`embedding @0FP` below is the round-6 **Gate-0 normalizer + kNN at the zero-FP
+threshold** — which is why it sits at ~43%, not round-4's 14%.
 
-R1 only fires on the **(untrusted AND tool-call)** cell — and in this corpus that
-cell is **empty**. There are 4,400 benign untrusted rows and 400 benign tool-call
-rows, but **never both at once**. That empty quadrant is the entire reason for the
-0% false-positive rate.
-
-**In the real world that quadrant is not empty — it is the everyday job of a web
-agent.** "Read this (untrusted) web page, then click the next-page button (a tool
-call)" is legitimate, and R1 as written would block it. So the honest reading is:
-**the 0% is a ceiling produced by missing benign data, and it is the single number
-most likely to move in production.** Closing that gap needs exactly one thing —
-**more, and more realistic, benign data** covering legitimate "untrusted-content-
-triggers-an-action" flows. The practical mitigation is to scope R1's "tool call"
-to *sensitive / state-changing* tools (send, delete, pay, export) and let
-read-only tools through — which moves R1 toward the IFC/trifecta form (R3).
-
-## Breakdown BY ATTACK TECHNIQUE
-
-(`embedding @0FP` below = the round-6 **Gate-0 normalizer + kNN at the zero-FP
-threshold** — that is why it sits at ~43% rather than round-4's 14%.)
-
-Block rate per family under the deployable stack (`embedding ∨ R1`):
-
-| Attack family | Rows | embedding @0FP | R1 (structural) | **embedding ∨ R1** | Owner |
+| Attack family | Rows | embedding @0FP | R1 | **embedding ∨ R1** | Owner |
 |---|---:|---:|---:|---:|---|
 | indirect_injection | 360 | 29% | **100%** | **100%** | R1 (structural) |
 | output_exfiltration | 960 | 47% | **100%** | **100%** | R1 (structural) |
@@ -103,87 +102,167 @@ Block rate per family under the deployable stack (`embedding ∨ R1`):
 | direct_override | 440 | 63% | 0% | 63% | embedding |
 | memory_poisoning | 440 | 48% | 0% | 48% | embedding (residual) |
 | tool_result_injection | 360 | 37% | 0% | 37% | embedding (residual) |
-| prompt_leakage | 80 | 0% | 0% | **0%** | **uncovered residual** |
-| **All attacks** | 3680 | ~43% | 64% | **81.0%** | |
+| prompt_leakage | 80 | 0% | 0% | **0%** | uncovered residual |
+| **All attacks** | 3,680 | ~43% | 64% | **81.0%** | |
 
-The four "action" families — the ones detection **capped on** in round 6 (tool_abuse, exfiltration) — are now **100% blocked by R1, at zero false-positive cost.** That is the core win: structural containment owns exactly the families detection couldn't.
+The four action families are the ones detection **capped on** in round 6
+(tool_abuse 38%, exfiltration 42%, no matter the false-positive budget). R1 takes
+them to **100% at zero false-positive cost** — structural containment owns exactly
+the families detection could not. The other four families still lean on the
+embedding, and three of them fall short (see residual).
 
-## The residual (honest)
+---
 
-Three families fall through both controls:
-- **prompt_leakage (0%)** — leaking the system prompt is an *output*, not a tool call, so R1's "requires_tool_call" never fires; and the zero-FP embedding misses it. This needs an **IFC output-label rule** ("system prompt is `secret`, block it leaving") — a control we don't have a corpus field for yet.
-- **tool_result_injection (37%)** — its source is `tool_output`, not `untrusted`, so R1's "untrusted" condition doesn't trigger. A refined **R1′ that treats `tool_output` as not-fully-trusted** would likely lift this sharply. Concrete next-step.
-- **memory_poisoning (48%)** — the malicious write isn't flagged as an untrusted tool call in the data; needs a **taint-on-write to memory** rule.
+## Why R1 shows 0.00% false-positives — and why that number will move
 
-These are the families below the 60% combined floor. They are not failures of the stack — they are precisely mapped gaps, each with a named structural control that would close it.
+R1 blocked **0 of 5,728** legitimate rows. That is not magic — it is the shape of
+the benign data. Split the benign rows by R1's two facts:
 
-## Coverage caveat: multilingual attacks (the corpus has them, and they expose a gap)
+| benign rows | no tool call | tool call |
+|---|---:|---:|
+| **untrusted source** | 4,400 | **0** |
+| trusted source | 928 | 400 |
 
-The corpus **does** include multilingual attacks (320 in the test split). They
-are a good stress test of the two controls:
+R1 only fires on the **(untrusted + tool-call)** cell — and in this corpus that
+cell is **empty**. There are plenty of benign untrusted rows and plenty of benign
+tool-call rows, but **never both at once**. That empty quadrant *is* the 0%
+false-positive rate.
 
-| Multilingual attacks (320) | catch |
-|---|---:|
-| Gate-0 + embedding @ zero-FP | **0%** — the normalizer has no translation; the embedding misses non-English |
-| R1 (provenance) | **25%** — language-proof, catches the untrusted+tool ones |
-| Combined | **25%** |
+**In the real world that quadrant is full** — it is the everyday job of a web
+agent ("read this untrusted page, then click next"). So the honest reading is:
+the 0% is a ceiling created by missing benign data, and it is the **single number
+most likely to move in production**. Two things close the gap, and both are
+real next-steps: (a) **more realistic benign data** that includes legitimate
+"untrusted-content-triggers-an-action" flows, and (b) **scoping R1's "tool call"
+to sensitive / state-changing tools** (send, delete, pay, export) while letting
+read-only tools through — which nudges R1 toward the IFC/trifecta form.
 
-So 75% of multilingual attacks still get through. This matters for the headline:
-**R1's language-independence partially rescues multilingual coverage that detection
-misses entirely, but a large multilingual gap remains** (the no-tool multilingual
-attacks). It is a concrete reason the overall numbers should be read as
-promising-but-incomplete, and a clear argument for expanding the corpus with more
-multilingual and more delivery-vector data.
+---
 
-## What we can stand behind (the honest framing)
+## The residual — three families it doesn't cover (each with a named fix)
 
-- **0% → ~43% (Gate 0 normalizer + kNN at zero-FP): solid.** Pure deterministic
-  text normalization in front of the existing detector tripled zero-false-positive
-  catch. This is the most defensible result.
-- **~43% → 81% (adding R1 structural containment): promising, but provisional.**
-  It rests on (a) the benign `(untrusted+tool)` quadrant being empty in this
-  corpus — which more realistic data will fill — and (b) governance labels being
-  correct. So the 81% / 0%-false-block figure is a **labels-perfect ceiling on
-  synthetic data**, not a production number.
-- **Both steps need more data and independent review/verification** before any
-  real-traffic claim. The controls look clearly **worth doing**; the exact
-  numbers will move.
+| Family | Combined | Why it slips through | The control that would close it |
+|---|---:|---|---|
+| prompt_leakage | 0% | it's an *output*, not a tool call, so R1 never fires; the zero-FP embedding misses it too | an **IFC output-label rule** ("system prompt is `secret`, block it leaving") |
+| tool_result_injection | 37% | its source is `tool_output`, not `untrusted`, so R1's condition doesn't match | an **R1′ that treats tool output as not-fully-trusted** |
+| memory_poisoning | 48% | the malicious write isn't flagged as an untrusted tool call | a **taint-on-write to memory** rule |
 
-## Scope: this is prompt injection only — one of six attack categories
+These aren't failures of the stack — they are precisely mapped gaps, each with a
+concrete structural control that would address it.
 
-Everything here addresses **prompt injection**. The Google DeepMind *AI Agent
-Traps* taxonomy (Franklin et al., 2026) names **six** categories — content
-injection, semantic manipulation, cognitive-state, behavioural-control, systemic
-(multi-agent), and human-in-the-loop. Our corpus covers roughly the
-behavioural-control slice plus part of cognitive-state; semantic manipulation,
-multi-agent, and human-in-the-loop are not represented at all.
+---
 
-The takeaway is not "we solved agent security" — it is narrower and still
-valuable: **a maintained, expanding corpus of attack tests, plus a few
-deterministic controls, is demonstrably worth having.** Gate-0 normalization and
-R1-style provenance+action rules are cheap, language-proof, and measurably
-effective on the slice we can test. A more dedicated, focused research effort —
-with more data, the missing trap categories, and independent verification — is
-recommended, and this experiment is enough evidence that it is worth pursuing.
+## Where this experiment is **not** perfect (read this)
 
-## §2 verdicts
+These limits are known, and several were deliberate scoping choices — the data
+and the checks were built this way on purpose, to keep the first measurement
+clean. They are caveats, not surprises:
+
+1. **Synthetic, labels-perfect data.** The governance labels (`trust_level`,
+   `requires_tool_call`, etc.) are exact by construction. Real deployments must
+   *produce* those labels, and R1 is only as good as they are. This is a
+   **ceiling**, not a forecast.
+2. **The empty benign quadrant.** As above — no legitimate "untrusted +
+   tool-call" examples exist in the corpus, so R1's 0% false-block is optimistic.
+   Realistic benign traffic will introduce some false-positives; the question is
+   how many, and we can't answer it yet.
+3. **Multilingual is only partly handled — by design.** The corpus *does* contain
+   320 multilingual attacks; Gate-0 deliberately has no translation step (we
+   accepted that as a known residual in round 6). So detection catches **0%** of
+   them and R1 recovers **25%** (language-proof provenance), leaving **75%
+   uncovered**. Expected, but a real gap.
+4. **Prompt injection only — one of six attack categories.** The Google DeepMind
+   *AI Agent Traps* taxonomy names six (content-injection, semantic-manipulation,
+   cognitive-state, behavioural-control, systemic/multi-agent, human-in-the-loop).
+   Our corpus covers roughly the behavioural-control slice plus part of
+   cognitive-state. Semantic manipulation, multi-agent, and human-in-the-loop are
+   **not represented at all**.
+5. **Single-input, single-agent.** Attacks that only assemble across multiple
+   inputs or agents (e.g. compositional-fragment traps) are invisible to this
+   whole approach by construction.
+6. **Not independently verified.** Every number here is ours, on our data. None
+   of it has had external review or a real-traffic check.
+
+None of these sink the result — but they bound it. The honest claim is "promising
+on the slice we can measure," and the path forward is to chip away at each limit.
+
+---
+
+## What we can stand behind
+
+- **0% → ~43% (Gate-0 normalization): solid.** Pure deterministic text
+  normalization in front of the existing detector tripled zero-false-positive
+  catch. This is the most defensible result in the whole program.
+- **~43% → 81% (adding R1 containment): promising, but provisional.** It rests on
+  the empty benign quadrant and on correct labels, so treat it as a labels-perfect
+  ceiling — directionally strong, exact figure will move.
+- **Both steps are low-false-positive and cheap, and clearly worth doing.** The
+  exact trade-offs need more data and independent verification before any
+  real-traffic or production claim.
+
+---
+
+## Where this goes next
+
+The result is strong enough to justify a focused, ongoing effort rather than a
+one-off. Concretely:
+
+1. **Invest in data.** Grow the corpus with (a) more synthetic coverage of the
+   under-represented categories and multilingual/delivery-vector variants, and
+   (b) sanitized real-world examples. Crucially, add the missing **benign**
+   patterns — legitimate untrusted-content-triggers-an-action flows — so the
+   false-positive numbers become honest.
+2. **Turn the data into a benchmark.** Fashion those examples into a maintained,
+   versioned set of checks with held-out splits and leakage controls — the same
+   hygiene this corpus already uses — so controls can be scored and re-scored as
+   they evolve.
+3. **Tune the controls against the benchmark.** Use the benchmark to pick
+   operating points and rule sets, then **continuously chip away** — close the
+   residual families, narrow R1 to sensitive tools, add the IFC/taint rules,
+   re-measure. Treat it as an iterative dial, not a one-time setting.
+4. **Independent review.** Get external eyes on the methodology and the numbers
+   before any deployment-facing claim.
+
+### Hypothesis worth exploring — an AGT-tuning assistant
+
+A natural product of this work would be an **agent skill or MCP server** that
+acts as a knowledge base to help engineering teams **dial their Agent Governance
+Toolkit to the right frequency** for their own traffic and risk tolerance. It
+would carry two things:
+
+- **The data and statistical analysis** — the benchmark results, per-family and
+  per-control breakdowns, false-positive/handle-rate trade-offs — so it can
+  *recommend* operating points (e.g. "for your tool set and trust labeling, use
+  Gate-0 + R1 scoped to sensitive tools; expect roughly this catch at this
+  false-block rate").
+- **The features, capabilities, and best practices we advocate** — which controls
+  exist, when to block vs. contain vs. label, the "measure rules against benign
+  traffic" discipline, and the known traps (like R2).
+
+In short: turn the lessons here into reusable, queryable guidance so teams don't
+have to re-derive the trade-offs from scratch. This is a hypothesis to test, not
+a committed deliverable — but it is the obvious way to make the analysis useful
+beyond this repo.
+
+---
+
+## Appendix — pre-registered verdicts and prior rounds
+
+### §2 accept/kill bars
 
 | Bar | Result | Verdict |
 |---|---|---|
-| Rule safety ≤1% false-block | R1 0%, R3 0% **pass**; R2 100%, R4 14% **fail** | **PASS for R1** — and the filter correctly rejected R2 |
+| Rule safety ≤1% false-block | R1 0%, R3 0% pass; R2 100%, R4 14% fail | **PASS for R1** — filter correctly rejected R2 |
 | Containment lift ≥30pt (tool_abuse, exfil) | tool_abuse +67pt, exfiltration +53pt | **PASS** |
-| Combined floor ≥60% per family | 5 of 8 families ≥60%; memory/tool_result/prompt_leakage below | **PARTIAL** — 3 named residuals |
+| Combined floor ≥60% per family | 5 of 8 families ≥60% | **PARTIAL** — 3 named residuals |
 | Handle-rate reported | every family reported | **PASS** |
 
-## What this means for deployment
-
-- **Ship `embedding(zero-FP) OR R1` as a fully-automated gate**: 81% of attacks blocked, zero false-positives, no human review. The action families are deterministically contained.
-- **Do not ship R2** — it's a plausible-sounding rule that over-blocks legitimate traffic for no gain. (This is the most transferable lesson: structural rules must be measured against benign traffic, not assumed safe.)
-- **Close the residual with three targeted structural controls**: an IFC output-label rule (prompt_leakage), an R1′ treating tool-output as semi-trusted (tool_result_injection), and a memory-write taint rule (memory_poisoning).
-- **Caveat**: this is the labels-perfect ceiling. The real-world number tracks how completely a deployment labels its tools, sinks, and sources.
-
-## Comparison to prior rounds
-
+### Comparison to prior rounds
 - Round-4 governance policy gate: ~65% unsafe-action prevention (no per-family / false-block detail).
-- Round-6 detection-only: tool_abuse 38%, exfiltration 42% (capped).
-- **Experiment 1**: the same families at **100%** via R1, overall **81% @ 0% FP** — with the per-control and per-family breakdown that pinpoints both the winning rule and the broken one.
+- Round-6 detection-only: tool_abuse 38%, exfiltration 42% (capped — no FP budget helped).
+- **Experiment 1**: the same families at **100%** via R1, overall **81% @ 0% FP** (labels-perfect ceiling), with the per-control and per-family breakdown that pinpoints both the winning rule and the broken one.
+
+### Reproduce
+Harness `meta/harness/exp1-structural/`; artifacts `artifacts/exp1-structural/`;
+validator `validate-exp1.py` recomputes every table from the per-row file. No
+model run — reuses `artifacts/round6-cascade/m1-gate0/test-per-row.jsonl`.
