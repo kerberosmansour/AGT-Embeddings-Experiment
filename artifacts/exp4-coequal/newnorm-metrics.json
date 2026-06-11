@@ -1,0 +1,19 @@
+{
+  "head_0p1pct_val_fpr_cut": 0.9921423586277868,
+  "knn_zerofp": 0.0828484347462654,
+  "normalizer": "extended (#10)",
+  "old_normalizer_ensemble": 0.872,
+  "per_family_recall": {
+    "data_boundary_abuse": 1.0,
+    "direct_override": 0.775,
+    "indirect_injection": 1.0,
+    "memory_poisoning": 0.5954545454545455,
+    "output_exfiltration": 1.0,
+    "prompt_leakage": 0.0,
+    "tool_abuse": 1.0,
+    "tool_result_injection": 0.8388888888888889
+  },
+  "selected_on": "validation",
+  "test_combined_fp": 0.0,
+  "test_combined_recall": 0.8872282608695652
+}

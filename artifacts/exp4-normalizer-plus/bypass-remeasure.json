@@ -1,0 +1,86 @@
+{
+  "bypass_before_after": [
+    {
+      "after": 0.0,
+      "before": 0.0,
+      "bypass_class": "chunked_leet",
+      "delta": 0.0
+    },
+    {
+      "after": 0.0,
+      "before": 0.0,
+      "bypass_class": "compact_leet",
+      "delta": 0.0
+    },
+    {
+      "after": 0.0,
+      "before": 0.0,
+      "bypass_class": "compact_plain",
+      "delta": 0.0
+    },
+    {
+      "after": 0.6791666666666667,
+      "before": 0.6583333333333333,
+      "bypass_class": "diacritics",
+      "delta": 0.02083333333333337
+    },
+    {
+      "after": 0.6236111111111111,
+      "before": 0.3527777777777778,
+      "bypass_class": "encoding",
+      "delta": 0.2708333333333333
+    },
+    {
+      "after": 0.775,
+      "before": 0.775,
+      "bypass_class": "homoglyph",
+      "delta": 0.0
+    },
+    {
+      "after": 1.0,
+      "before": 1.0,
+      "bypass_class": "leet_letter_spaced",
+      "delta": 0.0
+    },
+    {
+      "after": 0.7229166666666667,
+      "before": 0.7208333333333333,
+      "bypass_class": "leet_spacing",
+      "delta": 0.002083333333333326
+    },
+    {
+      "after": 1.0,
+      "before": 1.0,
+      "bypass_class": "letter_spaced",
+      "delta": 0.0
+    },
+    {
+      "after": 0.0,
+      "before": 0.0,
+      "bypass_class": "multilingual",
+      "delta": 0.0
+    },
+    {
+      "after": 0.6791666666666667,
+      "before": 0.6583333333333333,
+      "bypass_class": "plain",
+      "delta": 0.02083333333333337
+    },
+    {
+      "after": 0.39166666666666666,
+      "before": 0.37916666666666665,
+      "bypass_class": "rot13",
+      "delta": 0.012500000000000011
+    },
+    {
+      "after": 0.0,
+      "before": 0.0,
+      "bypass_class": "separator_spaced",
+      "delta": 0.0
+    }
+  ],
+  "obf_control_fp": 0,
+  "overall_benign_fp": 0,
+  "overall_recall": 0.48967391304347824,
+  "tau": 0.0828484347462654
+}
