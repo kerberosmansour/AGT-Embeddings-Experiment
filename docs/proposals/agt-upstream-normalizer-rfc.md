@@ -56,20 +56,31 @@ Two takeaways:
   becomes more reliable when the content has been un-disguised first; a human
   reviewer sees what the agent actually parses, not the cosmetic surface.
 
-## What's missing today (the gap)
+## What's there today vs. what's missing (we checked the source)
 
-`normalize_for_detection` is private to the regex detector and does width-fold +
-strip + lowercase + whitespace-collapse. It does **not**:
+`normalize_for_detection` (private to the regex detector) folds Unicode
+fullwidth, strips zero-width/bidi/control chars, lowercases, and collapses
+whitespace. Separately, `scan_encoding` decodes base64 (embedded tokens) and
+backslash/unicode escapes *inside detection*, and string-matches the words
+"rot13" / "base64 decode". A precise two-way comparison against our normalizer:
 
-- fold homoglyphs/confusables (Cyrillic/Greek look-alikes → Latin),
-- de-substitute leetspeak (`1gn0r3` → `ignore`) under a token guard,
-- collapse letter-spacing / separator obfuscation (`i.g.n.o.r.e`) under a
-  run-length guard,
-- decode-and-rescore nested encodings (base64/hex/rot13/percent/unicode-escape/
-  HTML-entity) — the detector references these as `EncodingAttack` patterns but
-  does not canonicalize them away,
-- expose its output (or *what it changed*) to any control other than the regex
-  detector.
+| Transform | AGT today | This proposal |
+|---|---|---|
+| Fullwidth fold · lowercase · whitespace-collapse | ✅ normalizes | ✅ (keep) |
+| Zero-width strip | ✅ | ✅ |
+| **Bidi-override / isolate strip (Trojan Source)** | ✅ (`202A–202E`, `2066–2069`) | ✅ — **adopt AGT's** (our research normalizer missed it) |
+| base64 / backslash-escape decode | ✅ but **detection-internal only** | ✅ + **surfaced** to all controls |
+| Homoglyph / confusable fold (Cyrillic/Greek → Latin) | ❌ | ✅ add |
+| Leetspeak de-substitution (`1gn0r3`→`ignore`, token-guarded) | ❌ | ✅ add |
+| Letter-spacing / separator collapse (run-length-guarded) | ❌ | ✅ add |
+| rot13 **decode** (not just the string "rot13") | ❌ reference-only | ✅ add |
+| percent/URL · HTML-entity · hex decode | ❌ | ✅ add |
+| **Surface normalized text + transform tags to every control** | ❌ private to detector | ✅ the design idea |
+
+So the additions are genuinely complementary — AGT already strips bidi-override
+characters (which our research normalizer did not, and which we'd adopt), and we
+add the homoglyph/leet/spacing/decoder transforms and the surfacing layer that
+AGT does not have. The net is "merge the best of both," not "replace."
 
 ## Proposal
 
