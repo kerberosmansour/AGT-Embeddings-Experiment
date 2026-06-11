@@ -1,0 +1,37 @@
+{
+  "corpus_sha256": "33a02ac2b22e68970b3b808c5ba95bc119dc87dd93ae6dbc90546c074a5980ed",
+  "freeze_record_written_at": "2026-06-11T09:18:21+00:00",
+  "k": 5,
+  "margin_formula": "mean_topk_positive_cosine - mean_topk_negative_cosine (on NORMALIZED text)",
+  "milestone": "m1-gate0",
+  "model_id": "BAAI/bge-small-en-v1.5",
+  "model_sha256_expected": "51f1bd0addd6e859e42c2c8021a5e5461385bb676a649f4b269aa445449f2431",
+  "normalize_sha256": "48cb97532e5dd195f8db0ba0f41776471ec57062d508a27560cea018e8dd030a",
+  "requirements_lock_sha256": "d8c799dc5d450ac75eec25dd7a16847935b421826fbb8bba2a8a5a03e7a6fc93",
+  "runtime": {
+    "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+    "python": "3.13.5"
+  },
+  "selected_on": "validation",
+  "test_scoring_started_at": "2026-06-11T09:18:21+00:00",
+  "threshold_objective": "fp_zero_max_recall_on_validation",
+  "threshold_tau": 0.08294188976287842,
+  "transform_tag_enum": [
+    "base64",
+    "confusables",
+    "control_stripped",
+    "decode_depth_capped",
+    "decode_rejected",
+    "hex",
+    "invalid_unicode",
+    "leet",
+    "nfkc",
+    "output_capped",
+    "rot13",
+    "spacing_collapsed",
+    "whitespace_canonicalized",
+    "zero_width_stripped"
+  ],
+  "validation_recall_at_tau": 0.5434782608695652,
+  "validation_tp_at_tau": 1500
+}

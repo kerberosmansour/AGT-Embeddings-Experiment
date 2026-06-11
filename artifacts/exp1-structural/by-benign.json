@@ -1,0 +1,1233 @@
+{
+  "all_benign": {
+    "R1": {
+      "count": 0,
+      "rate": 0.0,
+      "wilson95": {
+        "estimate": 0.0,
+        "lower": 0.0,
+        "successes": 0,
+        "total": 5728,
+        "upper": 0.0006701962795538472
+      }
+    },
+    "R2": {
+      "count": 800,
+      "rate": 0.13966480446927373,
+      "wilson95": {
+        "estimate": 0.13966480446927373,
+        "lower": 0.13092921054651413,
+        "successes": 800,
+        "total": 5728,
+        "upper": 0.14888338900690729
+      }
+    },
+    "R3": {
+      "count": 0,
+      "rate": 0.0,
+      "wilson95": {
+        "estimate": 0.0,
+        "lower": 0.0,
+        "successes": 0,
+        "total": 5728,
+        "upper": 0.0006701962795538472
+      }
+    },
+    "R4": {
+      "count": 800,
+      "rate": 0.13966480446927373,
+      "wilson95": {
+        "estimate": 0.13966480446927373,
+        "lower": 0.13092921054651413,
+        "successes": 800,
+        "total": 5728,
+        "upper": 0.14888338900690729
+      }
+    },
+    "combined": {
+      "count": 800,
+      "rate": 0.13966480446927373,
+      "wilson95": {
+        "estimate": 0.13966480446927373,
+        "lower": 0.13092921054651413,
+        "successes": 800,
+        "total": 5728,
+        "upper": 0.14888338900690729
+      }
+    },
+    "embedding_zeroFP": {
+      "count": 0,
+      "rate": 0.0,
+      "wilson95": {
+        "estimate": 0.0,
+        "lower": 0.0,
+        "successes": 0,
+        "total": 5728,
+        "upper": 0.0006701962795538472
+      }
+    },
+    "handle_rate": 0.8379888268156425,
+    "rows": 5728,
+    "structural_block": {
+      "count": 800,
+      "rate": 0.13966480446927373,
+      "wilson95": {
+        "estimate": 0.13966480446927373,
+        "lower": 0.13092921054651413,
+        "successes": 800,
+        "total": 5728,
+        "upper": 0.14888338900690729
+      }
+    }
+  },
+  "per_subclass": {
+    "benign_compact_obfuscation_control": {
+      "R1": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 600,
+          "upper": 0.006361701013700711
+        }
+      },
+      "R2": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 600,
+          "upper": 0.006361701013700711
+        }
+      },
+      "R3": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 600,
+          "upper": 0.006361701013700711
+        }
+      },
+      "R4": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 600,
+          "upper": 0.006361701013700711
+        }
+      },
+      "combined": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 600,
+          "upper": 0.006361701013700711
+        }
+      },
+      "embedding_zeroFP": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 600,
+          "upper": 0.006361701013700711
+        }
+      },
+      "handle_rate": 0.0,
+      "rows": 600,
+      "structural_block": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 600,
+          "upper": 0.006361701013700711
+        }
+      },
+      "uncontainable_rate": 1.0
+    },
+    "benign_obfuscation_control": {
+      "R1": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 328,
+          "upper": 0.011576187117625359
+        }
+      },
+      "R2": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 328,
+          "upper": 0.011576187117625359
+        }
+      },
+      "R3": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 328,
+          "upper": 0.011576187117625359
+        }
+      },
+      "R4": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 328,
+          "upper": 0.011576187117625359
+        }
+      },
+      "combined": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 328,
+          "upper": 0.011576187117625359
+        }
+      },
+      "embedding_zeroFP": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 328,
+          "upper": 0.011576187117625359
+        }
+      },
+      "handle_rate": 0.0,
+      "rows": 328,
+      "structural_block": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 328,
+          "upper": 0.011576187117625359
+        }
+      },
+      "uncontainable_rate": 1.0
+    },
+    "benign_security_discussion": {
+      "R1": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R2": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R3": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R4": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "combined": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "embedding_zeroFP": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "handle_rate": 1.0,
+      "rows": 400,
+      "structural_block": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "uncontainable_rate": 0.0
+    },
+    "benign_tool_use": {
+      "R1": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R2": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R3": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R4": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "combined": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "embedding_zeroFP": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "handle_rate": 1.0,
+      "rows": 400,
+      "structural_block": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "uncontainable_rate": 0.0
+    },
+    "detector_code_fixture": {
+      "R1": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R2": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R3": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R4": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "combined": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "embedding_zeroFP": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "handle_rate": 1.0,
+      "rows": 400,
+      "structural_block": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "uncontainable_rate": 0.0
+    },
+    "docs_code_comment": {
+      "R1": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R2": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R3": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R4": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "combined": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "embedding_zeroFP": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "handle_rate": 1.0,
+      "rows": 400,
+      "structural_block": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "uncontainable_rate": 0.0
+    },
+    "high_entropy_structured_data": {
+      "R1": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R2": {
+        "count": 400,
+        "rate": 1.0,
+        "wilson95": {
+          "estimate": 1.0,
+          "lower": 0.9904877056657034,
+          "successes": 400,
+          "total": 400,
+          "upper": 0.9999999999999999
+        }
+      },
+      "R3": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R4": {
+        "count": 400,
+        "rate": 1.0,
+        "wilson95": {
+          "estimate": 1.0,
+          "lower": 0.9904877056657034,
+          "successes": 400,
+          "total": 400,
+          "upper": 0.9999999999999999
+        }
+      },
+      "combined": {
+        "count": 400,
+        "rate": 1.0,
+        "wilson95": {
+          "estimate": 1.0,
+          "lower": 0.9904877056657034,
+          "successes": 400,
+          "total": 400,
+          "upper": 0.9999999999999999
+        }
+      },
+      "embedding_zeroFP": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "handle_rate": 1.0,
+      "rows": 400,
+      "structural_block": {
+        "count": 400,
+        "rate": 1.0,
+        "wilson95": {
+          "estimate": 1.0,
+          "lower": 0.9904877056657034,
+          "successes": 400,
+          "total": 400,
+          "upper": 0.9999999999999999
+        }
+      },
+      "uncontainable_rate": 0.0
+    },
+    "legitimate_imperative_request": {
+      "R1": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R2": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R3": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R4": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "combined": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "embedding_zeroFP": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "handle_rate": 1.0,
+      "rows": 400,
+      "structural_block": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "uncontainable_rate": 0.0
+    },
+    "owasp_ncsc_guidance": {
+      "R1": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R2": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R3": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R4": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "combined": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "embedding_zeroFP": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "handle_rate": 1.0,
+      "rows": 400,
+      "structural_block": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "uncontainable_rate": 0.0
+    },
+    "quoted_injection_example": {
+      "R1": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R2": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R3": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R4": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "combined": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "embedding_zeroFP": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "handle_rate": 1.0,
+      "rows": 400,
+      "structural_block": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "uncontainable_rate": 0.0
+    },
+    "research_blog_excerpt": {
+      "R1": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R2": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R3": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R4": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "combined": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "embedding_zeroFP": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "handle_rate": 1.0,
+      "rows": 400,
+      "structural_block": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "uncontainable_rate": 0.0
+    },
+    "security_changelog": {
+      "R1": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R2": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R3": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R4": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "combined": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "embedding_zeroFP": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "handle_rate": 1.0,
+      "rows": 400,
+      "structural_block": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "uncontainable_rate": 0.0
+    },
+    "security_training_material": {
+      "R1": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R2": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R3": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R4": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "combined": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "embedding_zeroFP": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "handle_rate": 1.0,
+      "rows": 400,
+      "structural_block": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "uncontainable_rate": 0.0
+    },
+    "tool_policy_documentation": {
+      "R1": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R2": {
+        "count": 400,
+        "rate": 1.0,
+        "wilson95": {
+          "estimate": 1.0,
+          "lower": 0.9904877056657034,
+          "successes": 400,
+          "total": 400,
+          "upper": 0.9999999999999999
+        }
+      },
+      "R3": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "R4": {
+        "count": 400,
+        "rate": 1.0,
+        "wilson95": {
+          "estimate": 1.0,
+          "lower": 0.9904877056657034,
+          "successes": 400,
+          "total": 400,
+          "upper": 0.9999999999999999
+        }
+      },
+      "combined": {
+        "count": 400,
+        "rate": 1.0,
+        "wilson95": {
+          "estimate": 1.0,
+          "lower": 0.9904877056657034,
+          "successes": 400,
+          "total": 400,
+          "upper": 0.9999999999999999
+        }
+      },
+      "embedding_zeroFP": {
+        "count": 0,
+        "rate": 0.0,
+        "wilson95": {
+          "estimate": 0.0,
+          "lower": 8.673617379884035e-19,
+          "successes": 0,
+          "total": 400,
+          "upper": 0.009512294334296508
+        }
+      },
+      "handle_rate": 1.0,
+      "rows": 400,
+      "structural_block": {
+        "count": 400,
+        "rate": 1.0,
+        "wilson95": {
+          "estimate": 1.0,
+          "lower": 0.9904877056657034,
+          "successes": 400,
+          "total": 400,
+          "upper": 0.9999999999999999
+        }
+      },
+      "uncontainable_rate": 0.0
+    }
+  }
+}

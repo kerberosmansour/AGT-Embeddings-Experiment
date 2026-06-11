@@ -48,6 +48,61 @@ The work is not proposing default auto-blocking. The embedding signal is an
 optional, default-off, auditable layer that can feed downstream policy or review
 routing.
 
+### Round-6 cascade update
+
+A follow-up round (`docs/RUNBOOK-round6-cascade-experiment.md`,
+`docs/reports/round6-cascade-report.md`) tested a four-stage cascade —
+de-obfuscation → trained head → conformal routing → governance Gate 2 — with
+pre-registered accept/kill thresholds. Headline results on the same frozen test
+split (round-4 rows above are kept, not superseded):
+
+| Approach | Catch rate | False positive rate | Notes |
+|---|---:|---:|---|
+| Embeddings at zero-FP point (round 4) | about `14%` | `0%` observed | superseded operating point, retained for comparison |
+| **Gate 0 de-obfuscation + zero-FP kNN** | **about `43%`** | `0%` observed | normalization in front of the unchanged round-4 scorer — 3× catch at zero FP |
+| Full cascade (free-tier Gate 2), end-to-end | about `64%` | about `0.9%` | every attack family caught (round-4's 0% families now 38–100%) |
+
+Decisive findings: (1) **Gate 0 normalization is the lever** — it triples
+zero-FP catch and eliminates round-4's two 0%-catch families (tool_abuse,
+prompt_leakage). (2) A **trained head does not beat kNN** at deployable FPR on
+this corpus. (3) The **two-gate independence assumption is refuted** (shared
+blind spots, miss-side overlap 2.76×). (4) **Free governance metadata ≈ full**:
+the AGT-guaranteed fields capture the metadata value; the expensive integration
+adds ~0.1pt. All numbers remain synthetic-corpus research evidence, not
+production claims.
+
+### Experiment 1 — structural auto-block ceiling
+
+A follow-up (`docs/RUNBOOK-exp1-structural-autoblock.md`,
+`docs/reports/exp1-structural-autoblock-report.md`) measures a fully-automated,
+no-human-review stack: the round-6 Gate-0 + kNN embedding at the **zero-FP
+point**, OR'd with deterministic structural block rules that fire on facts
+(source trust, tool call, sensitive sink) — never on text meaning.
+
+| Stack | Catch | False-block | Note |
+|---|---:|---:|---|
+| embedding @ zero-FP alone | ~43% | 0% | text-manipulation families |
+| **embedding ∨ R1** (untrusted+tool) | **81%** | **0%** | R1 blocks the 4 action families at 100% |
+
+Findings: **R1** (untrusted source drives a tool call) deterministically blocks
+**100%** of tool_abuse, output_exfiltration, indirect_injection and
+data_boundary_abuse at **zero** false-positives — exactly the families detection
+capped on. R1 reads only provenance + action (not text), so it is
+language-proof. A second plausible rule, **R2** (sensitive-sink + non-user), was
+measured as a **trap** (100% false-block on legitimate high-entropy data and
+tool-policy docs, zero extra attacks) and discarded. Residual: prompt_leakage,
+tool_result_injection, memory_poisoning need dedicated IFC/taint rules.
+
+Honest framing: **0%→~43%** (Gate-0 normalization) is the solid, defensible step;
+**~43%→81%** (R1 containment) is promising but provisional — R1's 0% false-block
+holds only because the benign `(untrusted + tool-call)` quadrant is **empty in
+this corpus**, which more realistic data will fill. Multilingual attacks (320 in
+test) expose the limit: detection catches 0%, R1 recovers 25%, 75% still escape.
+All numbers are the labels-perfect synthetic ceiling and need more data plus
+independent verification. Scope is **prompt injection only** — one of the six
+*AI Agent Traps* categories — but the result is enough to show that maintaining
+and expanding this corpus, and using these deterministic controls, is worthwhile.
+
 ## Method At A Glance
 
 The experiment uses the existing AGT Rust prompt-injection rules as the
@@ -91,6 +146,10 @@ text in the embedding/governance readout artifacts.
   - `artifacts/governance-eval/`
   - `meta/harness/round4-governance-eval/`
   - `meta/harness/round5-agt-value-add/`
+- Source-scale methodology evidence:
+  - `artifacts/source-scale-pilot/summary.json`
+  - `docs/methodology/round5-source-scale-methodology.md`
+  - `docs/reports/round5-source-scale-pilot.md`
 - Claim and methodology notes:
   - `docs/CLAIMS-LEDGER.md`
   - `docs/reports/`
@@ -157,8 +216,25 @@ For deeper details:
 - Governance/value-add comparison:
   `artifacts/governance-eval/metrics.json` and
   `docs/reports/round4-governance-eval-evidence.md`.
+- Source-scale methodology pilot:
+  `artifacts/source-scale-pilot/summary.json` and
+  `docs/methodology/round5-source-scale-methodology.md`.
+- Source-to-AGT expected-action mapping:
+  `docs/methodology/source-to-agt-expected-action-mapping.md`.
 - Claim-to-evidence mapping and stronger-claim gaps:
   `docs/CLAIMS-LEDGER.md`.
+
+## Upstream AGT Path
+
+The intended AGT upstream path is two PRs:
+
+1. Add the corpus and benchmark harness as a standalone evaluation fixture,
+   with no runtime behavior change.
+2. After methodology review, add the embedding signal as an optional,
+   default-off evidence layer behind an explicit flag.
+
+See [`docs/UPSTREAM-PR-PLAN.md`](docs/UPSTREAM-PR-PLAN.md) for the concrete
+scope, baseline pinning requirements, and PR boundaries.
 
 ## What This Repo Does Not Claim
 

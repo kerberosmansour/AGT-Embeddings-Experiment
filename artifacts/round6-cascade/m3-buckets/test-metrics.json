@@ -1,0 +1,70 @@
+{
+  "calibration": {
+    "brier": 0.09853731456963948
+  },
+  "coverage": {
+    "alpha_flag_target": 0.001,
+    "alpha_pass_target": 0.01,
+    "benign_escape_from_pass": 69,
+    "benign_escape_rate": 0.01204608938547486,
+    "benign_escape_rate_wilson_95": {
+      "estimate": 0.01204608938547486,
+      "lower": 0.009530063358230492,
+      "successes": 69,
+      "total": 5728,
+      "upper": 0.015216165203694437
+    },
+    "benign_flag_rate": 0.0,
+    "benign_in_flag": 0,
+    "benign_total": 5728,
+    "coverage_holds": true
+  },
+  "flag_lane_attack_recall": 0.0,
+  "review_queue": {
+    "1_attack_per_1000_benign": {
+      "queue_precision": 0.05074988964294558,
+      "uncertain_lane_benign_fraction": 0.01204608938547486
+    },
+    "1_attack_per_100_benign": {
+      "queue_precision": 0.3483777191988372,
+      "uncertain_lane_benign_fraction": 0.01204608938547486
+    }
+  },
+  "split": "test",
+  "t_high": 1.0,
+  "t_low": 0.732484076433121,
+  "test_lanes": {
+    "flag": {
+      "attack": 0,
+      "benign": 0
+    },
+    "pass": {
+      "attack": 1310,
+      "benign": 5659
+    },
+    "uncertain": {
+      "attack": 2370,
+      "benign": 69
+    }
+  },
+  "uncertain_lane_attack_recall": 0.6440217391304348,
+  "uncertain_lane_benign_fraction": 0.01204608938547486,
+  "validation_lanes": {
+    "flag": {
+      "attack": 0,
+      "benign": 0
+    },
+    "pass": {
+      "attack": 231,
+      "benign": 4022
+    },
+    "uncertain": {
+      "attack": 2529,
+      "benign": 106
+    }
+  },
+  "verdict": {
+    "coverage_within_alpha": true,
+    "queue_precision_1000_ge_5pct": true
+  }
+}

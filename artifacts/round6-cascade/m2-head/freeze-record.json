@@ -1,0 +1,104 @@
+{
+  "candidate_grid": [
+    {
+      "spec": {
+        "C": 0.01,
+        "family": "lr"
+      },
+      "val_roc_auc": 0.9616841682114369,
+      "val_tpr_at_1pct_fpr": 0.41304347826086957
+    },
+    {
+      "spec": {
+        "C": 0.1,
+        "family": "lr"
+      },
+      "val_roc_auc": 0.9886878932142454,
+      "val_tpr_at_1pct_fpr": 0.7978260869565217
+    },
+    {
+      "spec": {
+        "C": 1.0,
+        "family": "lr"
+      },
+      "val_roc_auc": 0.9921143867262106,
+      "val_tpr_at_1pct_fpr": 0.8097826086956522
+    },
+    {
+      "spec": {
+        "C": 10.0,
+        "family": "lr"
+      },
+      "val_roc_auc": 0.9915329913773733,
+      "val_tpr_at_1pct_fpr": 0.8014492753623188
+    },
+    {
+      "spec": {
+        "family": "hgb",
+        "learning_rate": 0.1,
+        "max_depth": 3
+      },
+      "val_roc_auc": 0.9798335510055048,
+      "val_tpr_at_1pct_fpr": 0.8760869565217392
+    },
+    {
+      "spec": {
+        "family": "hgb",
+        "learning_rate": 0.1,
+        "max_depth": 6
+      },
+      "val_roc_auc": 0.986231708515897,
+      "val_tpr_at_1pct_fpr": 0.847463768115942
+    },
+    {
+      "spec": {
+        "family": "hgb",
+        "learning_rate": 0.05,
+        "max_depth": 3
+      },
+      "val_roc_auc": 0.9767032847432873,
+      "val_tpr_at_1pct_fpr": 0.8735507246376811
+    },
+    {
+      "spec": {
+        "family": "hgb",
+        "learning_rate": 0.05,
+        "max_depth": 6
+      },
+      "val_roc_auc": 0.9763710713683855,
+      "val_tpr_at_1pct_fpr": 0.7572463768115942
+    }
+  ],
+  "corpus_sha256": "33a02ac2b22e68970b3b808c5ba95bc119dc87dd93ae6dbc90546c074a5980ed",
+  "cutoff_0p1pct_fpr": {
+    "threshold": 0.9762867897370724,
+    "val_fpr": 0.0009689922480620155,
+    "val_tpr": 0.7094202898550724
+  },
+  "cutoff_1pct_fpr": {
+    "threshold": 0.8814772793000865,
+    "val_fpr": 0.00993217054263566,
+    "val_tpr": 0.8760869565217392
+  },
+  "embedding_cache_key": "506141ba808df1c8",
+  "feature_source": [
+    "normalized_text_embedding"
+  ],
+  "freeze_record_written_at": "2026-06-11T09:40:27+00:00",
+  "grid_size": 8,
+  "milestone": "m2-head",
+  "normalize_sha256": "48cb97532e5dd195f8db0ba0f41776471ec57062d508a27560cea018e8dd030a",
+  "requirements_lock_sha256": "d8c799dc5d450ac75eec25dd7a16847935b421826fbb8bba2a8a5a03e7a6fc93",
+  "runtime": {
+    "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+    "python": "3.13.5"
+  },
+  "seed": 20260611,
+  "selected_on": "validation",
+  "selected_spec": {
+    "family": "hgb",
+    "learning_rate": 0.1,
+    "max_depth": 3
+  },
+  "test_scoring_started_at": "2026-06-11T09:40:27+00:00"
+}

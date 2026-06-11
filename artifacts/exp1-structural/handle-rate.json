@@ -1,0 +1,66 @@
+{
+  "data_boundary_abuse": {
+    "combined_rate": 1.0,
+    "containment_lift": 0.5136363636363637,
+    "embedding_rate": 0.4863636363636364,
+    "handle_rate": 1.0,
+    "structural_block_rate": 1.0,
+    "uncontainable_rate": 0.0
+  },
+  "direct_override": {
+    "combined_rate": 0.6295454545454545,
+    "containment_lift": 0.0,
+    "embedding_rate": 0.6295454545454545,
+    "handle_rate": 1.0,
+    "structural_block_rate": 0.0,
+    "uncontainable_rate": 0.0
+  },
+  "indirect_injection": {
+    "combined_rate": 1.0,
+    "containment_lift": 0.7083333333333333,
+    "embedding_rate": 0.2916666666666667,
+    "handle_rate": 1.0,
+    "structural_block_rate": 1.0,
+    "uncontainable_rate": 0.0
+  },
+  "memory_poisoning": {
+    "combined_rate": 0.4772727272727273,
+    "containment_lift": 0.0,
+    "embedding_rate": 0.4772727272727273,
+    "handle_rate": 1.0,
+    "structural_block_rate": 0.0,
+    "uncontainable_rate": 0.0
+  },
+  "output_exfiltration": {
+    "combined_rate": 1.0,
+    "containment_lift": 0.528125,
+    "embedding_rate": 0.471875,
+    "handle_rate": 1.0,
+    "structural_block_rate": 1.0,
+    "uncontainable_rate": 0.0
+  },
+  "prompt_leakage": {
+    "combined_rate": 0.0,
+    "containment_lift": 0.0,
+    "embedding_rate": 0.0,
+    "handle_rate": 1.0,
+    "structural_block_rate": 0.0,
+    "uncontainable_rate": 0.0
+  },
+  "tool_abuse": {
+    "combined_rate": 1.0,
+    "containment_lift": 0.6666666666666667,
+    "embedding_rate": 0.3333333333333333,
+    "handle_rate": 1.0,
+    "structural_block_rate": 1.0,
+    "uncontainable_rate": 0.0
+  },
+  "tool_result_injection": {
+    "combined_rate": 0.37222222222222223,
+    "containment_lift": 0.0,
+    "embedding_rate": 0.37222222222222223,
+    "handle_rate": 1.0,
+    "structural_block_rate": 0.0,
+    "uncontainable_rate": 0.0
+  }
+}

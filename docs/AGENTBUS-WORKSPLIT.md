@@ -74,3 +74,37 @@ checklist, not migrated evidence. Both replacement M4 gates are PASS on the
 peer-gated evidence/narrative head `4ac0ed3`. Later Mac coordination-only
 status commits do not change evidence artifacts, metrics, README claims, or
 release-facing semantics.
+
+## Upstream AGT PR Coordination
+
+Team feedback changes the upstream lane split:
+
+1. PR 1 should land only the evaluation corpus and benchmark harness as a
+   standalone fixture.
+2. PR 2 should land the embedding signal only after methodology review, and
+   only as optional/default-off evidence behind a flag.
+
+Public-facing upstream work must be sanitized. The PR branch, commits, PR body,
+and issue comments should contain only maintainer-facing fixture and benchmark
+context. Internal runbooks, coordination logs, task IDs, owner labels, local
+paths, private branch names, and assistant/tooling references stay out of the
+Microsoft-facing PR.
+
+New AgentBus tasks should be scoped this way:
+
+| Task | Assignee | Output |
+|---|---|---|
+| PR1 baseline re-pin | mac-agent | Rerun rules-only harness against fresh AGT upstream main and record commit, detector SHA, corpus hash, TP/FP rates. |
+| PR1 AGT target-path review | win-agent | Confirm upstream target path and native AGT semantics for a standalone fixture with no runtime feature. |
+| PR1 reproducibility/no-overclaim audit | linux-agent | Verify fixture checks, baseline methodology wording, and no production/default-block claim. |
+| PR1 Round-5 methodology review | linux-agent + win-agent | Review sanitized source-scale pilot summary and decide which source-review/matched-control gates should be proposed upstream. |
+| PR2 methodology blocker | all agents | Keep open until corpus generation, holdout, benign-control, and threshold-freeze methodology are reviewed. |
+
+Mac refreshed the AGT detector baseline preflight on 2026-06-10: fresh AGT
+`origin/main` was `10a1cceb1bda63bc126fe054f0a13ff2ab93a42c`, while the
+prompt-injection detector's last-touch commit remained
+`7c89582420b667fa93b3030180b618b7c208a02f` and its SHA-256 remained
+`92ac1f855e03502886fffdfb8cf9eece8ce7c2bea268ecacb4ff6386cb345ab3`.
+The experiment vendored `prompt_injection.rs` matches that detector blob. See
+`docs/methodology/agt-upstream-baseline-refresh.md`. This is a useful current
+pin, not a substitute for a final fresh rerun immediately before PR 1.

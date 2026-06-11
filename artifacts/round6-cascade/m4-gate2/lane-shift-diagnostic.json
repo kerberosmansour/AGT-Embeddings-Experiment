@@ -1,0 +1,14 @@
+{
+  "test_uncertain": {
+    "attack": 2370,
+    "benign": 69,
+    "mean_cal_score": 0.9684998432880236,
+    "size": 2439
+  },
+  "validation_uncertain": {
+    "attack": 2529,
+    "benign": 106,
+    "mean_cal_score": 0.9737876433202985,
+    "size": 2635
+  }
+}

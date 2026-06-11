@@ -1,0 +1,26 @@
+{
+  "ceiling": {
+    "C": 1.0,
+    "manifest": [
+      "calibrated_score",
+      "requires_tool_call",
+      "coarse_source",
+      "contains_sensitive_sink",
+      "source_type"
+    ]
+  },
+  "control": {
+    "C": 0.1,
+    "manifest": [
+      "calibrated_score"
+    ]
+  },
+  "floor": {
+    "C": 10.0,
+    "manifest": [
+      "calibrated_score",
+      "requires_tool_call",
+      "coarse_source"
+    ]
+  }
+}

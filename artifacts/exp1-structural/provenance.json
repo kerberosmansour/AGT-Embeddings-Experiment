@@ -1,0 +1,9 @@
+{
+  "corpus_sha256": "33a02ac2b22e68970b3b808c5ba95bc119dc87dd93ae6dbc90546c074a5980ed",
+  "created_at": "2026-06-11T12:45:56+00:00",
+  "dependency_probe": {
+    "numpy": "2.4.6"
+  },
+  "embedding_source": "artifacts/round6-cascade/m1-gate0/test-per-row.jsonl (pred_attack @ zero-FP)",
+  "no_model_run": true
+}

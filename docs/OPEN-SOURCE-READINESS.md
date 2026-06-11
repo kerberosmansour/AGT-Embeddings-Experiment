@@ -16,8 +16,12 @@ evidence and must not change artifact claims.
 
 Before public release, verify that:
 
+- the upstream AGT path is described as two PRs: fixture first, optional
+  embedding signal second;
 - the embedding signal is described as optional, default-off, additive, and
   auditable;
+- the rules-only baseline number is tied to the exact corpus, AGT commit, and
+  detector hash;
 - governance/value-add evidence remains `needs_more_play` research evidence;
 - no production safety, default-blocking, certification, benchmark coverage,
   governance-readiness, detector-promotion, policy-promotion, source-import, or
@@ -48,7 +52,30 @@ python3 meta/harness/round4-governance-eval/validate-governance-eval.py \
   --metrics artifacts/governance-eval/metrics.json
 python3 meta/harness/round5-agt-value-add/validate-round5-agt-value-add-report.py \
   meta/harness/round5-agt-value-add/round5-agt-value-add-report.example.json
+python3 -m json.tool artifacts/source-scale-pilot/summary.json >/dev/null
 ```
 
 If any check changes metrics or claim strength, treat it as new evidence work
 and route it through the AgentBus audit split before publishing.
+
+## Upstream PR Readiness
+
+Before opening an AGT PR:
+
+- stage from a clean upstream worktree and copy only the intended public fixture
+  files listed in `docs/methodology/upstream-pr1-public-file-manifest.md`;
+- use `docs/methodology/upstream-pr1-pr-draft.md` as a sanitized title/body
+  starting point only after refreshing the baseline pin;
+- use `docs/methodology/upstream-pr1-issue-pr-linking.md` for the issue draft
+  and issue-to-PR cross-link sequence;
+- exclude internal runbooks, coordination notes, task IDs, owner metadata, local
+  paths, private branch names, and assistant/tooling references from commits,
+  PR text, and issue comments;
+- rerun the rules-only baseline against fresh AGT upstream `main`;
+- record AGT commit SHA and detector file SHA-256;
+- keep PR 1 to corpus, manifest, validators, baseline harness, and docs;
+- use Round-5 source-scale material as methodology guidance, not as a headline
+  detector metric;
+- keep PR 2 blocked until methodology review is complete;
+- ensure PR 2, if opened later, is disabled by default and evidence-only unless
+  a policy profile explicitly routes it.

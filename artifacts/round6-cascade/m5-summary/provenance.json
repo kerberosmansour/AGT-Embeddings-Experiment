@@ -1,0 +1,7 @@
+{
+  "corpus_sha256": "33a02ac2b22e68970b3b808c5ba95bc119dc87dd93ae6dbc90546c074a5980ed",
+  "imported": [
+    "sklearn"
+  ],
+  "no_new_scoring": true
+}
