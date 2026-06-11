@@ -47,6 +47,31 @@ data, never fires on a benign row. The standout: the head **rescues
 prompt_leakage**, which the kNN inspector misses entirely — exactly the
 "informative disagreement" the founder described.
 
+## Robustness: Rec B vs Rec B+ (higher catch ≠ more robust)
+
+Both hold 0% FP on this data — but for different reasons, and that decides which
+one survives real traffic.
+
+| | Tie-breaker | Why 0 benign in the band | Robustness |
+|---|---|---|---|
+| **Rec B** | 2nd model agrees | a benign must **fool two different models at once** | mechanism-based → **robust** |
+| **Rec B+** | *or* it's a tool call | the corpus has **no benign tool-use in the band** | artifact-based → **fragile** |
+
+Rec B+'s extra catch (461 attacks, +3.5 pts) comes **only** from the tool-call
+predicate, whose 0% FP is the same empty-quadrant artifact as the earlier R1
+rule. In production, legitimate tool-use that scores mid-range lands exactly in
+this band and would become false positives — so Rec B+'s zero is borrowed against
+the synthetic data. **Rec B's** zero rests on independence (two different models
+agreeing on a mistake is genuinely hard) and should degrade gracefully. Rec B is
+also more *adversarially* robust: evading it means scoring low on two independent
+models at once.
+
+**Verdict: Rec B (87%) is the bankable 0%-FP choice; Rec B+ (91%) trades
+robustness for catch.** The clean way to recover B+'s catch *with* robustness is
+to replace the bare tool predicate with a **third independent signal** (another
+model, or requiring the 2nd model to at least lean attack) — a thread for the
+next round.
+
 ## Honest caveats (what the data does *not* tell us)
 
 - **Rec A's 99.9% is inflated.** It leans on a corpus artifact: "has a structural
