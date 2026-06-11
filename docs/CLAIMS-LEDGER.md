@@ -90,3 +90,24 @@ pre-registered accept/kill thresholds (runbook §2).
   blind spots.
 - "free-tier Gate 2" = fields every AGT deployment has; the ceiling integration
   is not worth it on this evidence.
+
+## Experiment 1 — Structural Auto-Block Ceiling (additive)
+
+Evidence: `docs/reports/exp1-structural-autoblock-report.md`,
+`artifacts/exp1-structural/`, harness `meta/harness/exp1-structural/`.
+Frozen-test synthetic-corpus, **labels-perfect ceiling** (governance labels are
+exact on synthetic data; not a production guarantee). No embedding model run —
+reuses the committed round-6 zero-FP decision.
+
+| Public claim | Evidence | Verdict |
+|---|---|---|
+| Fully-automated stack (embedding zero-FP ∨ R1) blocks 81% of attacks at 0% false-block, no human review. | `artifacts/exp1-structural/by-technique.json`, `by-benign.json` | deployable stack |
+| R1 (untrusted source + tool call) blocks 100% of tool_abuse, output_exfiltration, indirect_injection, data_boundary_abuse at 0% false-block. | `by-technique.json` | PASS (captain-obvious) |
+| R2 (sensitive-sink + non-user) is too broad: 100% false-block on high_entropy_structured_data and tool_policy_documentation, zero extra attacks → discarded. | `by-benign.json`, `verdicts.json` | rule rejected by safety bar |
+| Containment lifts the detection-capped families ≥30pt (tool_abuse +67, exfiltration +53). | `verdicts.json` | PASS |
+| Residual below 60% combined: prompt_leakage (needs IFC output-label), tool_result_injection (needs R1′ for tool-output), memory_poisoning (needs memory-write taint). | `verdicts.json`, report | named residual |
+
+### Wording guardrails
+- Call it the "labels-perfect ceiling"; real-world tracks labeling coverage.
+- R1 is auto-blockable because it fires on structural facts, never on text meaning.
+- Do not present R2-style rules as safe without per-benign measurement.

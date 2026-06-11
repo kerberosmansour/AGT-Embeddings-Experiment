@@ -1,0 +1,17 @@
+{
+  "R1": "trust_level==untrusted AND requires_tool_call",
+  "R2": "contains_sensitive_sink AND coarse_source!=user",
+  "R3": "untrusted AND requires_tool_call AND contains_sensitive_sink (strict subset of R1)",
+  "R4": "R1 OR R2 (deployed structural block)",
+  "allowed_rule_fields": [
+    "contains_sensitive_sink",
+    "requires_tool_call",
+    "source_type",
+    "trust_level"
+  ],
+  "combined": "embedding_zeroFP OR R4",
+  "forbidden_fields": [
+    "expected_action",
+    "risk_level"
+  ]
+}

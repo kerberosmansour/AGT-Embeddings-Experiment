@@ -118,6 +118,17 @@ Round-6 harness: `meta/harness/round6-cascade/`; artifacts:
 (Gate 0), `common.py` (shared scoring), `head.py`, `buckets.py`, `gate2.py`,
 per-milestone runners, `validate-round6-cascade.py`.
 
+### Experiment 1 — structural auto-block ceiling (built; `docs/reports/exp1-structural-autoblock-report.md`)
+
+Fully-automated stack = round-6 Gate-0 + kNN @ zero-FP **OR** deterministic
+structural rules (facts only, no text meaning). Headline: **embedding ∨ R1 = 81%
+catch @ 0% false-block**; R1 blocks the four action families at 100%; R2 found
+too-broad and discarded; residual = prompt_leakage / tool_result_injection /
+memory_poisoning. Labels-perfect synthetic ceiling. Harness:
+`meta/harness/exp1-structural/` (`rules.py`, `run_exp1_eval.py`,
+`validate-exp1.py`); artifacts: `artifacts/exp1-structural/`. No embedding model
+run — reuses committed round-6 zero-FP decisions.
+
 ## Environment
 
 - Python 3.14 (system) with `numpy`, `scikit-learn` installed; harness runs

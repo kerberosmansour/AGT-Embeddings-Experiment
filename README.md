@@ -71,6 +71,28 @@ the AGT-guaranteed fields capture the metadata value; the expensive integration
 adds ~0.1pt. All numbers remain synthetic-corpus research evidence, not
 production claims.
 
+### Experiment 1 — structural auto-block ceiling
+
+A follow-up (`docs/RUNBOOK-exp1-structural-autoblock.md`,
+`docs/reports/exp1-structural-autoblock-report.md`) measures a fully-automated,
+no-human-review stack: the round-6 Gate-0 + kNN embedding at the **zero-FP
+point**, OR'd with deterministic structural block rules that fire on facts
+(source trust, tool call, sensitive sink) — never on text meaning.
+
+| Stack | Catch | False-block | Note |
+|---|---:|---:|---|
+| embedding @ zero-FP alone | ~43% | 0% | text-manipulation families |
+| **embedding ∨ R1** (untrusted+tool) | **81%** | **0%** | R1 blocks the 4 action families at 100% |
+
+Findings: **R1** (untrusted source drives a tool call) deterministically blocks
+**100%** of tool_abuse, output_exfiltration, indirect_injection and
+data_boundary_abuse at **zero** false-positives — exactly the families detection
+capped on. A second plausible rule, **R2** (sensitive-sink + non-user), was
+measured as a **trap** (100% false-block on legitimate high-entropy data and
+tool-policy docs, zero extra attacks) and discarded. Residual: prompt_leakage,
+tool_result_injection, memory_poisoning need dedicated IFC/taint rules. All
+numbers are the labels-perfect synthetic ceiling, not a production guarantee.
+
 ## Method At A Glance
 
 The experiment uses the existing AGT Rust prompt-injection rules as the
