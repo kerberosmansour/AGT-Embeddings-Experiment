@@ -1,0 +1,11 @@
+{
+  "corpus_sha256": "33a02ac2b22e68970b3b808c5ba95bc119dc87dd93ae6dbc90546c074a5980ed",
+  "created_at": "2026-06-11T09:40:36+00:00",
+  "dependency_probe": {
+    "numpy": "2.4.6",
+    "sklearn": "1.9.0"
+  },
+  "dry_run": false,
+  "embedding_cache_key": "506141ba808df1c8",
+  "requirements_lock_sha256": "d8c799dc5d450ac75eec25dd7a16847935b421826fbb8bba2a8a5a03e7a6fc93"
+}

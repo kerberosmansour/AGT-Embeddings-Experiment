@@ -1,0 +1,41 @@
+{
+  "arm_C": {
+    "ceiling": 1.0,
+    "control": 0.1,
+    "floor": 10.0,
+    "rule": null
+  },
+  "beta_gate2_fpr_budget": 0.009,
+  "corpus_sha256": "33a02ac2b22e68970b3b808c5ba95bc119dc87dd93ae6dbc90546c074a5980ed",
+  "fail_closed_substitutions": {},
+  "feature_manifests": {
+    "ceiling": [
+      "calibrated_score",
+      "requires_tool_call",
+      "coarse_source",
+      "contains_sensitive_sink",
+      "source_type"
+    ],
+    "control": [
+      "calibrated_score"
+    ],
+    "floor": [
+      "calibrated_score",
+      "requires_tool_call",
+      "coarse_source"
+    ],
+    "rule": [
+      "requires_tool_call",
+      "coarse_source"
+    ]
+  },
+  "freeze_record_written_at": "2026-06-11T09:54:25+00:00",
+  "m3_freeze_sha256": "c76db2f9b123084b0ec71de0e213165f044aa33cd68a9dac064005f6fe022bd0",
+  "milestone": "m4-gate2",
+  "runtime": {
+    "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+    "python": "3.13.5"
+  },
+  "selected_on": "validation",
+  "test_scoring_started_at": "2026-06-11T09:54:25+00:00"
+}

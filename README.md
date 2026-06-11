@@ -48,6 +48,29 @@ The work is not proposing default auto-blocking. The embedding signal is an
 optional, default-off, auditable layer that can feed downstream policy or review
 routing.
 
+### Round-6 cascade update
+
+A follow-up round (`docs/RUNBOOK-round6-cascade-experiment.md`,
+`docs/reports/round6-cascade-report.md`) tested a four-stage cascade —
+de-obfuscation → trained head → conformal routing → governance Gate 2 — with
+pre-registered accept/kill thresholds. Headline results on the same frozen test
+split (round-4 rows above are kept, not superseded):
+
+| Approach | Catch rate | False positive rate | Notes |
+|---|---:|---:|---|
+| Embeddings at zero-FP point (round 4) | about `14%` | `0%` observed | superseded operating point, retained for comparison |
+| **Gate 0 de-obfuscation + zero-FP kNN** | **about `43%`** | `0%` observed | normalization in front of the unchanged round-4 scorer — 3× catch at zero FP |
+| Full cascade (free-tier Gate 2), end-to-end | about `64%` | about `0.9%` | every attack family caught (round-4's 0% families now 38–100%) |
+
+Decisive findings: (1) **Gate 0 normalization is the lever** — it triples
+zero-FP catch and eliminates round-4's two 0%-catch families (tool_abuse,
+prompt_leakage). (2) A **trained head does not beat kNN** at deployable FPR on
+this corpus. (3) The **two-gate independence assumption is refuted** (shared
+blind spots, miss-side overlap 2.76×). (4) **Free governance metadata ≈ full**:
+the AGT-guaranteed fields capture the metadata value; the expensive integration
+adds ~0.1pt. All numbers remain synthetic-corpus research evidence, not
+production claims.
+
 ## Method At A Glance
 
 The experiment uses the existing AGT Rust prompt-injection rules as the

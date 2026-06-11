@@ -46,3 +46,8 @@ corpus/round4/*-smoke.json
 corpus/round4/*-smoke.jsonl
 corpus/round4/*-smoke-summary.json
 corpus/round4/*-smoke-metrics.json
+
+# Round-6 cascade experiment
+.venv-round6/
+.cache/round6-embeddings/
+artifacts/round6-cascade/**/*.tmp

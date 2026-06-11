@@ -1,0 +1,85 @@
+{
+  "arms": {
+    "ceiling": {
+      "C": 1.0,
+      "end_to_end": {
+        "end_to_end_hard_fpr": 0.00803072625698324,
+        "end_to_end_recall": 0.6440217391304348,
+        "uncertain_attack_caught": 2370,
+        "uncertain_benign_flagged": 46
+      },
+      "threshold": 0.0032965397509398067
+    },
+    "control": {
+      "C": 0.1,
+      "end_to_end": {
+        "end_to_end_hard_fpr": 0.007506983240223464,
+        "end_to_end_recall": 0.6051630434782609,
+        "uncertain_attack_caught": 2227,
+        "uncertain_benign_flagged": 43
+      },
+      "threshold": 0.2725251016863893
+    },
+    "floor": {
+      "C": 10.0,
+      "end_to_end": {
+        "end_to_end_hard_fpr": 0.008729050279329608,
+        "end_to_end_recall": 0.6429347826086956,
+        "uncertain_attack_caught": 2366,
+        "uncertain_benign_flagged": 50
+      },
+      "threshold": 0.03634085630203353
+    },
+    "rule": {
+      "C": null,
+      "end_to_end": {
+        "end_to_end_hard_fpr": 0.0,
+        "end_to_end_recall": 0.16657608695652174,
+        "uncertain_attack_caught": 613,
+        "uncertain_benign_flagged": 0
+      },
+      "threshold": null
+    }
+  },
+  "ceiling_minus_floor_recall": 0.0010869565217391797,
+  "end_to_end_recall_ceiling": 0.6440217391304348,
+  "fail_closed_substitutions": {},
+  "floor_minus_control_recall": 0.037771739130434745,
+  "lane_shift_diagnostic": {
+    "test_uncertain": {
+      "attack": 2370,
+      "benign": 69,
+      "mean_cal_score": 0.9684998432880236,
+      "size": 2439
+    },
+    "validation_uncertain": {
+      "attack": 2529,
+      "benign": 106,
+      "mean_cal_score": 0.9737876433202985,
+      "size": 2635
+    }
+  },
+  "overlap_ratios": {
+    "ceiling": {
+      "fp_side": 3.977777777777778,
+      "miss_side": null,
+      "worse": 3.977777777777778
+    },
+    "control": {
+      "fp_side": 83.01449275362319,
+      "miss_side": 2.5326909841706815,
+      "worse": 83.01449275362319
+    },
+    "floor": {
+      "fp_side": 83.01449275362319,
+      "miss_side": 2.7647467036780013,
+      "worse": 83.01449275362319
+    }
+  },
+  "split": "test",
+  "verdict": {
+    "end_to_end_80_at_1pct_fpr": false,
+    "error_overlap_floor_le_1_5": false,
+    "floor_beats_control_by_5pt": false
+  }
+}

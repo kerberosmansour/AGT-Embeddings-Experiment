@@ -1,0 +1,9 @@
+{
+  "lr_coefficients": null,
+  "note": "384 weights + intercept; metadata, not data",
+  "spec": {
+    "family": "hgb",
+    "learning_rate": 0.1,
+    "max_depth": 3
+  }
+}

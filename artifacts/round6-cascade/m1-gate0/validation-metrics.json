@@ -1,0 +1,90 @@
+{
+  "adjacent_security_benign_fp": 0,
+  "attack_class_catch": {
+    "benign": 0.0,
+    "data_boundary_abuse": 0.6611111111111111,
+    "direct_override": 0.5886363636363636,
+    "memory_poisoning": 0.7916666666666666,
+    "output_exfiltration": 0.005555555555555556,
+    "prompt_leakage": 0.39090909090909093,
+    "tool_abuse": 0.509090909090909,
+    "tool_result_injection": 0.8888888888888888
+  },
+  "attack_recall": 0.5434782608695652,
+  "attack_recall_wilson_95": {
+    "estimate": 0.5434782608695652,
+    "lower": 0.5248476704464565,
+    "successes": 1500,
+    "total": 2760,
+    "upper": 0.5619879905622635
+  },
+  "attack_total": 2760,
+  "base_rate_precision_1000_benign_per_attack": 1.0,
+  "base_rate_precision_100_benign_per_attack": 1.0,
+  "benign_fp_rate": 0.0,
+  "benign_fp_rate_wilson_95": {
+    "estimate": 0.0,
+    "lower": 0.0,
+    "successes": 0,
+    "total": 4128,
+    "upper": 0.0009297207695356613
+  },
+  "benign_obfuscation_control_fp": {},
+  "benign_total": 4128,
+  "bypass_class_catch": {
+    "diacritics": {
+      "catch_rate": 0.7214285714285714,
+      "caught": 202,
+      "total": 280
+    },
+    "encoding": {
+      "catch_rate": 0.3476190476190476,
+      "caught": 292,
+      "total": 840
+    },
+    "homoglyph": {
+      "catch_rate": 0.7107142857142857,
+      "caught": 199,
+      "total": 280
+    },
+    "leet_spacing": {
+      "catch_rate": 0.6535714285714286,
+      "caught": 366,
+      "total": 560
+    },
+    "multilingual": {
+      "catch_rate": 0.3333333333333333,
+      "caught": 80,
+      "total": 240
+    },
+    "plain": {
+      "catch_rate": 0.7214285714285714,
+      "caught": 202,
+      "total": 280
+    },
+    "rot13": {
+      "catch_rate": 0.5678571428571428,
+      "caught": 159,
+      "total": 280
+    }
+  },
+  "false_positives_per_1k_benign": 0.0,
+  "fn": 1260,
+  "fp": 0,
+  "k": 5,
+  "margin_summary": {
+    "max": 0.21179813146591187,
+    "mean": 0.019426288083195686,
+    "median": 0.011048763990402222,
+    "min": -0.12771844863891602,
+    "p05": -0.10935286432504654,
+    "p95": 0.16835643351078033,
+    "stdev": 0.07864724099636078
+  },
+  "pr_auc": 0.9380373141074165,
+  "roc_auc": 0.9601113112290756,
+  "split": "validation",
+  "threshold_tau": 0.08294188976287842,
+  "tn": 4128,
+  "tp": 1500
+}

@@ -304,3 +304,13 @@ The strongest current product readout is:
 
 The next AgentBus tasks should be PR 1 oriented. PR 2 should remain blocked
 until PR 1's fixture and methodology are reviewed.
+
+## Round-6 evidence pointer (additive)
+
+The round-6 cascade experiment (`docs/reports/round6-cascade-report.md`)
+supersedes the round-4 single-operating-point framing for PR 2 discussion: the
+shippable win is **Gate 0 de-obfuscation** (3× zero-FP catch, fixes the 0%
+families), with a floor-tier governance Gate 2 as an advisory FP-reducer. The
+trained-head and ceiling-metadata directions are documented negative results and
+should not anchor PR 2. PR 2 remains blocked on PR 1 review and real-traffic
+validation.

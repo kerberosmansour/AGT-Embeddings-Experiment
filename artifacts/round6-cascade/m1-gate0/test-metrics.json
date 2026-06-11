@@ -1,0 +1,121 @@
+{
+  "adjacent_security_benign_fp": 0,
+  "attack_class_catch": {
+    "benign": 0.0,
+    "data_boundary_abuse": 0.4863636363636364,
+    "direct_override": 0.6295454545454545,
+    "indirect_injection": 0.2916666666666667,
+    "memory_poisoning": 0.4772727272727273,
+    "output_exfiltration": 0.471875,
+    "prompt_leakage": 0.0,
+    "tool_abuse": 0.3333333333333333,
+    "tool_result_injection": 0.37222222222222223
+  },
+  "attack_recall": 0.4328804347826087,
+  "attack_recall_wilson_95": {
+    "estimate": 0.4328804347826087,
+    "lower": 0.41695031222866297,
+    "successes": 1593,
+    "total": 3680,
+    "upper": 0.4489505400414171
+  },
+  "attack_total": 3680,
+  "base_rate_precision_1000_benign_per_attack": 1.0,
+  "base_rate_precision_100_benign_per_attack": 1.0,
+  "benign_fp_rate": 0.0,
+  "benign_fp_rate_wilson_95": {
+    "estimate": 0.0,
+    "lower": 0.0,
+    "successes": 0,
+    "total": 5728,
+    "upper": 0.0006701962795538472
+  },
+  "benign_obfuscation_control_fp": {},
+  "benign_total": 5728,
+  "bypass_class_catch": {
+    "chunked_leet": {
+      "catch_rate": 0.0,
+      "caught": 0,
+      "total": 200
+    },
+    "compact_leet": {
+      "catch_rate": 0.0,
+      "caught": 0,
+      "total": 200
+    },
+    "compact_plain": {
+      "catch_rate": 0.0,
+      "caught": 0,
+      "total": 200
+    },
+    "diacritics": {
+      "catch_rate": 0.6583333333333333,
+      "caught": 158,
+      "total": 240
+    },
+    "encoding": {
+      "catch_rate": 0.3527777777777778,
+      "caught": 254,
+      "total": 720
+    },
+    "homoglyph": {
+      "catch_rate": 0.775,
+      "caught": 186,
+      "total": 240
+    },
+    "leet_letter_spaced": {
+      "catch_rate": 1.0,
+      "caught": 200,
+      "total": 200
+    },
+    "leet_spacing": {
+      "catch_rate": 0.7208333333333333,
+      "caught": 346,
+      "total": 480
+    },
+    "letter_spaced": {
+      "catch_rate": 1.0,
+      "caught": 200,
+      "total": 200
+    },
+    "multilingual": {
+      "catch_rate": 0.0,
+      "caught": 0,
+      "total": 320
+    },
+    "plain": {
+      "catch_rate": 0.6583333333333333,
+      "caught": 158,
+      "total": 240
+    },
+    "rot13": {
+      "catch_rate": 0.37916666666666665,
+      "caught": 91,
+      "total": 240
+    },
+    "separator_spaced": {
+      "catch_rate": 0.0,
+      "caught": 0,
+      "total": 200
+    }
+  },
+  "false_positives_per_1k_benign": 0.0,
+  "fn": 2087,
+  "fp": 0,
+  "k": 5,
+  "margin_summary": {
+    "max": 0.21007347106933594,
+    "mean": -0.010730600915849209,
+    "median": -0.013477921485900879,
+    "min": -0.15862548351287842,
+    "p05": -0.13959342241287231,
+    "p95": 0.13519880175590515,
+    "stdev": 0.08143815398216248
+  },
+  "pr_auc": 0.9341475556190171,
+  "roc_auc": 0.946962266782548,
+  "split": "test",
+  "threshold_tau": 0.08294188976287842,
+  "tn": 5728,
+  "tp": 1593
+}

@@ -64,3 +64,29 @@ See `docs/methodology/agt-upstream-baseline-refresh.md`.
 | Ready for default blocking. | Review-load budget, policy evaluation, and false-positive proof at realistic prevalence. |
 | Governance integration is ready. | Validation split still has critical allows; needs policy/harness iteration plus independent audit. |
 | Upstream optional embedding feature is ready. | PR 1 benchmark fixture review plus documented generation methodology and fresh AGT baseline pin. |
+
+## Round-6 Cascade Claims (additive; round-4 rows above unchanged)
+
+Evidence: `docs/reports/round6-cascade-report.md`,
+`artifacts/round6-cascade/m1..m5/`, harness `meta/harness/round6-cascade/`.
+All numbers are frozen-test synthetic-corpus research evidence with
+pre-registered accept/kill thresholds (runbook §2).
+
+| Public claim | Evidence | §2 verdict |
+|---|---|---|
+| De-obfuscation in front of scoring triples zero-FP catch (14.2%→43.3%) with 0 benign-control FPs. | `m1-gate0/test-metrics.json` | M1 partial accept |
+| Every attack family is caught end-to-end (round-4's tool_abuse 0%→37.7%, prompt_leakage 0%→100%). | `m5-summary/summary-metrics.json` per_family_end_to_end | M5 per-family floors PASS |
+| A trained head does not beat kNN at deployable FPR on this corpus. | `m2-head/test-metrics.json` dominance grid | M2 head NOT SUPPORTED |
+| Head generalizes to unseen families (LOFO median 71.6%, 0 families <5%). | `m2-head/lofo-metrics.json` | M2 LOFO PASS |
+| Conformal pass-lane coverage transfers (benign escape 1.20%, 1% in Wilson); review queue 5.07% precise at 1:1000. | `m3-buckets/test-metrics.json` | M3 ACCEPT |
+| The two-gate independence assumption is refuted (miss-side overlap 2.76×). | `m4-gate2/test-metrics.json` overlap_ratios | M4 independence NOT MET |
+| Free AGT metadata ≈ full metadata (floor +3.8pt over score; ceiling +0.1pt over floor). | `m4-gate2/test-metrics.json` deltas | M4 floor-control NOT MET (real but <5pt) |
+| End-to-end 80% catch @ ≤1% FPR is structurally unreachable (ceiling 64.4%). | `m4-gate2/test-metrics.json` | M4 headline NOT MET |
+
+### Round-6 wording guardrails
+- The cascade is a detection/triage layer **inside** AGT's deterministic
+  governance boundary — never call it the security boundary.
+- Do **not** claim the two gates are independent; on this corpus they share
+  blind spots.
+- "free-tier Gate 2" = fields every AGT deployment has; the ceiling integration
+  is not worth it on this evidence.
