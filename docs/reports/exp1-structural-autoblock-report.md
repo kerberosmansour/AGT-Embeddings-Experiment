@@ -1,9 +1,9 @@
 # Experiment 1 — Structural Auto-Block Ceiling
 
-**Bottom line:** a fully-automated, **no-human-review** filter blocks **81% of
-prompt-injection attacks at 0% false-positives** on our test set — up from **14%
-two experiments ago**. It's promising and low-noise. The figures still need more
-data and independent review before any production claim.
+**Key findings:** a fully-automated, **no-human-review** filter blocks **43% of prompt-injection attacks at 0% false-positives** on our test set — up from **14%** two experiments ago, and up to **81%** with an additional preventative rule (Note: More data is needed to verify the FP rate for the 81% claim).
+
+The controls are promising and low-noise. 
+The figures still need more data and independent review before any production claim.
 
 ## The story in three numbers
 
@@ -11,7 +11,7 @@ data and independent review before any production claim.
 |---|---|---:|---:|
 | Round 4 | kNN embedding detector, alone | 14% | 0% |
 | Round 6 | + **Gate-0 normalizer** (clean the text first) | **43%** | 0% |
-| **This one** | + **R1** structural rule (block on facts) | **81%** | **0%** |
+| **Current Round (7)** | + **R1** structural rule (block on facts) | **81%** | **0%** |
 
 *Frozen synthetic test set (9,408 rows), detector at its conservative
 zero-false-positive setting. AGT = Microsoft's Agent Governance Toolkit, where
