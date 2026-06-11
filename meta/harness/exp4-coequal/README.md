@@ -35,6 +35,23 @@ model's honest threshold — earlier "100%" claims were test-derived or measured
 ```
 .venv-round6/bin/python meta/harness/exp4-coequal/run_coequal.py
 ```
-Writes `artifacts/exp4-coequal/`. The good-news follow-up (does the **new**
-normalizer from #10 raise the ensemble bar?) is measured separately —
-see `meta/harness/exp4-coequal/run_coequal_newnorm.py`.
+Writes `artifacts/exp4-coequal/`.
+
+## Compounding follow-up — does the #10 normalizer raise the ensemble bar?
+
+**Yes.** Re-running the *whole* validation-frozen co-equal ensemble with the
+extended (#10) normalizer — re-embed both signals, **re-train the head** on the
+new-normalized embeddings, re-select thresholds on validation, score test once:
+
+| ensemble (validation-frozen, 0% FP) | catch |
+|---|---:|
+| old normalizer | 87.2% |
+| **new (#10) normalizer** | **88.7%** |
+
+**+1.5 points for free, at 0% FP** — the normalizer gain compounds through the
+ensemble. `tool_result_injection` rose 62.8% → 83.9% (the new encoding decoders
+help it directly). Honest, not test-mined.
+
+Run: `.venv-round6/bin/python meta/harness/exp4-coequal/run_coequal_newnorm.py`
+(re-embeds + re-trains the head; writes `artifacts/exp4-coequal/newnorm-metrics.json`).
+
