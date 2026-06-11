@@ -71,8 +71,18 @@ _CONFUSABLES = {
 # Leet substitution map (applied only under the token guard below).
 _LEET = {"0": "o", "1": "i", "3": "e", "4": "a", "5": "s", "7": "t", "@": "a", "$": "s"}
 
+# Invisible / format characters stripped before detection. Covers zero-width
+# joiners, the soft hyphen, AND the bidirectional override/embedding/isolate
+# ranges (the "Trojan Source" class: LRE/RLE/PDF/LRO/RLO and LRI/RLI/FSI/PDI),
+# which can visually reorder text without changing the codepoint stream. This
+# matches AGT's `should_strip_from_detection` coverage and was a gap in the
+# original research normalizer.
 _ZERO_WIDTH = dict.fromkeys(
-    [0x200B, 0x200C, 0x200D, 0x2060, 0xFEFF, 0x00AD, 0x180E, 0x200E, 0x200F], None
+    [0x200B, 0x200C, 0x200D, 0xFEFF, 0x00AD, 0x180E]
+    + list(range(0x200E, 0x2010))   # LRM, RLM
+    + list(range(0x202A, 0x202F))   # bidi embedding/override: LRE RLE PDF LRO RLO
+    + list(range(0x2060, 0x2070)),  # word-joiner, invisible operators, bidi isolates (LRI RLI FSI PDI)
+    None,
 )
 
 # A small fixed English marker set used ONLY as a generic "did this decode make
