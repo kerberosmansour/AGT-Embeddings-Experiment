@@ -1,0 +1,7 @@
+{
+  "head_0p1pct_val_fpr": 0.9762867897370724,
+  "head_zerofp_strict": 0.98204549,
+  "knn_zerofp": 0.08294189,
+  "rule": "block if (knn>knn_zfp) OR (head>head_threshold) OR (untrusted AND tool)",
+  "selected_on": "validation"
+}
