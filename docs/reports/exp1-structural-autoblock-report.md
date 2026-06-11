@@ -1,15 +1,64 @@
 # Experiment 1 — Structural Auto-Block Ceiling
 
+## Background — the problem and the two controls (read this first)
+
+This report assumes no prior knowledge of the earlier experiments. If you already
+know what the Gate-0 normalizer and the kNN embedding detector are, skip ahead.
+
+**The threat — prompt injection.** An AI agent reads text from many places: the
+user, but also web pages, documents, emails, and the outputs of tools it calls.
+*Prompt injection* is when attacker-controlled text hidden in one of those sources
+tricks the agent into doing something it shouldn't — leak its instructions, call a
+dangerous tool, exfiltrate data. The defender's job is to stop that without
+blocking the legitimate traffic, which is the vast majority. (AGT — Microsoft's
+Agent Governance Toolkit — is the layer that sits between an agent and its tools
+and is where these controls would live.)
+
+**Control A — the embedding / kNN detector (catching attacks by *meaning*).** One
+way to spot an injection is by what the text *means*. We turn each request into an
+**embedding** — a list of numbers (a vector) that captures its meaning — and
+compare it against a bank of known attack and benign examples. If a request's
+vector sits closest to known *attacks*, we flag it. That nearest-neighbour
+comparison is the **kNN** (k-nearest-neighbours) part. It is a probabilistic,
+meaning-based detector: good at catching things that *look like* known attacks,
+but it can be fooled by disguises and it makes mistakes, so we run it at a
+conservative **zero-false-positive setting** — it only speaks up when it's
+confident, and stays silent otherwise.
+
+**Control B — the Gate-0 normalizer (cleaning the text *before* detection).**
+Earlier research, and our own round-4 results, showed attackers *disguise*
+injections — `1gn0re` instead of "ignore", invisible characters, letter spacing,
+look-alike letters, base64. A disguised attack looks nothing like a known attack
+to the embedding, so it slips past. **Gate 0 is a deterministic cleanup step that
+runs first:** it un-disguises the text (fixes leetspeak, strips hidden characters,
+decodes, collapses spacing) before the detector ever sees it. Our analysis
+predicted this should help, and **round 6 confirmed it: putting Gate-0
+normalization in front of the *same* kNN detector tripled its zero-false-positive
+catch, from 14% to 43%.**
+
+**This experiment — adding deterministic rules.** Detection, even after
+normalization, hit a ceiling: it simply cannot catch some attack types no matter
+how the threshold is tuned. So we asked a different question — instead of judging
+*meaning*, can we **block on facts**: who sent the text, and what is it trying to
+do? We looked for a small set of simple rules we could set to auto-block with
+high (not perfect) confidence, with no human review, and measured each one. One
+rule — **R1** — took the combined catch from **43% to 81%**. The rest of this
+report is what we found, why R1 works, and where it doesn't.
+
+The progression in one line: **round 4** kNN alone ≈14% → **round 6** add Gate-0
+normalizer ≈43% → **this experiment** add structural rules ≈81% (all at ~0%
+false-positives, on synthetic data).
+
+---
+
 ## Executive summary
 
 We measured a **fully-automated, no-human-review** prompt-injection defense and
 broke the results down by control and by attack technique. The stack is two
-cheap, deterministic layers OR'd together:
-
-1. **Gate-0 normalizer + kNN embedding, tuned to zero false-positives** (quiet
-   but certain), and
-2. **R1**, a structural rule: *block any tool action triggered by untrusted
-   content* — it reads provenance and action, never the text.
+cheap, deterministic layers OR'd together: **(1)** the Gate-0 normalizer + kNN
+embedding tuned to zero false-positives (quiet but certain), and **(2) R1**, a
+structural rule — *block any tool action triggered by untrusted content* — which
+reads provenance and action, never the text.
 
 **Result on the frozen test split: 81% of attacks blocked at 0% false-block.**
 Gate-0 + embedding alone gets ~43%; adding R1 takes it to 81%, and R1 blocks the
