@@ -87,11 +87,21 @@ point**, OR'd with deterministic structural block rules that fire on facts
 Findings: **R1** (untrusted source drives a tool call) deterministically blocks
 **100%** of tool_abuse, output_exfiltration, indirect_injection and
 data_boundary_abuse at **zero** false-positives — exactly the families detection
-capped on. A second plausible rule, **R2** (sensitive-sink + non-user), was
+capped on. R1 reads only provenance + action (not text), so it is
+language-proof. A second plausible rule, **R2** (sensitive-sink + non-user), was
 measured as a **trap** (100% false-block on legitimate high-entropy data and
 tool-policy docs, zero extra attacks) and discarded. Residual: prompt_leakage,
-tool_result_injection, memory_poisoning need dedicated IFC/taint rules. All
-numbers are the labels-perfect synthetic ceiling, not a production guarantee.
+tool_result_injection, memory_poisoning need dedicated IFC/taint rules.
+
+Honest framing: **0%→~43%** (Gate-0 normalization) is the solid, defensible step;
+**~43%→81%** (R1 containment) is promising but provisional — R1's 0% false-block
+holds only because the benign `(untrusted + tool-call)` quadrant is **empty in
+this corpus**, which more realistic data will fill. Multilingual attacks (320 in
+test) expose the limit: detection catches 0%, R1 recovers 25%, 75% still escape.
+All numbers are the labels-perfect synthetic ceiling and need more data plus
+independent verification. Scope is **prompt injection only** — one of the six
+*AI Agent Traps* categories — but the result is enough to show that maintaining
+and expanding this corpus, and using these deterministic controls, is worthwhile.
 
 ## Method At A Glance
 

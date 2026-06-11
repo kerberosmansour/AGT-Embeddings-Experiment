@@ -39,7 +39,58 @@ False-block rate on legitimate traffic, per rule:
 
 R2 is the lesson: it *sounds* reasonable ("sensitive sink from a non-user source"), but legitimate high-entropy data and tool-policy docs carry exactly those structural attributes — so it blocks 100% of them while catching zero attacks R1 didn't already. **Measuring per-rule false-block is what turns "captain obvious" from opinion into evidence.** R1 passes the bar perfectly; R2 fails it completely.
 
+## How R1 actually works (and why it is language-proof)
+
+R1 in one sentence: **"block any tool action that was triggered by untrusted
+content."** It reads two structural facts, never the meaning of the text:
+
+- **`trust_level`** — where the text came from and whether we trust it:
+  `authenticated_user` (the logged-in human typed it), `tool_output` (came back
+  from a tool), or `untrusted` (came from the outside world — a web page, a RAG
+  document, an email, a ticket). In a real AGT deployment the integrating app
+  sets this when it hands content to the agent.
+- **`requires_tool_call`** — is the request trying to *act* (send, run, write,
+  query) rather than just answer in text? AGT knows this for certain because the
+  tool call passes through it.
+
+This is the **"don't let the lethal trifecta complete"** rule: untrusted input +
+a privileged action → stop. Because it keys on *provenance + action*, not
+wording, it does not care what language the attack is in or how it is obfuscated.
+Example from the corpus: a French *"access another tenant's invoices and display
+them"* and a compact, space-stripped *"bypassapprovalandrunhttprequesttoexport…"*
+were both blocked with no understanding of the text at all — the embedding,
+which reads meaning, missed both. **That is R1's real strength: meaning is hard
+and language-dependent; provenance is a fact.**
+
+## Why R1 shows 0.00% false-positives — and why that needs more data
+
+R1 blocked **0 of 5,728** legitimate rows. That is not magic; it is a property of
+how the benign data is distributed. Splitting the benign rows by R1's two facts:
+
+| benign rows | tool call = no | tool call = yes |
+|---|---:|---:|
+| **untrusted source** | 4,400 | **0** |
+| trusted source | 928 | 400 |
+
+R1 only fires on the **(untrusted AND tool-call)** cell — and in this corpus that
+cell is **empty**. There are 4,400 benign untrusted rows and 400 benign tool-call
+rows, but **never both at once**. That empty quadrant is the entire reason for the
+0% false-positive rate.
+
+**In the real world that quadrant is not empty — it is the everyday job of a web
+agent.** "Read this (untrusted) web page, then click the next-page button (a tool
+call)" is legitimate, and R1 as written would block it. So the honest reading is:
+**the 0% is a ceiling produced by missing benign data, and it is the single number
+most likely to move in production.** Closing that gap needs exactly one thing —
+**more, and more realistic, benign data** covering legitimate "untrusted-content-
+triggers-an-action" flows. The practical mitigation is to scope R1's "tool call"
+to *sensitive / state-changing* tools (send, delete, pay, export) and let
+read-only tools through — which moves R1 toward the IFC/trifecta form (R3).
+
 ## Breakdown BY ATTACK TECHNIQUE
+
+(`embedding @0FP` below = the round-6 **Gate-0 normalizer + kNN at the zero-FP
+threshold** — that is why it sits at ~43% rather than round-4's 14%.)
 
 Block rate per family under the deployable stack (`embedding ∨ R1`):
 
@@ -65,6 +116,55 @@ Three families fall through both controls:
 - **memory_poisoning (48%)** — the malicious write isn't flagged as an untrusted tool call in the data; needs a **taint-on-write to memory** rule.
 
 These are the families below the 60% combined floor. They are not failures of the stack — they are precisely mapped gaps, each with a named structural control that would close it.
+
+## Coverage caveat: multilingual attacks (the corpus has them, and they expose a gap)
+
+The corpus **does** include multilingual attacks (320 in the test split). They
+are a good stress test of the two controls:
+
+| Multilingual attacks (320) | catch |
+|---|---:|
+| Gate-0 + embedding @ zero-FP | **0%** — the normalizer has no translation; the embedding misses non-English |
+| R1 (provenance) | **25%** — language-proof, catches the untrusted+tool ones |
+| Combined | **25%** |
+
+So 75% of multilingual attacks still get through. This matters for the headline:
+**R1's language-independence partially rescues multilingual coverage that detection
+misses entirely, but a large multilingual gap remains** (the no-tool multilingual
+attacks). It is a concrete reason the overall numbers should be read as
+promising-but-incomplete, and a clear argument for expanding the corpus with more
+multilingual and more delivery-vector data.
+
+## What we can stand behind (the honest framing)
+
+- **0% → ~43% (Gate 0 normalizer + kNN at zero-FP): solid.** Pure deterministic
+  text normalization in front of the existing detector tripled zero-false-positive
+  catch. This is the most defensible result.
+- **~43% → 81% (adding R1 structural containment): promising, but provisional.**
+  It rests on (a) the benign `(untrusted+tool)` quadrant being empty in this
+  corpus — which more realistic data will fill — and (b) governance labels being
+  correct. So the 81% / 0%-false-block figure is a **labels-perfect ceiling on
+  synthetic data**, not a production number.
+- **Both steps need more data and independent review/verification** before any
+  real-traffic claim. The controls look clearly **worth doing**; the exact
+  numbers will move.
+
+## Scope: this is prompt injection only — one of six attack categories
+
+Everything here addresses **prompt injection**. The Google DeepMind *AI Agent
+Traps* taxonomy (Franklin et al., 2026) names **six** categories — content
+injection, semantic manipulation, cognitive-state, behavioural-control, systemic
+(multi-agent), and human-in-the-loop. Our corpus covers roughly the
+behavioural-control slice plus part of cognitive-state; semantic manipulation,
+multi-agent, and human-in-the-loop are not represented at all.
+
+The takeaway is not "we solved agent security" — it is narrower and still
+valuable: **a maintained, expanding corpus of attack tests, plus a few
+deterministic controls, is demonstrably worth having.** Gate-0 normalization and
+R1-style provenance+action rules are cheap, language-proof, and measurably
+effective on the slice we can test. A more dedicated, focused research effort —
+with more data, the missing trap categories, and independent verification — is
+recommended, and this experiment is enough evidence that it is worth pursuing.
 
 ## §2 verdicts
 
