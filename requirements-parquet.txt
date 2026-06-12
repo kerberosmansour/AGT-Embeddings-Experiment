@@ -1,0 +1,8 @@
+# Parquet tooling for research/data intake.
+# Install with:
+#   python3.13 -m venv .venv-parquet
+#   .venv-parquet/bin/pip install -r requirements-parquet.txt
+pyarrow==24.0.0
+pandas==3.0.3
+polars==1.41.2
+duckdb==1.5.3

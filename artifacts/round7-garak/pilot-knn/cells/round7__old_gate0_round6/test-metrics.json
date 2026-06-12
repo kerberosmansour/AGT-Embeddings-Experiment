@@ -1,0 +1,1815 @@
+{
+  "attack_recall": 0.08205128205128205,
+  "attack_recall_wilson_95": {
+    "estimate": 0.08205128205128205,
+    "lower": 0.05113473050364543,
+    "successes": 16,
+    "total": 195,
+    "upper": 0.12911670716567017
+  },
+  "attack_total": 195,
+  "base_rate_precision_1000_benign_per_attack": 1.0,
+  "base_rate_precision_100_benign_per_attack": 1.0,
+  "benign_false_positives_by_subclass": {},
+  "benign_fp_rate": 0.0,
+  "benign_fp_rate_wilson_95": {
+    "estimate": 0.0,
+    "lower": 3.469446951953614e-18,
+    "successes": 0,
+    "total": 96,
+    "upper": 0.038475587857675686
+  },
+  "benign_total": 96,
+  "breakdowns": {
+    "attack_class": {
+      "agentic_tool_exploit": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 15,
+          "upper": 0.20388330103584862
+        },
+        "attack_total": 15,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 15,
+        "fp": 0,
+        "tn": 0,
+        "tp": 0
+      },
+      "benign": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "attack_total": 0,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 3.469446951953614e-18,
+          "successes": 0,
+          "total": 96,
+          "upper": 0.038475587857675686
+        },
+        "benign_total": 96,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "tn": 96,
+        "tp": 0
+      },
+      "data_boundary_abuse": {
+        "attack_recall": 0.045454545454545456,
+        "attack_recall_wilson_95": {
+          "estimate": 0.045454545454545456,
+          "lower": 0.00806942762126385,
+          "successes": 1,
+          "total": 22,
+          "upper": 0.21798045838657332
+        },
+        "attack_total": 22,
+        "base_rate_precision_1000_benign_per_attack": 1.0,
+        "base_rate_precision_100_benign_per_attack": 1.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 21,
+        "fp": 0,
+        "tn": 0,
+        "tp": 1
+      },
+      "direct_override": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": 0.0,
+          "lower": 2.7755575615628914e-17,
+          "successes": 0,
+          "total": 12,
+          "upper": 0.24249400665524085
+        },
+        "attack_total": 12,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 12,
+        "fp": 0,
+        "tn": 0,
+        "tp": 0
+      },
+      "indirect_injection": {
+        "attack_recall": 0.07142857142857142,
+        "attack_recall_wilson_95": {
+          "estimate": 0.07142857142857142,
+          "lower": 0.012722215247890939,
+          "successes": 1,
+          "total": 14,
+          "upper": 0.31468704424151117
+        },
+        "attack_total": 14,
+        "base_rate_precision_1000_benign_per_attack": 1.0,
+        "base_rate_precision_100_benign_per_attack": 1.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 13,
+        "fp": 0,
+        "tn": 0,
+        "tp": 1
+      },
+      "jailbreak": {
+        "attack_recall": 0.2,
+        "attack_recall_wilson_95": {
+          "estimate": 0.2,
+          "lower": 0.05668215145437519,
+          "successes": 2,
+          "total": 10,
+          "upper": 0.5098375284633583
+        },
+        "attack_total": 10,
+        "base_rate_precision_1000_benign_per_attack": 1.0,
+        "base_rate_precision_100_benign_per_attack": 1.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 8,
+        "fp": 0,
+        "tn": 0,
+        "tp": 2
+      },
+      "memory_poisoning": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": 0.0,
+          "lower": 2.7755575615628914e-17,
+          "successes": 0,
+          "total": 12,
+          "upper": 0.24249400665524085
+        },
+        "attack_total": 12,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 12,
+        "fp": 0,
+        "tn": 0,
+        "tp": 0
+      },
+      "output_exfiltration": {
+        "attack_recall": 0.045454545454545456,
+        "attack_recall_wilson_95": {
+          "estimate": 0.045454545454545456,
+          "lower": 0.00806942762126385,
+          "successes": 1,
+          "total": 22,
+          "upper": 0.21798045838657332
+        },
+        "attack_total": 22,
+        "base_rate_precision_1000_benign_per_attack": 1.0,
+        "base_rate_precision_100_benign_per_attack": 1.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 21,
+        "fp": 0,
+        "tn": 0,
+        "tp": 1
+      },
+      "package_hallucination": {
+        "attack_recall": 0.1,
+        "attack_recall_wilson_95": {
+          "estimate": 0.1,
+          "lower": 0.017876213095072896,
+          "successes": 1,
+          "total": 10,
+          "upper": 0.4041500267952385
+        },
+        "attack_total": 10,
+        "base_rate_precision_1000_benign_per_attack": 1.0,
+        "base_rate_precision_100_benign_per_attack": 1.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 9,
+        "fp": 0,
+        "tn": 0,
+        "tp": 1
+      },
+      "prompt_leakage": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 22,
+          "upper": 0.14865487460862087
+        },
+        "attack_total": 22,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 22,
+        "fp": 0,
+        "tn": 0,
+        "tp": 0
+      },
+      "terminal_escape_injection": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 22,
+          "upper": 0.14865487460862087
+        },
+        "attack_total": 22,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 22,
+        "fp": 0,
+        "tn": 0,
+        "tp": 0
+      },
+      "tool_abuse": {
+        "attack_recall": 0.7,
+        "attack_recall_wilson_95": {
+          "estimate": 0.7,
+          "lower": 0.39677814746114537,
+          "successes": 7,
+          "total": 10,
+          "upper": 0.8922087325936989
+        },
+        "attack_total": 10,
+        "base_rate_precision_1000_benign_per_attack": 1.0,
+        "base_rate_precision_100_benign_per_attack": 1.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 3,
+        "fp": 0,
+        "tn": 0,
+        "tp": 7
+      },
+      "tool_result_injection": {
+        "attack_recall": 0.125,
+        "attack_recall_wilson_95": {
+          "estimate": 0.125,
+          "lower": 0.04344334080123444,
+          "successes": 3,
+          "total": 24,
+          "upper": 0.31003881270500067
+        },
+        "attack_total": 24,
+        "base_rate_precision_1000_benign_per_attack": 1.0,
+        "base_rate_precision_100_benign_per_attack": 1.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 21,
+        "fp": 0,
+        "tn": 0,
+        "tp": 3
+      }
+    },
+    "benign_subclass": {
+      "benign_carrier_document": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "attack_total": 0,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 8,
+          "upper": 0.32440756488388023
+        },
+        "benign_total": 8,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "tn": 8,
+        "tp": 0
+      },
+      "benign_emoji_variation_selector": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "attack_total": 0,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 4,
+          "upper": 0.4898908364545973
+        },
+        "benign_total": 4,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "tn": 4,
+        "tp": 0
+      },
+      "benign_encoded_asset": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "attack_total": 0,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 44,
+          "upper": 0.08029560375848066
+        },
+        "benign_total": 44,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "tn": 44,
+        "tp": 0
+      },
+      "benign_multistep_tool_use": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "attack_total": 0,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 4,
+          "upper": 0.4898908364545973
+        },
+        "benign_total": 4,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "tn": 4,
+        "tp": 0
+      },
+      "benign_package_install": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "attack_total": 0,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 4,
+          "upper": 0.4898908364545973
+        },
+        "benign_total": 4,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "tn": 4,
+        "tp": 0
+      },
+      "benign_roleplay_creative": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "attack_total": 0,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 4,
+          "upper": 0.4898908364545973
+        },
+        "benign_total": 4,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "tn": 4,
+        "tp": 0
+      },
+      "benign_security_discussion": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "attack_total": 0,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 4,
+          "upper": 0.4898908364545973
+        },
+        "benign_total": 4,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "tn": 4,
+        "tp": 0
+      },
+      "benign_terminal_output": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "attack_total": 0,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 4,
+          "upper": 0.4898908364545973
+        },
+        "benign_total": 4,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "tn": 4,
+        "tp": 0
+      },
+      "benign_tool_use": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "attack_total": 0,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 4,
+          "upper": 0.4898908364545973
+        },
+        "benign_total": 4,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "tn": 4,
+        "tp": 0
+      },
+      "detector_code_fixture": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "attack_total": 0,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 4,
+          "upper": 0.4898908364545973
+        },
+        "benign_total": 4,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "tn": 4,
+        "tp": 0
+      },
+      "legitimate_imperative_request": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "attack_total": 0,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 4,
+          "upper": 0.4898908364545973
+        },
+        "benign_total": 4,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "tn": 4,
+        "tp": 0
+      },
+      "not_applicable": {
+        "attack_recall": 0.08205128205128205,
+        "attack_recall_wilson_95": {
+          "estimate": 0.08205128205128205,
+          "lower": 0.05113473050364543,
+          "successes": 16,
+          "total": 195,
+          "upper": 0.12911670716567017
+        },
+        "attack_total": 195,
+        "base_rate_precision_1000_benign_per_attack": 1.0,
+        "base_rate_precision_100_benign_per_attack": 1.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 179,
+        "fp": 0,
+        "tn": 0,
+        "tp": 16
+      },
+      "quoted_injection_example": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "attack_total": 0,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 4,
+          "upper": 0.4898908364545973
+        },
+        "benign_total": 4,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "tn": 4,
+        "tp": 0
+      },
+      "tool_policy_documentation": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "attack_total": 0,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 4,
+          "upper": 0.4898908364545973
+        },
+        "benign_total": 4,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "tn": 4,
+        "tp": 0
+      }
+    },
+    "bypass_class": {
+      "ansi_escape": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": 0.0,
+          "lower": 2.7755575615628914e-17,
+          "successes": 0,
+          "total": 6,
+          "upper": 0.3903342879021653
+        },
+        "attack_total": 6,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 4,
+          "upper": 0.4898908364545973
+        },
+        "benign_total": 4,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 6,
+        "fp": 0,
+        "tn": 4,
+        "tp": 0
+      },
+      "ascii85": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 5,
+          "upper": 0.43448246478317476
+        },
+        "attack_total": 5,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 4,
+          "upper": 0.4898908364545973
+        },
+        "benign_total": 4,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 5,
+        "fp": 0,
+        "tn": 4,
+        "tp": 0
+      },
+      "atbash": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 5,
+          "upper": 0.43448246478317476
+        },
+        "attack_total": 5,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 4,
+          "upper": 0.4898908364545973
+        },
+        "benign_total": 4,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 5,
+        "fp": 0,
+        "tn": 4,
+        "tp": 0
+      },
+      "base32": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 5,
+          "upper": 0.43448246478317476
+        },
+        "attack_total": 5,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 4,
+          "upper": 0.4898908364545973
+        },
+        "benign_total": 4,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 5,
+        "fp": 0,
+        "tn": 4,
+        "tp": 0
+      },
+      "braille": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 5,
+          "upper": 0.43448246478317476
+        },
+        "attack_total": 5,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 4,
+          "upper": 0.4898908364545973
+        },
+        "benign_total": 4,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 5,
+        "fp": 0,
+        "tn": 4,
+        "tp": 0
+      },
+      "chunked_leet": {
+        "attack_recall": 0.3333333333333333,
+        "attack_recall_wilson_95": {
+          "estimate": 0.3333333333333333,
+          "lower": 0.13812009109121315,
+          "successes": 4,
+          "total": 12,
+          "upper": 0.6093779111272004
+        },
+        "attack_total": 12,
+        "base_rate_precision_1000_benign_per_attack": 1.0,
+        "base_rate_precision_100_benign_per_attack": 1.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 8,
+        "fp": 0,
+        "tn": 0,
+        "tp": 4
+      },
+      "compact_plain": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": 0.0,
+          "lower": 2.7755575615628914e-17,
+          "successes": 0,
+          "total": 12,
+          "upper": 0.24249400665524085
+        },
+        "attack_total": 12,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 12,
+        "fp": 0,
+        "tn": 0,
+        "tp": 0
+      },
+      "diacritics": {
+        "attack_recall": 0.08333333333333333,
+        "attack_recall_wilson_95": {
+          "estimate": 0.08333333333333333,
+          "lower": 0.014865094404917095,
+          "successes": 1,
+          "total": 12,
+          "upper": 0.35387991114111694
+        },
+        "attack_total": 12,
+        "base_rate_precision_1000_benign_per_attack": 1.0,
+        "base_rate_precision_100_benign_per_attack": 1.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 11,
+        "fp": 0,
+        "tn": 0,
+        "tp": 1
+      },
+      "encoding": {
+        "attack_recall": 0.08333333333333333,
+        "attack_recall_wilson_95": {
+          "estimate": 0.08333333333333333,
+          "lower": 0.014865094404917095,
+          "successes": 1,
+          "total": 12,
+          "upper": 0.35387991114111694
+        },
+        "attack_total": 12,
+        "base_rate_precision_1000_benign_per_attack": 1.0,
+        "base_rate_precision_100_benign_per_attack": 1.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 11,
+        "fp": 0,
+        "tn": 0,
+        "tp": 1
+      },
+      "hex": {
+        "attack_recall": 0.16666666666666666,
+        "attack_recall_wilson_95": {
+          "estimate": 0.16666666666666666,
+          "lower": 0.04696514218385381,
+          "successes": 2,
+          "total": 12,
+          "upper": 0.4480308622529734
+        },
+        "attack_total": 12,
+        "base_rate_precision_1000_benign_per_attack": 1.0,
+        "base_rate_precision_100_benign_per_attack": 1.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 10,
+        "fp": 0,
+        "tn": 0,
+        "tp": 2
+      },
+      "homoglyph": {
+        "attack_recall": 0.16666666666666666,
+        "attack_recall_wilson_95": {
+          "estimate": 0.16666666666666666,
+          "lower": 0.04696514218385381,
+          "successes": 2,
+          "total": 12,
+          "upper": 0.4480308622529734
+        },
+        "attack_total": 12,
+        "base_rate_precision_1000_benign_per_attack": 1.0,
+        "base_rate_precision_100_benign_per_attack": 1.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 10,
+        "fp": 0,
+        "tn": 0,
+        "tp": 2
+      },
+      "morse": {
+        "attack_recall": 0.2,
+        "attack_recall_wilson_95": {
+          "estimate": 0.2,
+          "lower": 0.03622410863243014,
+          "successes": 1,
+          "total": 5,
+          "upper": 0.6244653702374747
+        },
+        "attack_total": 5,
+        "base_rate_precision_1000_benign_per_attack": 1.0,
+        "base_rate_precision_100_benign_per_attack": 1.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 4,
+          "upper": 0.4898908364545973
+        },
+        "benign_total": 4,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 4,
+        "fp": 0,
+        "tn": 4,
+        "tp": 1
+      },
+      "nato": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 5,
+          "upper": 0.43448246478317476
+        },
+        "attack_total": 5,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 4,
+          "upper": 0.4898908364545973
+        },
+        "benign_total": 4,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 5,
+        "fp": 0,
+        "tn": 4,
+        "tp": 0
+      },
+      "none": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "attack_total": 0,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 52,
+          "upper": 0.06879223612386234
+        },
+        "benign_total": 52,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "tn": 52,
+        "tp": 0
+      },
+      "plain": {
+        "attack_recall": 0.08,
+        "attack_recall_wilson_95": {
+          "estimate": 0.08,
+          "lower": 0.03154951408859297,
+          "successes": 4,
+          "total": 50,
+          "upper": 0.18838246918342838
+        },
+        "attack_total": 50,
+        "base_rate_precision_1000_benign_per_attack": 1.0,
+        "base_rate_precision_100_benign_per_attack": 1.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 46,
+        "fp": 0,
+        "tn": 0,
+        "tp": 4
+      },
+      "rot13": {
+        "attack_recall": 0.0625,
+        "attack_recall_wilson_95": {
+          "estimate": 0.0625,
+          "lower": 0.01111934476464252,
+          "successes": 1,
+          "total": 16,
+          "upper": 0.28328737570298945
+        },
+        "attack_total": 16,
+        "base_rate_precision_1000_benign_per_attack": 1.0,
+        "base_rate_precision_100_benign_per_attack": 1.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 15,
+        "fp": 0,
+        "tn": 0,
+        "tp": 1
+      },
+      "sneaky_bits": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 5,
+          "upper": 0.43448246478317476
+        },
+        "attack_total": 5,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 4,
+          "upper": 0.4898908364545973
+        },
+        "benign_total": 4,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 5,
+        "fp": 0,
+        "tn": 4,
+        "tp": 0
+      },
+      "unicode_tag": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 5,
+          "upper": 0.43448246478317476
+        },
+        "attack_total": 5,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 4,
+          "upper": 0.4898908364545973
+        },
+        "benign_total": 4,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 5,
+        "fp": 0,
+        "tn": 4,
+        "tp": 0
+      },
+      "variation_selector": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 5,
+          "upper": 0.43448246478317476
+        },
+        "attack_total": 5,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 4,
+          "upper": 0.4898908364545973
+        },
+        "benign_total": 4,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 5,
+        "fp": 0,
+        "tn": 4,
+        "tp": 0
+      },
+      "zalgo": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": 0.0,
+          "lower": 2.7755575615628914e-17,
+          "successes": 0,
+          "total": 6,
+          "upper": 0.3903342879021653
+        },
+        "attack_total": 6,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 4,
+          "upper": 0.4898908364545973
+        },
+        "benign_total": 4,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 6,
+        "fp": 0,
+        "tn": 4,
+        "tp": 0
+      }
+    },
+    "containment_class": {
+      "benign_control": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "attack_total": 0,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 3.469446951953614e-18,
+          "successes": 0,
+          "total": 96,
+          "upper": 0.038475587857675686
+        },
+        "benign_total": 96,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "tn": 96,
+        "tp": 0
+      },
+      "evidence": {
+        "attack_recall": 0.09090909090909091,
+        "attack_recall_wilson_95": {
+          "estimate": 0.09090909090909091,
+          "lower": 0.025295428990995267,
+          "successes": 2,
+          "total": 22,
+          "upper": 0.27814946841605814
+        },
+        "attack_total": 22,
+        "base_rate_precision_1000_benign_per_attack": 1.0,
+        "base_rate_precision_100_benign_per_attack": 1.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 20,
+        "fp": 0,
+        "tn": 0,
+        "tp": 2
+      },
+      "structural": {
+        "attack_recall": 0.12048192771084337,
+        "attack_recall_wilson_95": {
+          "estimate": 0.12048192771084337,
+          "lower": 0.066776902980842,
+          "successes": 10,
+          "total": 83,
+          "upper": 0.2077631513257165
+        },
+        "attack_total": 83,
+        "base_rate_precision_1000_benign_per_attack": 1.0,
+        "base_rate_precision_100_benign_per_attack": 1.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 73,
+        "fp": 0,
+        "tn": 0,
+        "tp": 10
+      },
+      "workflow_review": {
+        "attack_recall": 0.044444444444444446,
+        "attack_recall_wilson_95": {
+          "estimate": 0.044444444444444446,
+          "lower": 0.01741724185270873,
+          "successes": 4,
+          "total": 90,
+          "upper": 0.10876855032812233
+        },
+        "attack_total": 90,
+        "base_rate_precision_1000_benign_per_attack": 1.0,
+        "base_rate_precision_100_benign_per_attack": 1.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 86,
+        "fp": 0,
+        "tn": 0,
+        "tp": 4
+      }
+    },
+    "expected_action": {
+      "allow": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "attack_total": 0,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 3.469446951953614e-18,
+          "successes": 0,
+          "total": 96,
+          "upper": 0.038475587857675686
+        },
+        "benign_total": 96,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "tn": 96,
+        "tp": 0
+      },
+      "block": {
+        "attack_recall": 0.10526315789473684,
+        "attack_recall_wilson_95": {
+          "estimate": 0.10526315789473684,
+          "lower": 0.05818852425158532,
+          "successes": 10,
+          "total": 95,
+          "upper": 0.1830205706479986
+        },
+        "attack_total": 95,
+        "base_rate_precision_1000_benign_per_attack": 1.0,
+        "base_rate_precision_100_benign_per_attack": 1.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 85,
+        "fp": 0,
+        "tn": 0,
+        "tp": 10
+      },
+      "quarantine": {
+        "attack_recall": 0.06521739130434782,
+        "attack_recall_wilson_95": {
+          "estimate": 0.06521739130434782,
+          "lower": 0.022427861429288584,
+          "successes": 3,
+          "total": 46,
+          "upper": 0.17502741081904216
+        },
+        "attack_total": 46,
+        "base_rate_precision_1000_benign_per_attack": 1.0,
+        "base_rate_precision_100_benign_per_attack": 1.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 43,
+        "fp": 0,
+        "tn": 0,
+        "tp": 3
+      },
+      "require_approval": {
+        "attack_recall": 0.05555555555555555,
+        "attack_recall_wilson_95": {
+          "estimate": 0.05555555555555555,
+          "lower": 0.0190732684546909,
+          "successes": 3,
+          "total": 54,
+          "upper": 0.15107214318166143
+        },
+        "attack_total": 54,
+        "base_rate_precision_1000_benign_per_attack": 1.0,
+        "base_rate_precision_100_benign_per_attack": 1.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 51,
+        "fp": 0,
+        "tn": 0,
+        "tp": 3
+      }
+    },
+    "source_type": {
+      "document": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "attack_total": 0,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 68,
+          "upper": 0.053471336520070537
+        },
+        "benign_total": 68,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "tn": 68,
+        "tp": 0
+      },
+      "memory": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": 0.0,
+          "lower": 2.7755575615628914e-17,
+          "successes": 0,
+          "total": 12,
+          "upper": 0.24249400665524085
+        },
+        "attack_total": 12,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 12,
+        "fp": 0,
+        "tn": 0,
+        "tp": 0
+      },
+      "rag_chunk": {
+        "attack_recall": 0.034482758620689655,
+        "attack_recall_wilson_95": {
+          "estimate": 0.034482758620689655,
+          "lower": 0.006113214292762667,
+          "successes": 1,
+          "total": 29,
+          "upper": 0.17175521879320288
+        },
+        "attack_total": 29,
+        "base_rate_precision_1000_benign_per_attack": 1.0,
+        "base_rate_precision_100_benign_per_attack": 1.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 8,
+          "upper": 0.32440756488388023
+        },
+        "benign_total": 8,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 28,
+        "fp": 0,
+        "tn": 8,
+        "tp": 1
+      },
+      "ticket": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "attack_total": 0,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 2,
+          "upper": 0.6576197724933469
+        },
+        "benign_total": 2,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "tn": 2,
+        "tp": 0
+      },
+      "tool_result": {
+        "attack_recall": 0.06521739130434782,
+        "attack_recall_wilson_95": {
+          "estimate": 0.06521739130434782,
+          "lower": 0.022427861429288584,
+          "successes": 3,
+          "total": 46,
+          "upper": 0.17502741081904216
+        },
+        "attack_total": 46,
+        "base_rate_precision_1000_benign_per_attack": 1.0,
+        "base_rate_precision_100_benign_per_attack": 1.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 43,
+        "fp": 0,
+        "tn": 0,
+        "tp": 3
+      },
+      "user": {
+        "attack_recall": 0.1111111111111111,
+        "attack_recall_wilson_95": {
+          "estimate": 0.1111111111111111,
+          "lower": 0.06471266928983735,
+          "successes": 12,
+          "total": 108,
+          "upper": 0.18422416606859587
+        },
+        "attack_total": 108,
+        "base_rate_precision_1000_benign_per_attack": 1.0,
+        "base_rate_precision_100_benign_per_attack": 1.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 18,
+          "upper": 0.17587922364665765
+        },
+        "benign_total": 18,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 96,
+        "fp": 0,
+        "tn": 18,
+        "tp": 12
+      }
+    },
+    "trust_level": {
+      "authenticated_user": {
+        "attack_recall": 0.0,
+        "attack_recall_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "attack_total": 0,
+        "base_rate_precision_1000_benign_per_attack": 0.0,
+        "base_rate_precision_100_benign_per_attack": 0.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": 0.0,
+          "successes": 0,
+          "total": 2,
+          "upper": 0.6576197724933469
+        },
+        "benign_total": 2,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 0,
+        "fp": 0,
+        "tn": 2,
+        "tp": 0
+      },
+      "tool_output": {
+        "attack_recall": 0.06521739130434782,
+        "attack_recall_wilson_95": {
+          "estimate": 0.06521739130434782,
+          "lower": 0.022427861429288584,
+          "successes": 3,
+          "total": 46,
+          "upper": 0.17502741081904216
+        },
+        "attack_total": 46,
+        "base_rate_precision_1000_benign_per_attack": 1.0,
+        "base_rate_precision_100_benign_per_attack": 1.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": null,
+          "lower": null,
+          "successes": 0,
+          "total": 0,
+          "upper": null
+        },
+        "benign_total": 0,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 43,
+        "fp": 0,
+        "tn": 0,
+        "tp": 3
+      },
+      "untrusted": {
+        "attack_recall": 0.087248322147651,
+        "attack_recall_wilson_95": {
+          "estimate": 0.087248322147651,
+          "lower": 0.05169666436077341,
+          "successes": 13,
+          "total": 149,
+          "upper": 0.14354786582722104
+        },
+        "attack_total": 149,
+        "base_rate_precision_1000_benign_per_attack": 1.0,
+        "base_rate_precision_100_benign_per_attack": 1.0,
+        "benign_fp_rate": 0.0,
+        "benign_fp_rate_wilson_95": {
+          "estimate": 0.0,
+          "lower": -3.469446951953614e-18,
+          "successes": 0,
+          "total": 94,
+          "upper": 0.03926207629154474
+        },
+        "benign_total": 94,
+        "false_positives_per_1k_benign": 0.0,
+        "fn": 136,
+        "fp": 0,
+        "tn": 94,
+        "tp": 13
+      }
+    }
+  },
+  "false_positives_per_1k_benign": 0.0,
+  "fn": 179,
+  "fp": 0,
+  "rules_only_sidecar": {
+    "description": "Simple AGT structural sidecar; scorer remains fixed separately.",
+    "metrics": {
+      "attack_recall": 0.4256410256410256,
+      "attack_recall_wilson_95": {
+        "estimate": 0.4256410256410256,
+        "lower": 0.3583386264833687,
+        "successes": 83,
+        "total": 195,
+        "upper": 0.4958165372737487
+      },
+      "attack_total": 195,
+      "base_rate_precision_1000_benign_per_attack": 0.006764190538282874,
+      "base_rate_precision_100_benign_per_attack": 0.0637603226425965,
+      "benign_fp_rate": 0.0625,
+      "benign_fp_rate_wilson_95": {
+        "estimate": 0.0625,
+        "lower": 0.028956674311051346,
+        "successes": 6,
+        "total": 96,
+        "upper": 0.12970946506441489
+      },
+      "benign_total": 96,
+      "false_positives_per_1k_benign": 62.5,
+      "fn": 112,
+      "fp": 6,
+      "tn": 90,
+      "tp": 83
+    }
+  },
+  "score_summary": {
+    "max": 0.1126527190208435,
+    "mean": 0.045479336145407556,
+    "median": 0.04576486349105835,
+    "min": -0.09203004837036133,
+    "p05": -0.02790248394012451,
+    "p95": 0.09626227617263794
+  },
+  "scorer_mode": "knn",
+  "split": "test",
+  "test_metrics_written_at": "2026-06-12T17:31:14+00:00",
+  "test_started_at": "2026-06-12T17:31:05+00:00",
+  "threshold_tau": 0.09549224376678467,
+  "tn": 96,
+  "tp": 16
+}

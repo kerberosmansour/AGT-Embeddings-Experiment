@@ -1,0 +1,187 @@
+{
+  "arms": [
+    {
+      "arm": "fixed_round4_bank",
+      "bank_rows": 400,
+      "freeze_record_path": "artifacts/round7-garak/recb-pilot/arms/fixed_round4_bank/freeze-record.json",
+      "metrics_path": "artifacts/round7-garak/recb-pilot/arms/fixed_round4_bank/metrics.json",
+      "test_per_row_path": "artifacts/round7-garak/recb-pilot/arms/fixed_round4_bank/test-per-row.jsonl",
+      "test_recb_fp": 8,
+      "test_recb_fp_rate": 0.08333333333333333,
+      "test_recb_recall": 0.5025641025641026,
+      "test_recb_tp": 98
+    },
+    {
+      "arm": "round7_in_domain_bank",
+      "bank_rows": 216,
+      "freeze_record_path": "artifacts/round7-garak/recb-pilot/arms/round7_in_domain_bank/freeze-record.json",
+      "metrics_path": "artifacts/round7-garak/recb-pilot/arms/round7_in_domain_bank/metrics.json",
+      "test_per_row_path": "artifacts/round7-garak/recb-pilot/arms/round7_in_domain_bank/test-per-row.jsonl",
+      "test_recb_fp": 7,
+      "test_recb_fp_rate": 0.07291666666666667,
+      "test_recb_recall": 0.558974358974359,
+      "test_recb_tp": 109
+    }
+  ],
+  "created_at": "2026-06-12T21:13:01+00:00",
+  "detector_contract": {
+    "arms": {
+      "fixed_round4_bank": "Uses the existing round-7 WS-C fixed round-4 exemplar bank.",
+      "round7_in_domain_bank": "Uses round-7 exemplar rows to estimate what in-domain training can recover."
+    },
+    "head_spec": {
+      "family": "hgb",
+      "learning_rate": 0.1,
+      "max_depth": 3
+    },
+    "head_target_fpr": 0.001,
+    "knn_k": 5,
+    "rule": "Rec B = (kNN_zeroFP OR legacy_R1) OR (head_confident AND kNN_youden < margin <= kNN_zeroFP)",
+    "selection_split": "validation",
+    "test_scored_once_after_freeze": true
+  },
+  "metrics_path": "artifacts/round7-garak/recb-pilot/metrics.json",
+  "normalizer_id": "agt_rust_round7",
+  "profile": "pilot",
+  "recommendations": [
+    {
+      "control_id": "r1-prime-intent-gated-tool-control",
+      "evidence": {
+        "fixed_bank_legacy_r1_fp": 6,
+        "fixed_bank_recb_fp": 8,
+        "in_domain_recb_fp": 7
+      },
+      "next_experiment": "Replace bare untrusted+tool-call with tool provenance plus sink/intent routing and measure on expanded benign tool-use controls.",
+      "why": "Legacy R1 is the largest catch lever but creates benign tool-use false positives."
+    },
+    {
+      "control_id": "terminal-escape-output-sanitizer",
+      "evidence": {
+        "terminal_ansi_candidate": {
+          "attack_recall": 0.010256410256410256,
+          "attack_recall_wilson_95": {
+            "estimate": 0.010256410256410256,
+            "lower": 0.00281719866017395,
+            "successes": 2,
+            "total": 195,
+            "upper": 0.03661853505049644
+          },
+          "attack_total": 195,
+          "base_rate_precision_1000_benign_per_attack": 1.0,
+          "base_rate_precision_100_benign_per_attack": 1.0,
+          "benign_fp_rate": 0.0,
+          "benign_fp_rate_wilson_95": {
+            "estimate": 0.0,
+            "lower": 3.469446951953614e-18,
+            "successes": 0,
+            "total": 96,
+            "upper": 0.038475587857675686
+          },
+          "benign_total": 96,
+          "false_positives_per_1k_benign": 0.0,
+          "fn": 193,
+          "fp": 0,
+          "tn": 96,
+          "tp": 2
+        }
+      },
+      "next_experiment": "Split ANSI rendering safety from attack detection: always sanitize unsafe terminal controls, only escalate when paired with tool/policy intent.",
+      "why": "Terminal escape attacks remain weak and one FP is benign terminal output."
+    },
+    {
+      "control_id": "outbound-sensitive-output-scan",
+      "evidence": {
+        "fixed_bank_prompt_leakage_recall": 0.045454545454545456
+      },
+      "next_experiment": "Add final-response labels/sinks and verify system/developer/policy leakage before release to the user.",
+      "why": "Prompt leakage and output exfiltration need an output-stage control rather than only input embedding similarity."
+    },
+    {
+      "control_id": "package-provenance-verifier",
+      "evidence": {
+        "fixed_bank_package_hallucination_recall": 0.2
+      },
+      "next_experiment": "Route package recommendations through registry existence, typosquat, age, maintainer, and source allowlist checks.",
+      "why": "Package hallucination is not primarily an obfuscation problem."
+    },
+    {
+      "control_id": "round7-hard-benign-expansion",
+      "evidence": {
+        "pilot_test_benign_rows": 96
+      },
+      "next_experiment": "Add many more benign tool workflows, terminal logs, package installs, encoded assets, and quoted attack examples before tuning thresholds.",
+      "why": "Only 96 pilot benign test rows makes every FP expensive and prevents credible sub-1% FPR tuning."
+    }
+  ],
+  "round7_corpus": {
+    "manifest_path": "scratch/round7-pilot-manifest.json",
+    "manifest_sha256": "5c87ed72c3816642793019395dd09399481e491e9a9508325328f35fa272229c",
+    "path": "scratch/round7-pilot.jsonl",
+    "sha256": "edf2b082a611e84d6ca0effe72c1e27a26315e23adee91b16711a9345453f28e",
+    "used_summary": {
+      "attack_class": {
+        "agentic_tool_exploit": 37,
+        "benign": 252,
+        "data_boundary_abuse": 46,
+        "direct_override": 46,
+        "indirect_injection": 54,
+        "jailbreak": 46,
+        "memory_poisoning": 46,
+        "output_exfiltration": 46,
+        "package_hallucination": 46,
+        "prompt_leakage": 46,
+        "terminal_escape_injection": 46,
+        "tool_abuse": 46,
+        "tool_result_injection": 46
+      },
+      "benign_subclass": {
+        "benign_carrier_document": 24,
+        "benign_emoji_variation_selector": 12,
+        "benign_encoded_asset": 96,
+        "benign_multistep_tool_use": 12,
+        "benign_package_install": 12,
+        "benign_roleplay_creative": 12,
+        "benign_security_discussion": 12,
+        "benign_terminal_output": 12,
+        "benign_tool_use": 12,
+        "detector_code_fixture": 12,
+        "legitimate_imperative_request": 12,
+        "not_applicable": 551,
+        "quoted_injection_example": 12,
+        "tool_policy_documentation": 12
+      },
+      "by_split_label": {
+        "exemplar_bank:attack": 156,
+        "exemplar_bank:benign": 60,
+        "test:attack": 195,
+        "test:benign": 96,
+        "validation:attack": 200,
+        "validation:benign": 96
+      },
+      "bypass_class": {
+        "ansi_escape": 20,
+        "ascii85": 19,
+        "atbash": 19,
+        "base32": 19,
+        "braille": 19,
+        "chunked_leet": 36,
+        "compact_plain": 36,
+        "diacritics": 36,
+        "encoding": 40,
+        "hex": 40,
+        "homoglyph": 36,
+        "morse": 19,
+        "nato": 19,
+        "none": 156,
+        "plain": 152,
+        "rot13": 60,
+        "sneaky_bits": 19,
+        "unicode_tag": 19,
+        "variation_selector": 19,
+        "zalgo": 20
+      },
+      "rows": 803
+    }
+  },
+  "schema": "round7-recb-experiment-v1"
+}

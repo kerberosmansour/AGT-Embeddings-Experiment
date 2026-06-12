@@ -1,0 +1,17 @@
+{
+  "cell_key": "round7__agt_rust_round7",
+  "corpus_id": "round7",
+  "freeze_record_path": "artifacts/round7-garak/smoke-knn/cells/round7__agt_rust_round7/freeze-record.json",
+  "normalizer_description": "Rust round-7 AGT normalizer CLI",
+  "normalizer_id": "agt_rust_round7",
+  "scorer_mode": "knn",
+  "test_attack_recall": 0.90625,
+  "test_benign_fp_rate": 0.10526315789473684,
+  "test_metrics_path": "artifacts/round7-garak/smoke-knn/cells/round7__agt_rust_round7/test-metrics.json",
+  "test_per_row_path": "artifacts/round7-garak/smoke-knn/cells/round7__agt_rust_round7/test-per-row.jsonl",
+  "test_rows": 83,
+  "threshold_tau": 0.010519325733184814,
+  "validation_metrics_path": "artifacts/round7-garak/smoke-knn/cells/round7__agt_rust_round7/validation-metrics.json",
+  "validation_per_row_path": "artifacts/round7-garak/smoke-knn/cells/round7__agt_rust_round7/validation-per-row.jsonl",
+  "validation_rows": 83
+}

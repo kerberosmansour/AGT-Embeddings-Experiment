@@ -65,6 +65,21 @@ See `docs/methodology/agt-upstream-baseline-refresh.md`.
 | Governance integration is ready. | Validation split still has critical allows; needs policy/harness iteration plus independent audit. |
 | Upstream optional embedding feature is ready. | PR 1 benchmark fixture review plus documented generation methodology and fresh AGT baseline pin. |
 
+## Issue #8 Research Notes Action Map
+
+Evidence: `docs/reports/research-notes-q1-q2-action-map.md`.
+
+Issue #8 is now treated as an action map, not as a headline metric source. The
+old 92.5% co-equal ensemble figure is rejected as test-set overfitting; the
+validation-frozen follow-up evidence is the #9 correction and the #10
+normalizer-backed 88.72% synthetic-corpus result at 0 observed FP. Round-7 hard
+benign controls and the Apache-2.0/MIT reality-check intake improve visibility,
+but they do not replace the missing real-data false-positive audit.
+
+Guardrail: do not collapse synthetic, payload-derived reality-check, and real
+traffic claims into one bucket. Use paths, hashes, aggregate counts, and
+validation commands in public summaries; do not publish raw payload examples.
+
 ## Round-6 Cascade Claims (additive; round-4 rows above unchanged)
 
 Evidence: `docs/reports/round6-cascade-report.md`,

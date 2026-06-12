@@ -1,0 +1,15 @@
+[package]
+name = "agt-normalize"
+version = "0.1.0"
+edition = "2021"
+description = "Round-7 extension of AGT's agentmesh content normalizer (de-obfuscation + closed transform vocabulary). Drop-in superset of agent-governance-rust/agentmesh/src/normalize.rs, staged for upstream contribution."
+license = "MIT"
+publish = false
+
+# Mirrors AGT's agentmesh dependency surface: no new deps beyond `base64`.
+[dependencies]
+base64 = "0.22"
+
+[[bin]]
+name = "agt-normalize"
+path = "src/bin/normalize_cli.rs"
