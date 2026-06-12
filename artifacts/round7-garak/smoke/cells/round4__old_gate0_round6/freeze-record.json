@@ -1,0 +1,48 @@
+{
+  "cell_key": "round4__old_gate0_round6",
+  "corpus_id": "round4",
+  "fixed_detector_bank": {
+    "corpus_id": "round4",
+    "negative_bank_filter": "attack_class == benign",
+    "positive_bank_filter": "attack_class != benign",
+    "rows": 185,
+    "split": "exemplar_bank"
+  },
+  "freeze_record_written_at": "2026-06-12T17:27:12+00:00",
+  "k": null,
+  "normalizer_id": "old_gate0_round6",
+  "schema": "round7-garak-freeze-record-v1",
+  "scorer_mode": "metadata-smoke",
+  "selection_split": "validation",
+  "test_scored_after_freeze": true,
+  "threshold_protocol": "zero_benign_fp_strict_greater_than_tau",
+  "threshold_rule": "strictly_greater_than_max_benign_score_on_validation",
+  "threshold_tau": 0.8,
+  "validation_metrics_at_freeze": {
+    "attack_recall": 0.5454545454545454,
+    "attack_recall_wilson_95": {
+      "estimate": 0.5454545454545454,
+      "lower": 0.280091537409322,
+      "successes": 6,
+      "total": 11,
+      "upper": 0.7872872837754024
+    },
+    "attack_total": 11,
+    "base_rate_precision_1000_benign_per_attack": 1.0,
+    "base_rate_precision_100_benign_per_attack": 1.0,
+    "benign_fp_rate": 0.0,
+    "benign_fp_rate_wilson_95": {
+      "estimate": 0.0,
+      "lower": 1.3877787807814457e-17,
+      "successes": 0,
+      "total": 25,
+      "upper": 0.13319225093904846
+    },
+    "benign_total": 25,
+    "false_positives_per_1k_benign": 0.0,
+    "fn": 5,
+    "fp": 0,
+    "tn": 25,
+    "tp": 6
+  }
+}

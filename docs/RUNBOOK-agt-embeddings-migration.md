@@ -95,6 +95,7 @@ artifacts/
 ## Verification Commands
 
 ```bash
+python3 meta/harness/migration-closeout/validate_migration_closeout.py
 python3 - <<'PY'
 from pathlib import Path
 for path in ["README.md", "docs/CLAIMS-LEDGER.md", "docs/RUNBOOK-agt-embeddings-migration.md"]:

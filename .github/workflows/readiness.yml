@@ -19,6 +19,9 @@ jobs:
       - name: Diff hygiene
         run: git diff --check
 
+      - name: Validate open-source readiness package
+        run: python3 meta/harness/open-source-readiness/validate_open_source_readiness.py
+
       - name: Round-4 smoke reproduction
         run: bash corpus/round4/run-smoke.sh
 

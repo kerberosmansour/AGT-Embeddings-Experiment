@@ -1,0 +1,323 @@
+{
+  "agt_export_contract": {
+    "new_normalizer_id": "agt_rust_round7",
+    "old_normalizer_path": "meta/harness/round6-cascade/normalize.py",
+    "rust_cli_path": "rust/agt-normalize/target/debug/agt-normalize",
+    "rust_crate_path": "rust/agt-normalize",
+    "upstream_shape": "Rust Transform enum names are preserved as per-row metadata; no production policy claim."
+  },
+  "cells": [
+    {
+      "cell_key": "round4__agt_rust_round7",
+      "corpus_id": "round4",
+      "freeze_record_path": "artifacts/round7-garak/pilot-knn-attribution/cells/round4__agt_rust_round7/freeze-record.json",
+      "normalizer_description": "Rust round-7 AGT normalizer CLI",
+      "normalizer_id": "agt_rust_round7",
+      "scorer_mode": "knn",
+      "test_attack_recall": 0.81,
+      "test_benign_fp_rate": 0.0,
+      "test_metrics_path": "artifacts/round7-garak/pilot-knn-attribution/cells/round4__agt_rust_round7/test-metrics.json",
+      "test_per_row_path": "artifacts/round7-garak/pilot-knn-attribution/cells/round4__agt_rust_round7/test-per-row.jsonl",
+      "test_rows": 400,
+      "threshold_tau": 0.032916903495788574,
+      "validation_metrics_path": "artifacts/round7-garak/pilot-knn-attribution/cells/round4__agt_rust_round7/validation-metrics.json",
+      "validation_per_row_path": "artifacts/round7-garak/pilot-knn-attribution/cells/round4__agt_rust_round7/validation-per-row.jsonl",
+      "validation_rows": 400
+    },
+    {
+      "cell_key": "round4__old_gate0_round6",
+      "corpus_id": "round4",
+      "freeze_record_path": "artifacts/round7-garak/pilot-knn-attribution/cells/round4__old_gate0_round6/freeze-record.json",
+      "normalizer_description": "Python round-6 Gate-0 normalizer",
+      "normalizer_id": "old_gate0_round6",
+      "scorer_mode": "knn",
+      "test_attack_recall": 0.81,
+      "test_benign_fp_rate": 0.0,
+      "test_metrics_path": "artifacts/round7-garak/pilot-knn-attribution/cells/round4__old_gate0_round6/test-metrics.json",
+      "test_per_row_path": "artifacts/round7-garak/pilot-knn-attribution/cells/round4__old_gate0_round6/test-per-row.jsonl",
+      "test_rows": 400,
+      "threshold_tau": 0.03291696310043335,
+      "validation_metrics_path": "artifacts/round7-garak/pilot-knn-attribution/cells/round4__old_gate0_round6/validation-metrics.json",
+      "validation_per_row_path": "artifacts/round7-garak/pilot-knn-attribution/cells/round4__old_gate0_round6/validation-per-row.jsonl",
+      "validation_rows": 400
+    },
+    {
+      "cell_key": "round7__agt_rust_round7",
+      "corpus_id": "round7",
+      "freeze_record_path": "artifacts/round7-garak/pilot-knn-attribution/cells/round7__agt_rust_round7/freeze-record.json",
+      "normalizer_description": "Rust round-7 AGT normalizer CLI",
+      "normalizer_id": "agt_rust_round7",
+      "scorer_mode": "knn",
+      "test_attack_recall": 0.16923076923076924,
+      "test_benign_fp_rate": 0.020833333333333332,
+      "test_metrics_path": "artifacts/round7-garak/pilot-knn-attribution/cells/round7__agt_rust_round7/test-metrics.json",
+      "test_per_row_path": "artifacts/round7-garak/pilot-knn-attribution/cells/round7__agt_rust_round7/test-per-row.jsonl",
+      "test_rows": 291,
+      "threshold_tau": 0.08979856967926025,
+      "validation_metrics_path": "artifacts/round7-garak/pilot-knn-attribution/cells/round7__agt_rust_round7/validation-metrics.json",
+      "validation_per_row_path": "artifacts/round7-garak/pilot-knn-attribution/cells/round7__agt_rust_round7/validation-per-row.jsonl",
+      "validation_rows": 296
+    },
+    {
+      "cell_key": "round7__old_gate0_round6",
+      "corpus_id": "round7",
+      "freeze_record_path": "artifacts/round7-garak/pilot-knn-attribution/cells/round7__old_gate0_round6/freeze-record.json",
+      "normalizer_description": "Python round-6 Gate-0 normalizer",
+      "normalizer_id": "old_gate0_round6",
+      "scorer_mode": "knn",
+      "test_attack_recall": 0.08205128205128205,
+      "test_benign_fp_rate": 0.0,
+      "test_metrics_path": "artifacts/round7-garak/pilot-knn-attribution/cells/round7__old_gate0_round6/test-metrics.json",
+      "test_per_row_path": "artifacts/round7-garak/pilot-knn-attribution/cells/round7__old_gate0_round6/test-per-row.jsonl",
+      "test_rows": 291,
+      "threshold_tau": 0.09549224376678467,
+      "validation_metrics_path": "artifacts/round7-garak/pilot-knn-attribution/cells/round7__old_gate0_round6/validation-metrics.json",
+      "validation_per_row_path": "artifacts/round7-garak/pilot-knn-attribution/cells/round7__old_gate0_round6/validation-per-row.jsonl",
+      "validation_rows": 296
+    }
+  ],
+  "created_at": "2026-06-12T17:59:05+00:00",
+  "detector_contract": {
+    "fixed_detector_bank_corpus": "round4",
+    "fixed_detector_bank_split": "exemplar_bank",
+    "knn_k": 5,
+    "metadata_smoke_note": null,
+    "scorer_mode": "knn",
+    "test_scored_once_after_freeze": true,
+    "threshold_selection": "validation_split_zero_benign_fp_per_cell"
+  },
+  "headline_status": "real_fixed_knn_measurement",
+  "inputs": {
+    "round4": {
+      "full_summary": {
+        "attack_class": {
+          "benign": 27200,
+          "data_boundary_abuse": 2200,
+          "direct_override": 2800,
+          "indirect_injection": 1600,
+          "memory_poisoning": 2200,
+          "output_exfiltration": 2200,
+          "prompt_leakage": 2200,
+          "tool_abuse": 2200,
+          "tool_result_injection": 2200
+        },
+        "benign_subclass": {
+          "benign_compact_obfuscation_control": 4800,
+          "benign_obfuscation_control": 1600,
+          "benign_security_discussion": 1600,
+          "benign_tool_use": 1600,
+          "detector_code_fixture": 1600,
+          "docs_code_comment": 1600,
+          "high_entropy_structured_data": 1600,
+          "legitimate_imperative_request": 1600,
+          "not_applicable": 17600,
+          "owasp_ncsc_guidance": 1600,
+          "quoted_injection_example": 1600,
+          "research_blog_excerpt": 1600,
+          "security_changelog": 1600,
+          "security_training_material": 1600,
+          "support_urgency": 1600,
+          "tool_policy_documentation": 1600
+        },
+        "by_split_label": {
+          "exemplar_bank:attack": 11160,
+          "exemplar_bank:benign": 17344,
+          "test:attack": 3680,
+          "test:benign": 5728,
+          "validation:attack": 2760,
+          "validation:benign": 4128
+        },
+        "bypass_class": {
+          "chunked_leet": 1600,
+          "compact_leet": 1600,
+          "compact_plain": 1600,
+          "diacritics": 1440,
+          "encoding": 4320,
+          "homoglyph": 1440,
+          "leet_letter_spaced": 1600,
+          "leet_spacing": 2880,
+          "letter_spaced": 1600,
+          "multilingual": 1440,
+          "none": 20800,
+          "plain": 1440,
+          "rot13": 1440,
+          "separator_spaced": 1600
+        },
+        "rows": 44800
+      },
+      "path": "corpus/round4/injection-round4-large.jsonl",
+      "sha256": "33a02ac2b22e68970b3b808c5ba95bc119dc87dd93ae6dbc90546c074a5980ed",
+      "used_summary": {
+        "attack_class": {
+          "benign": 600,
+          "direct_override": 600
+        },
+        "benign_subclass": {
+          "benign_security_discussion": 600,
+          "not_applicable": 600
+        },
+        "by_split_label": {
+          "exemplar_bank:attack": 200,
+          "exemplar_bank:benign": 200,
+          "test:attack": 200,
+          "test:benign": 200,
+          "validation:attack": 200,
+          "validation:benign": 200
+        },
+        "bypass_class": {
+          "diacritics": 58,
+          "encoding": 174,
+          "homoglyph": 58,
+          "leet_spacing": 117,
+          "multilingual": 75,
+          "none": 600,
+          "plain": 60,
+          "rot13": 58
+        },
+        "rows": 1200
+      }
+    },
+    "round7": {
+      "full_summary": {
+        "attack_class": {
+          "agentic_tool_exploit": 37,
+          "benign": 252,
+          "data_boundary_abuse": 46,
+          "direct_override": 46,
+          "indirect_injection": 58,
+          "jailbreak": 46,
+          "memory_poisoning": 46,
+          "output_exfiltration": 46,
+          "package_hallucination": 46,
+          "prompt_leakage": 46,
+          "terminal_escape_injection": 46,
+          "tool_abuse": 46,
+          "tool_result_injection": 46
+        },
+        "benign_subclass": {
+          "benign_carrier_document": 24,
+          "benign_emoji_variation_selector": 12,
+          "benign_encoded_asset": 96,
+          "benign_multistep_tool_use": 12,
+          "benign_package_install": 12,
+          "benign_roleplay_creative": 12,
+          "benign_security_discussion": 12,
+          "benign_terminal_output": 12,
+          "benign_tool_use": 12,
+          "detector_code_fixture": 12,
+          "legitimate_imperative_request": 12,
+          "not_applicable": 555,
+          "quoted_injection_example": 12,
+          "tool_policy_documentation": 12
+        },
+        "by_split_label": {
+          "exemplar_bank:attack": 156,
+          "exemplar_bank:benign": 60,
+          "test:attack": 195,
+          "test:benign": 96,
+          "validation:attack": 204,
+          "validation:benign": 96
+        },
+        "bypass_class": {
+          "ansi_escape": 20,
+          "ascii85": 19,
+          "atbash": 19,
+          "base32": 19,
+          "braille": 19,
+          "chunked_leet": 36,
+          "compact_plain": 36,
+          "diacritics": 36,
+          "encoding": 40,
+          "hex": 40,
+          "homoglyph": 36,
+          "morse": 19,
+          "nato": 19,
+          "none": 156,
+          "plain": 156,
+          "rot13": 60,
+          "sneaky_bits": 19,
+          "unicode_tag": 19,
+          "variation_selector": 19,
+          "zalgo": 20
+        },
+        "rows": 807
+      },
+      "manifest_path": "scratch/round7-pilot-manifest.json",
+      "manifest_sha256": "5c87ed72c3816642793019395dd09399481e491e9a9508325328f35fa272229c",
+      "path": "scratch/round7-pilot.jsonl",
+      "sha256": "edf2b082a611e84d6ca0effe72c1e27a26315e23adee91b16711a9345453f28e",
+      "used_summary": {
+        "attack_class": {
+          "agentic_tool_exploit": 37,
+          "benign": 252,
+          "data_boundary_abuse": 46,
+          "direct_override": 46,
+          "indirect_injection": 54,
+          "jailbreak": 46,
+          "memory_poisoning": 46,
+          "output_exfiltration": 46,
+          "package_hallucination": 46,
+          "prompt_leakage": 46,
+          "terminal_escape_injection": 46,
+          "tool_abuse": 46,
+          "tool_result_injection": 46
+        },
+        "benign_subclass": {
+          "benign_carrier_document": 24,
+          "benign_emoji_variation_selector": 12,
+          "benign_encoded_asset": 96,
+          "benign_multistep_tool_use": 12,
+          "benign_package_install": 12,
+          "benign_roleplay_creative": 12,
+          "benign_security_discussion": 12,
+          "benign_terminal_output": 12,
+          "benign_tool_use": 12,
+          "detector_code_fixture": 12,
+          "legitimate_imperative_request": 12,
+          "not_applicable": 551,
+          "quoted_injection_example": 12,
+          "tool_policy_documentation": 12
+        },
+        "by_split_label": {
+          "exemplar_bank:attack": 156,
+          "exemplar_bank:benign": 60,
+          "test:attack": 195,
+          "test:benign": 96,
+          "validation:attack": 200,
+          "validation:benign": 96
+        },
+        "bypass_class": {
+          "ansi_escape": 20,
+          "ascii85": 19,
+          "atbash": 19,
+          "base32": 19,
+          "braille": 19,
+          "chunked_leet": 36,
+          "compact_plain": 36,
+          "diacritics": 36,
+          "encoding": 40,
+          "hex": 40,
+          "homoglyph": 36,
+          "morse": 19,
+          "nato": 19,
+          "none": 156,
+          "plain": 152,
+          "rot13": 60,
+          "sneaky_bits": 19,
+          "unicode_tag": 19,
+          "variation_selector": 19,
+          "zalgo": 20
+        },
+        "rows": 803
+      }
+    }
+  },
+  "limit_per_split_label": 200,
+  "matrix_summary_path": "artifacts/round7-garak/pilot-knn-attribution/matrix-summary.json",
+  "measurement_valid_for_headline": true,
+  "output_dir": "artifacts/round7-garak/pilot-knn-attribution",
+  "profile": "pilot",
+  "schema": "round7-garak-2x2-manifest-v1",
+  "scorer_mode": "knn",
+  "source_issue": "#16"
+}

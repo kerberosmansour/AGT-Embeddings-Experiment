@@ -1,0 +1,138 @@
+{
+  "created_at": "2026-06-12T21:36:44+00:00",
+  "detector_contract": {
+    "baseline": "fixed Round-4-bank Rec B with legacy R1",
+    "head_spec": {
+      "family": "hgb",
+      "learning_rate": 0.1,
+      "max_depth": 3
+    },
+    "head_target_fpr": 0.001,
+    "knn_k": 5,
+    "note": "Prototype controls use operational metadata and in-memory text/normalized text, never label-only fields.",
+    "selection_split": "validation",
+    "step_order": [
+      "00_baseline_fixed_recb",
+      "01_r1_prime_intent_gate",
+      "02_hard_benign_guard",
+      "03_round7_in_domain_training",
+      "04_tool_output_authority_boundary",
+      "05_output_stage_leakage_scan",
+      "06_package_provenance_verifier",
+      "07_terminal_escape_sanitizer"
+    ],
+    "test_scored_once_after_freeze": true
+  },
+  "metrics_path": "artifacts/round7-garak/ceiling-pilot/metrics.json",
+  "normalizer_id": "agt_rust_round7",
+  "profile": "pilot",
+  "recommendations": [
+    {
+      "next_action": "Keep the intent gate, but recover recall with in-domain training and route-specific controls instead of restoring bare R1.",
+      "readout": "Replacing bare tool-use R1 reduces the FP problem, but by itself it gives up too much catch.",
+      "step_id": "01_r1_prime_intent_gate"
+    },
+    {
+      "next_action": "Scale the hard benign set before trusting sub-1% FP numbers.",
+      "readout": "The benign guard is needed to avoid quoted/example/read-only/tool-doc false positives.",
+      "step_id": "02_hard_benign_guard"
+    },
+    {
+      "next_action": "Train on a larger Round-7 exemplar bank and keep validation/test frozen.",
+      "readout": "In-domain training is a real lift and should be kept.",
+      "step_id": "03_round7_in_domain_training"
+    },
+    {
+      "next_action": "Model tool output as facts-only; forbid policy, approval, and privileged-action authority.",
+      "readout": "Tool-output authority is the highest-impact route-specific control.",
+      "step_id": "04_tool_output_authority_boundary"
+    },
+    {
+      "next_action": "Add final-response checks for protected context labels, canaries, secrets, and outbound sinks.",
+      "readout": "Leakage/exfiltration is better handled at output time than by input embeddings alone.",
+      "step_id": "05_output_stage_leakage_scan"
+    },
+    {
+      "next_action": "Verify package existence, namespace risk, maintainer/reputation, and typosquat distance.",
+      "readout": "Package hallucination needs registry/provenance checks, not more text normalization.",
+      "step_id": "06_package_provenance_verifier"
+    },
+    {
+      "next_action": "Keep terminal sanitizer always-on and policy escalation narrow.",
+      "readout": "Terminal controls should be sanitized separately; escalation only when paired with instruction/unsafe-action intent.",
+      "step_id": "07_terminal_escape_sanitizer"
+    }
+  ],
+  "round7_corpus": {
+    "manifest_path": "scratch/round7-pilot-manifest.json",
+    "manifest_sha256": "5c87ed72c3816642793019395dd09399481e491e9a9508325328f35fa272229c",
+    "path": "scratch/round7-pilot.jsonl",
+    "sha256": "edf2b082a611e84d6ca0effe72c1e27a26315e23adee91b16711a9345453f28e",
+    "used_summary": {
+      "attack_class": {
+        "agentic_tool_exploit": 37,
+        "benign": 252,
+        "data_boundary_abuse": 46,
+        "direct_override": 46,
+        "indirect_injection": 54,
+        "jailbreak": 46,
+        "memory_poisoning": 46,
+        "output_exfiltration": 46,
+        "package_hallucination": 46,
+        "prompt_leakage": 46,
+        "terminal_escape_injection": 46,
+        "tool_abuse": 46,
+        "tool_result_injection": 46
+      },
+      "benign_subclass": {
+        "benign_carrier_document": 24,
+        "benign_emoji_variation_selector": 12,
+        "benign_encoded_asset": 96,
+        "benign_multistep_tool_use": 12,
+        "benign_package_install": 12,
+        "benign_roleplay_creative": 12,
+        "benign_security_discussion": 12,
+        "benign_terminal_output": 12,
+        "benign_tool_use": 12,
+        "detector_code_fixture": 12,
+        "legitimate_imperative_request": 12,
+        "not_applicable": 551,
+        "quoted_injection_example": 12,
+        "tool_policy_documentation": 12
+      },
+      "by_split_label": {
+        "exemplar_bank:attack": 156,
+        "exemplar_bank:benign": 60,
+        "test:attack": 195,
+        "test:benign": 96,
+        "validation:attack": 200,
+        "validation:benign": 96
+      },
+      "bypass_class": {
+        "ansi_escape": 20,
+        "ascii85": 19,
+        "atbash": 19,
+        "base32": 19,
+        "braille": 19,
+        "chunked_leet": 36,
+        "compact_plain": 36,
+        "diacritics": 36,
+        "encoding": 40,
+        "hex": 40,
+        "homoglyph": 36,
+        "morse": 19,
+        "nato": 19,
+        "none": 156,
+        "plain": 152,
+        "rot13": 60,
+        "sneaky_bits": 19,
+        "unicode_tag": 19,
+        "variation_selector": 19,
+        "zalgo": 20
+      },
+      "rows": 803
+    }
+  },
+  "schema": "round7-ceiling-experiment-v1",
+  "test_per_row_path": "artifacts/round7-garak/ceiling-pilot/test-per-row.jsonl"
+}

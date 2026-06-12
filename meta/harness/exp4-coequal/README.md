@@ -37,6 +37,18 @@ model's honest threshold — earlier "100%" claims were test-derived or measured
 ```
 Writes `artifacts/exp4-coequal/`.
 
+## Validate
+
+```
+python3 meta/harness/exp4-coequal/validate_coequal.py artifacts/exp4-coequal
+python3 meta/harness/exp4-coequal/test_validate_coequal.py
+```
+
+The validator does not load an embedding model or select thresholds. It checks
+metadata-only hygiene, confirms the freeze was selected on validation, and
+recomputes the strict co-equal test recall/FP plus by-control/per-family recall
+from `test-per-row.jsonl`.
+
 ## Compounding follow-up — does the #10 normalizer raise the ensemble bar?
 
 **Yes.** Re-running the *whole* validation-frozen co-equal ensemble with the
@@ -54,4 +66,3 @@ help it directly). Honest, not test-mined.
 
 Run: `.venv-round6/bin/python meta/harness/exp4-coequal/run_coequal_newnorm.py`
 (re-embeds + re-trains the head; writes `artifacts/exp4-coequal/newnorm-metrics.json`).
-

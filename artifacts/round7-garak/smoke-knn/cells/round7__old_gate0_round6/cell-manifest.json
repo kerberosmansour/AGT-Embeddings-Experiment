@@ -1,0 +1,17 @@
+{
+  "cell_key": "round7__old_gate0_round6",
+  "corpus_id": "round7",
+  "freeze_record_path": "artifacts/round7-garak/smoke-knn/cells/round7__old_gate0_round6/freeze-record.json",
+  "normalizer_description": "Python round-6 Gate-0 normalizer",
+  "normalizer_id": "old_gate0_round6",
+  "scorer_mode": "knn",
+  "test_attack_recall": 0.421875,
+  "test_benign_fp_rate": 0.15789473684210525,
+  "test_metrics_path": "artifacts/round7-garak/smoke-knn/cells/round7__old_gate0_round6/test-metrics.json",
+  "test_per_row_path": "artifacts/round7-garak/smoke-knn/cells/round7__old_gate0_round6/test-per-row.jsonl",
+  "test_rows": 83,
+  "threshold_tau": 0.007753968238830566,
+  "validation_metrics_path": "artifacts/round7-garak/smoke-knn/cells/round7__old_gate0_round6/validation-metrics.json",
+  "validation_per_row_path": "artifacts/round7-garak/smoke-knn/cells/round7__old_gate0_round6/validation-per-row.jsonl",
+  "validation_rows": 83
+}
