@@ -44,6 +44,24 @@ matched the experiment vendored snapshot with SHA-256
 `92ac1f855e03502886fffdfb8cf9eece8ce7c2bea268ecacb4ff6386cb345ab3`.
 See `docs/methodology/agt-upstream-baseline-refresh.md`.
 
+## Baseline Pinning Requirement
+
+The "about 1%" rules-only catch-rate claim is the most important number to
+anchor before upstreaming. It means:
+
+```text
+AGT Rust prompt-injection detector at a specific commit and detector-file hash,
+scored on this synthetic hard held-out corpus, caught 180 of 17,600 attack rows.
+```
+
+It does not mean AGT generally catches only 1% of prompt-injection attacks.
+Before any AGT PR is opened, rerun the rules-only harness against fresh AGT
+upstream `main` and record the commit SHA, detector SHA-256, command, corpus
+manifest hash, and resulting TP/FP rates. Current local cross-check:
+`prompt_injection.rs` matches AGT commit
+`1bf359397df64aeb5285bdf5d609ade291c329b9` with SHA-256
+`92ac1f855e03502886fffdfb8cf9eece8ce7c2bea268ecacb4ff6386cb345ab3`.
+
 ## Wording Guardrails
 
 - Say "labelled examples" or "technique-labelled examples" unless reviewed

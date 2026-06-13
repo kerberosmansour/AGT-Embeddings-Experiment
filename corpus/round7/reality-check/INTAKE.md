@@ -27,12 +27,12 @@ base64/hex/percent/homoglyph/leet/spacing.
   "attack_class": "<closest of our families, OR 'novel:<short-name>' if it doesn't fit>",
   "harm_channel": "action | leak | output_bytes | output_text | unknown",
   "multi_turn": false,
-  "turns": null,                       // OR [{"role":"user|tool|assistant","text":"..."}]
+  "turns": null,                       // single-turn: null. multi-turn: [{"role":"user|assistant|tool|system","text":"..."}]
   "origin": "<where it came from: garak/paper/blog/CVE/dataset/repo>",
-  "origin_url": "<link>",
+  "origin_url": "<link, must start with http(s)://>",
   "license": "<source license: Apache-2.0 | MIT>",
   "why_novel": "<one line: why this isn't already in our taxonomy>",
-  "notes": "<optional>"
+  "notes": "<short note; use \"\" if none — the field must be present>"
 }
 ```
 
@@ -41,13 +41,18 @@ base64/hex/percent/homoglyph/leet/spacing.
   NOTICE. Committed `incoming/` rows must be Apache-2.0 or MIT only. Unknown,
   proprietary, NC-only, or unclear-redistribution datasets stay outside this
   folder until cleared.
-- **No live secrets / real credentials / PII / real victim data** — redact to
-  placeholders (the payload *structure* is what matters, not real values). A
-  provenance link belongs in `origin_url`; raw live URLs/emails/secrets do not
-  belong in `text` or `turns[*].text`.
+- **No live secrets / credentials / PII, and no raw URLs/emails in the payload** —
+  the validator rejects ANY `http(s)://`, email address, or secret marker inside
+  `text` / `turns[*].text` (even reserved domains like `example.com`). Redact to
+  **bracket placeholders** that preserve the attack structure: `[URL]`,
+  `[ATTACKER_URL]`, `[ATTACKER_EMAIL]`, `[SECRET]`, `[TOOL_NAME]`, … — e.g. a
+  markdown-exfil payload becomes `![x]([ATTACKER_URL])`. A real provenance link
+  belongs in `origin_url` only.
+- Include **every** field shown above (use `""` / `null` when empty) and **no
+  extra fields** — the validator flags both missing and unexpected keys.
 - Keep each source's samples in a separate file named by origin, e.g.
   `garak-latentinjection.jsonl`, `crescendo-paper.jsonl`.
-- Multi-turn traces welcome — use the `turns` array.
+- Multi-turn traces welcome — use the `turns` array (`multi_turn: true`).
 - Duplicates of what we already have are fine to skip; novelty > volume.
 
 When samples land here, ping Claude to normalize them into the payload-derived
