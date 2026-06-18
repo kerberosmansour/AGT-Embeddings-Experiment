@@ -31,7 +31,7 @@ def main() -> int:
         h = human_view(text)
         a = agent_view(text)
         rows.append({
-            "fixture": str(path.relative_to(ROOT)),
+            "fixture": path.relative_to(ROOT).as_posix(),
             "human_visible": h,
             "agent_visible": a,
             "divergence": h != a,
