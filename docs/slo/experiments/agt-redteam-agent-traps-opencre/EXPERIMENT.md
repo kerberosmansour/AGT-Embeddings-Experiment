@@ -25,7 +25,7 @@
 | Starting hunch | see fenced block below |
 | Primary user / beneficiary | security engineer / benchmark maintainer / internal operator |
 | Strategic lane | security / platform |
-| Current phase | `sandbox` |
+| Current phase | `complete` |
 | Default data classification | Internal |
 | Production promotion allowed? | **No — must route through SLO delivery** |
 | Scratch code allowed? | yes; path `experiments/agt-redteam-agent-traps-opencre/<spike-id>/` |
