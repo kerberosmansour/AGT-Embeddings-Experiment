@@ -1,0 +1,276 @@
+controls:
+  -
+    id: AGT-AC-001
+    name: Source Boundary and Provenance
+    trap_classes:
+      - Content Injection
+      - Semantic Manipulation
+    asi:
+      - ASI01
+    aivss:
+      - GV.source_provenance
+      - GV.input_boundary
+    evidence:
+      - static
+      - mock_behavioural
+    remediation: Record untrusted source boundaries and preserve provenance through policy evaluation.
+    opencre:
+      -
+        relation: broad
+        target: input validation / trust boundary candidate
+  -
+    id: AGT-AC-002
+    name: Instruction Hierarchy Integrity
+    trap_classes:
+      - Semantic Manipulation
+      - Behavioural Control
+    asi:
+      - ASI01
+      - ASI03
+    aivss:
+      - GV.instruction_priority
+    evidence:
+      - static
+      - mock_behavioural
+    remediation: Reject lower-priority content that attempts to override system or developer instructions.
+    opencre:
+      -
+        relation: related
+        target: access control / policy enforcement
+  -
+    id: AGT-AC-003
+    name: Hidden Content and Render/Parse Divergence Detection
+    trap_classes:
+      - Content Injection
+    asi:
+      - ASI01
+    aivss:
+      - GV.render_parse_divergence
+    evidence:
+      - mock_behavioural
+    remediation: Compare human-visible and agent-visible views before trusting fetched or rendered content.
+    opencre:
+      -
+        relation: candidate
+        target: render/parse divergence requirement
+  -
+    id: AGT-AC-004
+    name: Tool Capability Boundary Enforcement
+    trap_classes:
+      - Behavioural Control
+    asi:
+      - ASI02
+    aivss:
+      - TC.tool_scope
+      - TC.least_privilege
+    evidence:
+      - static
+      - mock_behavioural
+    remediation: Bind each tool to explicit capabilities and block out-of-scope calls.
+    opencre:
+      -
+        relation: broad
+        target: least privilege / authorization
+  -
+    id: AGT-AC-005
+    name: Sensitive Data Egress Control
+    trap_classes:
+      - Behavioural Control
+      - Human-in-the-Loop
+    asi:
+      - ASI05
+    aivss:
+      - DP.egress_filtering
+      - DP.canary_leak
+    evidence:
+      - mock_behavioural
+    remediation: Block outbound transmission of sensitive placeholders and record canary leakage attempts.
+    opencre:
+      -
+        relation: broad
+        target: data leakage prevention
+  -
+    id: AGT-AC-006
+    name: Human Approval for Irreversible Actions
+    trap_classes:
+      - Human-in-the-Loop
+      - Behavioural Control
+    asi:
+      - ASI02
+      - ASI10
+    aivss:
+      - HI.approval_required
+      - HI.approval_bypass
+    evidence:
+      - mock_behavioural
+    remediation: Require explicit human approval before irreversible or external-impact tool calls.
+    opencre:
+      -
+        relation: related
+        target: change authorization / four-eyes control
+  -
+    id: AGT-AC-007
+    name: Memory Write/Read Integrity
+    trap_classes:
+      - Cognitive State
+    asi:
+      - ASI06
+    aivss:
+      - MM.memory_write_integrity
+      - MM.memory_traceback
+    evidence:
+      - mock_behavioural
+    remediation: "Authorize memory writes, track source, and filter later memory reads by trust state."
+    opencre:
+      -
+        relation: candidate
+        target: agent memory integrity requirement
+  -
+    id: AGT-AC-008
+    name: RAG Source Traceback and Poisoning Detection
+    trap_classes:
+      - Cognitive State
+      - Semantic Manipulation
+    asi:
+      - ASI06
+    aivss:
+      - RG.source_traceback
+      - RG.poisoning_detection
+    evidence:
+      - static
+      - mock_behavioural
+    remediation: Attach source metadata to retrieved content and detect untrusted poisoning paths.
+    opencre:
+      -
+        relation: candidate
+        target: RAG provenance requirement
+  -
+    id: AGT-AC-009
+    name: MCP and Tool Supply-Chain Verification
+    trap_classes:
+      - Systemic
+      - Behavioural Control
+    asi:
+      - ASI04
+      - ASI07
+    aivss:
+      - SC.tool_origin
+      - SC.mcp_integrity
+    evidence:
+      - static
+    remediation: "Pin, verify, and audit tool/MCP server sources before exposing them to agents."
+    opencre:
+      -
+        relation: broad
+        target: software supply-chain integrity
+  -
+    id: AGT-AC-010
+    name: A2A Delegation and Message Integrity
+    trap_classes:
+      - Systemic
+    asi:
+      - ASI08
+    aivss:
+      - AA.message_authenticity
+      - AA.delegation_scope
+    evidence:
+      - mock_behavioural
+    remediation: Authenticate inter-agent messages and limit delegated capabilities.
+    opencre:
+      -
+        relation: candidate
+        target: agent-to-agent message integrity
+  -
+    id: AGT-AC-011
+    name: Audit Event Completeness
+    trap_classes:
+      - Behavioural Control
+      - Systemic
+    asi:
+      - ASI09
+    aivss:
+      - AU.event_completeness
+      - AU.replay
+    evidence:
+      - mock_behavioural
+    remediation: "Emit replayable audit events for policy decisions, tool attempts, and blocks."
+    opencre:
+      -
+        relation: broad
+        target: audit logging
+  -
+    id: AGT-AC-012
+    name: Raw Prompt Artifact Hygiene
+    trap_classes:
+      - Content Injection
+      - Semantic Manipulation
+    asi:
+      - ASI05
+      - ASI09
+    aivss:
+      - DP.raw_prompt_exposure
+    evidence:
+      - static
+    remediation: Keep benchmark and report artifacts metadata-only unless raw payload publication is approved.
+    opencre:
+      -
+        relation: related
+        target: sensitive data handling
+  -
+    id: AGT-AC-013
+    name: Session and State Boundary Enforcement
+    trap_classes:
+      - Cognitive State
+      - Systemic
+    asi:
+      - ASI06
+      - ASI08
+    aivss:
+      - SS.session_isolation
+    evidence:
+      - mock_behavioural
+    remediation: Prevent cross-session state bleed except through explicit trusted channels.
+    opencre:
+      -
+        relation: candidate
+        target: agent state isolation
+  -
+    id: AGT-AC-014
+    name: Hard-Benign Must-Not-Block Coverage
+    trap_classes:
+      - Semantic Manipulation
+    asi:
+      - ASI01
+    aivss:
+      - GV.false_positive_resilience
+    evidence:
+      - static
+      - mock_behavioural
+    remediation: Maintain benign security/code/structured-data controls that must remain allowed.
+    opencre:
+      -
+        relation: related
+        target: verification of security control correctness
+  -
+    id: AGT-AC-015
+    name: Evidence-Level Reporting
+    trap_classes:
+      - Content Injection
+      - Semantic Manipulation
+      - Cognitive State
+      - Behavioural Control
+      - Systemic
+      - Human-in-the-Loop
+    asi:
+      - ASI09
+    aivss:
+      - AU.evidence_quality
+    evidence:
+      - static
+      - mock_behavioural
+      - live_optional
+    remediation: "Report whether a control is declared, statically detected, mock-tested, or live-tested."
+    opencre:
+      -
+        relation: candidate
+        target: agentic evidence-level reporting

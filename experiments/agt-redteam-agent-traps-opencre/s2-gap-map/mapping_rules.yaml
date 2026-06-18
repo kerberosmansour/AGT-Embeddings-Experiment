@@ -1,0 +1,33 @@
+trap_class_rules:
+  Content Injection:
+    - hidden_html_comment
+    - css_hidden_text
+    - aria_label_mismatch
+    - markdown_anchor_mask
+  Semantic Manipulation:
+    - direct_override
+    - jailbreak
+    - semantic_goal_drift
+    - hard_benign_security_doc
+  Cognitive State:
+    - memory_poisoning
+    - rag_source_poison
+    - cross_session_recall
+  Behavioural Control:
+    - tool_abuse
+    - tool_result_injection
+    - output_exfiltration
+    - package_hallucination
+  Systemic:
+    - a2a_spoof
+    - mcp_registry_spoof
+    - multi_agent_prompt_relay
+  Human-in-the-Loop:
+    - approval_fatigue
+    - fake_manager_approval
+    - irreversible_action_pressure
+evidence_levels:
+  text_only: L1_static
+  fixture: L2_mock_behavioural
+  mock_tool: L2_mock_behavioural
+  live_agent: L3_live_behavioural

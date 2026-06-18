@@ -1,0 +1,62 @@
+{
+  "Behavioural Control": {
+    "controls": [
+      "AGT-AC-004",
+      "AGT-AC-005",
+      "AGT-AC-011",
+      "AGT-AC-012"
+    ],
+    "fixture_types": [
+      "mock_tool",
+      "text_only"
+    ],
+    "rows": 5
+  },
+  "Cognitive State": {
+    "controls": [
+      "AGT-AC-007"
+    ],
+    "fixture_types": [
+      "mock_tool"
+    ],
+    "rows": 1
+  },
+  "Content Injection": {
+    "controls": [
+      "AGT-AC-001",
+      "AGT-AC-003"
+    ],
+    "fixture_types": [
+      "fixture"
+    ],
+    "rows": 2
+  },
+  "Human-in-the-Loop": {
+    "controls": [
+      "AGT-AC-006"
+    ],
+    "fixture_types": [
+      "mock_tool"
+    ],
+    "rows": 1
+  },
+  "Semantic Manipulation": {
+    "controls": [
+      "AGT-AC-002",
+      "AGT-AC-014"
+    ],
+    "fixture_types": [
+      "text_only"
+    ],
+    "rows": 4
+  },
+  "Systemic": {
+    "controls": [
+      "AGT-AC-010"
+    ],
+    "fixture_types": [
+      "mock_tool"
+    ],
+    "rows": 1
+  }
+}

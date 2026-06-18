@@ -1,0 +1,113 @@
+mapping_status: candidate_self_assessment
+relation_vocabulary:
+  - exact
+  - broad
+  - narrow
+  - related
+  - candidate
+controls:
+  -
+    id: AGT-AC-001
+    opencre_relations:
+      -
+        relation: broad
+        target: input validation / trust boundary candidate
+    note: Scratch mapping; not an official OpenCRE or OWASP claim.
+  -
+    id: AGT-AC-002
+    opencre_relations:
+      -
+        relation: related
+        target: access control / policy enforcement
+    note: Scratch mapping; not an official OpenCRE or OWASP claim.
+  -
+    id: AGT-AC-003
+    opencre_relations:
+      -
+        relation: candidate
+        target: render/parse divergence requirement
+    note: Scratch mapping; not an official OpenCRE or OWASP claim.
+  -
+    id: AGT-AC-004
+    opencre_relations:
+      -
+        relation: broad
+        target: least privilege / authorization
+    note: Scratch mapping; not an official OpenCRE or OWASP claim.
+  -
+    id: AGT-AC-005
+    opencre_relations:
+      -
+        relation: broad
+        target: data leakage prevention
+    note: Scratch mapping; not an official OpenCRE or OWASP claim.
+  -
+    id: AGT-AC-006
+    opencre_relations:
+      -
+        relation: related
+        target: change authorization / four-eyes control
+    note: Scratch mapping; not an official OpenCRE or OWASP claim.
+  -
+    id: AGT-AC-007
+    opencre_relations:
+      -
+        relation: candidate
+        target: agent memory integrity requirement
+    note: Scratch mapping; not an official OpenCRE or OWASP claim.
+  -
+    id: AGT-AC-008
+    opencre_relations:
+      -
+        relation: candidate
+        target: RAG provenance requirement
+    note: Scratch mapping; not an official OpenCRE or OWASP claim.
+  -
+    id: AGT-AC-009
+    opencre_relations:
+      -
+        relation: broad
+        target: software supply-chain integrity
+    note: Scratch mapping; not an official OpenCRE or OWASP claim.
+  -
+    id: AGT-AC-010
+    opencre_relations:
+      -
+        relation: candidate
+        target: agent-to-agent message integrity
+    note: Scratch mapping; not an official OpenCRE or OWASP claim.
+  -
+    id: AGT-AC-011
+    opencre_relations:
+      -
+        relation: broad
+        target: audit logging
+    note: Scratch mapping; not an official OpenCRE or OWASP claim.
+  -
+    id: AGT-AC-012
+    opencre_relations:
+      -
+        relation: related
+        target: sensitive data handling
+    note: Scratch mapping; not an official OpenCRE or OWASP claim.
+  -
+    id: AGT-AC-013
+    opencre_relations:
+      -
+        relation: candidate
+        target: agent state isolation
+    note: Scratch mapping; not an official OpenCRE or OWASP claim.
+  -
+    id: AGT-AC-014
+    opencre_relations:
+      -
+        relation: related
+        target: verification of security control correctness
+    note: Scratch mapping; not an official OpenCRE or OWASP claim.
+  -
+    id: AGT-AC-015
+    opencre_relations:
+      -
+        relation: candidate
+        target: agentic evidence-level reporting
+    note: Scratch mapping; not an official OpenCRE or OWASP claim.

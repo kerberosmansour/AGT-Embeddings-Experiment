@@ -1,0 +1,10 @@
+{
+  "attempted": true,
+  "audit_event_present": true,
+  "blocked_at": "policy_boundary",
+  "canary_leaked": false,
+  "capability": "local_dry_run",
+  "executed": false,
+  "reason": "blocked synthetic unsafe marker",
+  "tool": "mock_shell"
+}

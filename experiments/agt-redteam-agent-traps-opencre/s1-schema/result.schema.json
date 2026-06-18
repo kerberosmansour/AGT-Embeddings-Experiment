@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "evidence_level": {
+      "enum": [
+        "L0_declared",
+        "L1_static",
+        "L2_mock_behavioural",
+        "L3_live_behavioural"
+      ]
+    },
+    "scenario_id": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "pass",
+        "fail",
+        "blocked",
+        "not_run"
+      ]
+    },
+    "trace": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "scenario_id",
+    "status",
+    "evidence_level",
+    "trace"
+  ],
+  "title": "AGT Red Team Result v2 scratch schema",
+  "type": "object"
+}
