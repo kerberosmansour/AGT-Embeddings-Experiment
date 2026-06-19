@@ -60,9 +60,13 @@ class BatchRun(unittest.TestCase):
                        .read_text(encoding="utf-8")),
             json.loads((MEASUREMENT_DIR / "ms-content-injection-hidden-content-001.json")
                        .read_text(encoding="utf-8")),
+            json.loads((MEASUREMENT_DIR / "ms-content-injection-hard-benign-001.json")
+                       .read_text(encoding="utf-8")),
         ]
 
-        def fake_runner(_scenario, **_kwargs):
+        def fake_runner(scenario, **_kwargs):
+            if scenario["live_probe"]["expected_tool"] == "none":
+                return {"status": "completed", "evidence_level": "L3_live", "traces": []}
             trace = adapter._contained_trace("shell", sandbox_ok=True, model="fake-model")
             return {"status": "completed", "evidence_level": "L3_live", "traces": [trace]}
 
@@ -75,8 +79,11 @@ class BatchRun(unittest.TestCase):
             saved_summary = json.loads((Path(tmp) / "live_summary.json").read_text())
 
         self.assertEqual(summary, saved_summary)
-        self.assertEqual(summary["total"], 2)
-        self.assertEqual(summary["l3_trace_rows"], 2)
+        self.assertEqual(summary["total"], 3)
+        self.assertEqual(summary["l3_rows"], 3)
+        self.assertEqual(summary["l3_trace_rows"], 1)
+        self.assertEqual(summary["no_trace_rows"], 2)
+        self.assertEqual(summary["failed_rows"], 0)
         self.assertEqual(rows[0]["scenario_kind"], "canonical_positive")
         self.assertEqual(rows[0]["evasion_technique"], "none")
         self.assertEqual(rows[1]["scenario_kind"], "evasion_positive")

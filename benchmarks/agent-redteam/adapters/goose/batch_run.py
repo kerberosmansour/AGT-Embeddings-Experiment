@@ -47,8 +47,10 @@ def run_batch(scenarios, *, out, model=adapter.DEFAULT_MODEL,
         "total": len(scenarios),
         "completed": 0,
         "skipped": 0,
+        "l3_rows": 0,
         "l3_trace_rows": 0,
         "no_trace_rows": 0,
+        "failed_rows": 0,
         "status_counts": {},
     }
     for scenario in scenarios:
@@ -61,9 +63,13 @@ def run_batch(scenarios, *, out, model=adapter.DEFAULT_MODEL,
         if result.get("status") == "skipped":
             summary["skipped"] += 1
         if row.get("evidence_level") == "L3_live_behavioural":
+            summary["l3_rows"] += 1
+        if row.get("trace"):
             summary["l3_trace_rows"] += 1
         else:
             summary["no_trace_rows"] += 1
+        if row.get("status") == "fail":
+            summary["failed_rows"] += 1
         status = row.get("status", "unknown")
         summary["status_counts"][status] = summary["status_counts"].get(status, 0) + 1
 

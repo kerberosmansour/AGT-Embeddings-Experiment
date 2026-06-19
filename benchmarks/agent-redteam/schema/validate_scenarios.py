@@ -39,6 +39,7 @@ EVASION_TECHNIQUES = {
     "visible_safe_hidden_unsafe",
 }
 EXPECTED_BEHAVIOURS = {"detect_or_block", "allow_or_clarify"}
+LIVE_EXPECTED_TOOLS = {"shell", "none"}
 MEASUREMENT_SUITE = "agt_redteam_measurement_v2"
 REQUIRED = {
     "id", "title", "trap_class", "attack_class", "target_layer",
@@ -47,10 +48,11 @@ REQUIRED = {
 }
 OPTIONAL = {
     "measurement_suite", "scenario_kind", "evasion_technique",
-    "expected_control_behavior",
+    "expected_control_behavior", "live_probe",
 }
 MEASUREMENT_REQUIRED = OPTIONAL
 _CONTROL_RE = re.compile(r"AGT-AC-[0-9]{3}\Z")
+_PLACEHOLDER_RE = re.compile(r"MEASUREMENT_[A-Z_]+_PLACEHOLDER")
 
 # --- Raw-free / no-overclaim heuristics (concept at M1; full gate is M5) -----
 _SECRET_RE = re.compile(
@@ -71,6 +73,9 @@ def _texts(data):
     views = data.get("views", {})
     if isinstance(views, dict):
         out += [views.get("human_visible", ""), views.get("agent_visible", "")]
+    live_probe = data.get("live_probe", {})
+    if isinstance(live_probe, dict):
+        out.append(live_probe.get("agent_visible", ""))
     out += [s for s in data.get("success_conditions", []) if isinstance(s, str)]
     return [t for t in out if isinstance(t, str)]
 
@@ -99,6 +104,7 @@ def _validate_measurement(data, require_measurement):
     kind = data.get("scenario_kind")
     evasion = data.get("evasion_technique")
     expected = data.get("expected_control_behavior")
+    live_probe = data.get("live_probe")
     if suite != MEASUREMENT_SUITE:
         return False, f"unknown measurement_suite {suite!r}"
     if kind not in SCENARIO_KINDS:
@@ -107,6 +113,9 @@ def _validate_measurement(data, require_measurement):
         return False, f"unknown evasion_technique {evasion!r}"
     if expected not in EXPECTED_BEHAVIOURS:
         return False, f"unknown expected_control_behavior {expected!r}"
+    ok, message = _validate_live_probe(kind, live_probe)
+    if not ok:
+        return ok, message
     if kind == "evasion_positive":
         if evasion == "none":
             return False, "evasion_positive requires non-none evasion_technique"
@@ -122,6 +131,25 @@ def _validate_measurement(data, require_measurement):
             return False, f"{kind} requires evasion_technique none"
         if expected != "allow_or_clarify":
             return False, f"{kind} requires allow_or_clarify"
+    return True, "ok"
+
+
+def _validate_live_probe(kind, live_probe):
+    if not isinstance(live_probe, dict):
+        return False, "live_probe must be an object"
+    if set(live_probe) != {"agent_visible", "expected_tool"}:
+        return False, "live_probe must be exactly {agent_visible, expected_tool}"
+    text = live_probe.get("agent_visible")
+    expected_tool = live_probe.get("expected_tool")
+    if not isinstance(text, str) or len(text.strip()) < 20:
+        return False, "live_probe.agent_visible must be a non-empty string"
+    if _PLACEHOLDER_RE.search(text):
+        return False, "live_probe.agent_visible must not be a measurement placeholder"
+    if expected_tool not in LIVE_EXPECTED_TOOLS:
+        return False, f"unknown live_probe.expected_tool {expected_tool!r}"
+    expected_by_kind = "shell" if kind == "hard_benign" else "none"
+    if expected_tool != expected_by_kind:
+        return False, f"{kind} requires live_probe.expected_tool {expected_by_kind}"
     return True, "ok"
 
 

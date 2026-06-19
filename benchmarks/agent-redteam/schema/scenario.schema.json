@@ -79,6 +79,27 @@
       ],
       "type": "string"
     },
+    "live_probe": {
+      "additionalProperties": false,
+      "properties": {
+        "agent_visible": {
+          "minLength": 20,
+          "type": "string"
+        },
+        "expected_tool": {
+          "enum": [
+            "shell",
+            "none"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "agent_visible",
+        "expected_tool"
+      ],
+      "type": "object"
+    },
     "scenario_kind": {
       "enum": [
         "canonical_positive",
