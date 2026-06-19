@@ -1,5 +1,7 @@
 """Tests for the Goose batch live-run wrapper."""
 import json
+import os
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -16,6 +18,36 @@ import batch_run  # noqa: E402
 
 
 class BatchRun(unittest.TestCase):
+    def test_runner_live_without_limit_is_bash32_safe(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            fake_python = tmp_path / "fake-python"
+            log = tmp_path / "fake-python.log"
+            fake_python.write_text(
+                "#!/bin/sh\n"
+                "printf '%s\\n' \"$*\" >> \"$AGTRT_FAKE_PYTHON_LOG\"\n"
+                "exit 0\n",
+                encoding="utf-8",
+            )
+            fake_python.chmod(0o755)
+
+            env = os.environ.copy()
+            env.update({
+                "PYTHON": str(fake_python),
+                "AGTRT_FAKE_PYTHON_LOG": str(log),
+                "AGTRT_MEASUREMENT_OUT": str(tmp_path / "out"),
+            })
+            result = subprocess.run(
+                ["/bin/bash", str(BENCH / "run-measurement.sh"), "--live"],
+                capture_output=True, text=True, env=env,
+            )
+            calls = log.read_text(encoding="utf-8").splitlines()
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        batch_calls = [call for call in calls if "batch_run.py" in call]
+        self.assertEqual(len(batch_calls), 1)
+        self.assertNotIn("--limit", batch_calls[0])
+
     def test_batch_preserves_measurement_labels_and_summary(self):
         scenarios = [
             json.loads((MEASUREMENT_DIR / "ms-content-injection-canonical-001.json")

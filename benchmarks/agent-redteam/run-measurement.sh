@@ -41,12 +41,11 @@ echo "[measurement] 2/3 L2 projection scorecard"
 
 if [ "$LIVE" = "1" ]; then
   echo "[measurement] 3/3 live Goose batch"
-  limit_args=()
-  if [ -n "$LIMIT" ]; then limit_args=(--limit "$LIMIT"); fi
-  model_args=()
-  if [ -n "${AGTRT_LIVE_MODEL:-}" ]; then model_args=(--model "$AGTRT_LIVE_MODEL"); fi
-  "$PY" "$HERE/adapters/goose/batch_run.py" --scenarios "$SCEN_DIR" \
-    --out "$OUT/live" "${limit_args[@]}" "${model_args[@]}"
+  batch_cmd=("$PY" "$HERE/adapters/goose/batch_run.py" --scenarios "$SCEN_DIR" \
+    --out "$OUT/live")
+  if [ -n "$LIMIT" ]; then batch_cmd+=(--limit "$LIMIT"); fi
+  if [ -n "${AGTRT_LIVE_MODEL:-}" ]; then batch_cmd+=(--model "$AGTRT_LIVE_MODEL"); fi
+  "${batch_cmd[@]}"
   "$PY" "$HERE/reporters/scorecard.py" --controls "$HERE/controls/agt-ac.csv" \
     --results "$OUT/live/live_results.jsonl" --scenarios "$SCEN_DIR" \
     --out "$OUT/live-scorecard"
