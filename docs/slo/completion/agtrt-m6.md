@@ -25,6 +25,6 @@
 Keys are used ONLY by the trusted orchestrator for the model call (outside the sandbox); the model's chosen tool executes INSIDE the no-network/no-fs/scrubbed sandbox, so an unsafe action is recorded (`attempted=True`) but structurally cannot cause a real side effect. `L3_live` is tagged only for sandbox-executed actions.
 
 ## Remaining (operator gate — NOT a code gap)
-The actual L3 trace needs the Anthropic key provisioned to the linux box **out-of-band** (`.agtrt-goose.env`, gitignored — never on the bus) + the **W-CEO-2** founder checkpoint. Cheap model + caps keep cost tiny. Once keys land: `bash run-smoke.sh --live` emits real L3 traces.
+The actual L3 trace needs **only** the Anthropic key provisioned to the linux box **out-of-band** (`.agtrt-goose.env`, gitignored — never on the bus) + the **W-CEO-2** founder checkpoint. The model call uses **stdlib `urllib`** (no SDK to install — pip is unavailable on this box's Python 3.14, so this is also more robust). Cheap model + caps keep cost tiny. Once the key lands: `bash run-smoke.sh --live` emits real L3 traces.
 
 ## Status: `blocked_by_operator` — build + sandbox proof complete; keyed live run awaits creds + checkpoint.
