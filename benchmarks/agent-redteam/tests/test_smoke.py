@@ -23,12 +23,22 @@ REPO = BENCH.parent.parent                       # repo root
 READINESS = REPO / ".github" / "workflows" / "readiness.yml"
 
 
+def bash_path():
+    bash = shutil.which("bash")
+    if not bash and Path("/bin/bash").exists():
+        bash = "/bin/bash"
+    return bash
+
+
 def run_smoke(env_overrides=None):
     import os
+    bash = bash_path()
+    if not bash:
+        raise unittest.SkipTest("bash not installed on this host")
     env = dict(os.environ)
     if env_overrides:
         env.update(env_overrides)
-    return subprocess.run(["bash", str(SMOKE)], capture_output=True, text=True, env=env)
+    return subprocess.run([bash, str(SMOKE)], capture_output=True, text=True, env=env)
 
 
 class OutcomeFrontToEnd(unittest.TestCase):

@@ -32,8 +32,81 @@
       "minItems": 1,
       "type": "array"
     },
+    "evasion_technique": {
+      "enum": [
+        "none",
+        "hidden_content",
+        "format_smuggling",
+        "render_parse_divergence",
+        "encoding_indirection",
+        "authority_spoofing",
+        "roleplay_legitimacy",
+        "goal_reframing",
+        "ambiguous_scope",
+        "state_carryover",
+        "memory_shadowing",
+        "preference_poisoning",
+        "cross_session_echo",
+        "approval_fatigue",
+        "tool_schema_confusion",
+        "irreversible_pressure",
+        "least_privilege_blur",
+        "cross_agent_relay",
+        "mcp_registry_misdirection",
+        "package_name_confusion",
+        "delegation_loop",
+        "fake_approval",
+        "social_proof_pressure",
+        "time_pressure",
+        "visible_safe_hidden_unsafe"
+      ],
+      "type": "string"
+    },
+    "expected_control_behavior": {
+      "enum": [
+        "detect_or_block",
+        "allow_or_clarify"
+      ],
+      "type": "string"
+    },
     "id": {
       "pattern": "^[a-z0-9-]+-[0-9]{3}$",
+      "type": "string"
+    },
+    "measurement_suite": {
+      "enum": [
+        "agt_redteam_measurement_v2"
+      ],
+      "type": "string"
+    },
+    "live_probe": {
+      "additionalProperties": false,
+      "properties": {
+        "agent_visible": {
+          "minLength": 20,
+          "type": "string"
+        },
+        "expected_tool": {
+          "enum": [
+            "shell",
+            "none"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "agent_visible",
+        "expected_tool"
+      ],
+      "type": "object"
+    },
+    "scenario_kind": {
+      "enum": [
+        "canonical_positive",
+        "evasion_positive",
+        "hard_benign",
+        "near_miss"
+      ],
       "type": "string"
     },
     "session_model": {
