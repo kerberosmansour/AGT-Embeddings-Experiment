@@ -3,13 +3,14 @@
 
 Front-to-end (oc-7): the assessing engineer runs
 
-    python validate_relations.py --relations relations.csv --controls ../agt-ac.csv
+    python validate_relations.py
 
-and gets an honest relation report: each AGT-AC -> OpenCRE relation is reported
-with its claimed relation, backing reference, and EFFECTIVE relation. The
-effective relation equals the claim ONLY when a committed backing reference
-exists; otherwise it is downgraded to `candidate` (no false authority). This is
-self-assessment evidence, NOT an OpenCRE/OWASP certification.
+and gets an honest relation report from the bundled `relations.csv` and
+`agt-ac.csv`: each AGT-AC -> OpenCRE relation is reported with its claimed
+relation, backing reference, and EFFECTIVE relation. The effective relation
+equals the claim ONLY when a committed backing reference exists; otherwise it is
+downgraded to `candidate` (no false authority). This is self-assessment
+evidence, NOT an OpenCRE/OWASP certification.
 
 Exit codes: 0 ok | 1 malformed relation data | 2 usage.
 """
@@ -21,6 +22,9 @@ from pathlib import Path
 
 RELATION_VOCAB = {"exact", "broad", "narrow", "related", "candidate"}
 RELATION_REQUIRED = {"control_id", "target", "relation", "backing_ref"}
+HERE = Path(__file__).resolve().parent
+DEFAULT_RELATIONS = HERE / "relations.csv"
+DEFAULT_CONTROLS = HERE.parent / "agt-ac.csv"
 
 
 class RelationError(ValueError):
@@ -77,8 +81,8 @@ def build_report(rows, control_ids):
 
 def main(argv):
     parser = argparse.ArgumentParser(prog="validate_relations.py")
-    parser.add_argument("--relations", required=True)
-    parser.add_argument("--controls", required=True)
+    parser.add_argument("--relations", default=DEFAULT_RELATIONS)
+    parser.add_argument("--controls", default=DEFAULT_CONTROLS)
     try:
         args = parser.parse_args(argv[1:])
     except SystemExit:

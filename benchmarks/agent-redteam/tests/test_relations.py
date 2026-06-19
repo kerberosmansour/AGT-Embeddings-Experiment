@@ -25,12 +25,16 @@ sys.path.insert(0, str(OPENCRE_DIR))
 import validate_relations as vr  # noqa: E402
 
 
-def run_cli(relations, *extra):
+def run_cli(relations=RELATIONS, *extra):
     return subprocess.run(
         [sys.executable, str(VALIDATOR), "--relations", str(relations),
          "--controls", str(CONTROLS), *extra],
         capture_output=True, text=True,
     )
+
+
+def run_default_cli():
+    return subprocess.run([sys.executable, str(VALIDATOR)], capture_output=True, text=True)
 
 
 def _write_relations(tmp, rows):
@@ -57,6 +61,14 @@ class OutcomeFrontToEnd(unittest.TestCase):
         for row in report["relations"]:
             if not row["backing_ref"]:
                 self.assertEqual(row["effective_relation"], "candidate", row["control_id"])
+
+    def test_oc7_default_invocation_uses_bundled_files(self):
+        r = run_default_cli()
+        self.assertEqual(r.returncode, 0, r.stderr)
+        report = json.loads(r.stdout)
+        self.assertEqual(report["verified"], 0)
+        self.assertEqual(report["candidate"], 15)
+        self.assertEqual(report["unmapped_controls"], [])
 
     def test_no_endorsement_terms(self):  # tm-agtrt-abuse-4
         r = run_cli(RELATIONS)
