@@ -69,7 +69,7 @@ Single source of truth for progress. Update as each milestone completes.
 | 3 | Agent-Traps deterministic smoke suite + CI integration | `done` | 2026-06-19 | 2026-06-19 | `docs/slo/lessons/agtrt-m3.md` | `docs/slo/completion/agtrt-m3.md` |
 | 4 | Control-linked evidence-level reporter (productionize s6) | `done` | 2026-06-19 | 2026-06-19 | `docs/slo/lessons/agtrt-m4.md` | `docs/slo/completion/agtrt-m4.md` |
 | 5 | Upstream-ready docs + raw-free hygiene gate + PR-boundary packaging (productionize s8) | `done` | 2026-06-19 | 2026-06-19 | `docs/slo/lessons/agtrt-m5.md` | oc-5 green; 46 tests; hygiene gate + PROMOTION.md; DW-001 → issue #29 |
-| 6 | Live Goose adapter — real-agent (L3) assessment in a hermetic sandbox (productionize s7) | `not_started` | | | | |
+| 6 | Live Goose adapter — real-agent (L3) assessment in a hermetic sandbox (productionize s7) | `blocked_by_operator` | 2026-06-19 | | `docs/slo/lessons/agtrt-m6.md` | sandbox+adapter BUILT+PROVEN (8 tests; OS egress/env/fs controls green); keyed cheap-model L3 run awaits out-of-band creds + W-CEO-2 checkpoint |
 | 7 | OpenCRE relation research + relation-quality validator | `done` | 2026-06-19 | 2026-06-19 | `docs/slo/lessons/agtrt-m7.md` | oc-7 green; 47 tests; fail-honest validator (15 candidate, 9 downgraded) |
 | 8 | Shareable evidence scorecard product (productionize the scorecard wedge) | `done` | 2026-06-19 | 2026-06-19 | `docs/slo/lessons/agtrt-m8.md` | oc-8 green; 46 tests; offline HTML+MD, HTML-escaped, cert=false |
 

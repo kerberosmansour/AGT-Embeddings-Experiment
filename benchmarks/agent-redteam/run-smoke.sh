@@ -11,6 +11,11 @@ set -euo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+# M6 opt-in: --live appends a sandboxed live-agent (L3) assessment AFTER the
+# mock chain. Default (no --live) is unchanged mock/L2 and runs everywhere.
+LIVE=0
+for arg in "$@"; do [ "$arg" = "--live" ] && LIVE=1; done
+
 # Portable interpreter pick (DW-004). A `command -v` check is NOT enough on
 # Windows: `python3` there is a Store-alias that PASSES `command -v` but does not
 # actually run Python (it prints an install hint and exits non-zero), so the old
@@ -44,5 +49,12 @@ echo "[smoke] 3/4 evidence-level scorecard"
 
 echo "[smoke] 4/4 raw-free hygiene gate"
 "$PY" "$HERE/hygiene/raw_free_scan.py" "$HERE"
+
+if [ "$LIVE" = "1" ]; then
+  echo "[smoke] live (opt-in): sandboxed L3 agent assessment"
+  # Fail-closed: refuses if the OS sandbox isn't secure; skips (exit 0) if no
+  # credentials are provisioned — never fakes an L3 result. Cheap model + caps.
+  "$PY" "$HERE/adapters/goose/adapter.py" --live --scenario "${scenarios[0]}" --out "$TMP"
+fi
 
 echo "[smoke] OK"

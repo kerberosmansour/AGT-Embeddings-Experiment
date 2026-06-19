@@ -53,3 +53,4 @@ corpus/round4/*-smoke-metrics.json
 .cache/round6-embeddings/
 artifacts/round6-cascade/**/*.tmp
 benchmarks/agent-redteam/**/__pycache__/
+.agtrt-goose.env
