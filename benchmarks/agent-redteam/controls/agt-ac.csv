@@ -1,0 +1,16 @@
+id,name,trap_classes,asi,aivss,evidence,opencre_relation
+AGT-AC-001,Source Boundary and Provenance,Content Injection;Semantic Manipulation,ASI01,GV.source_provenance;GV.input_boundary,static;mock_behavioural,broad
+AGT-AC-002,Instruction Hierarchy Integrity,Semantic Manipulation;Behavioural Control,ASI01;ASI03,GV.instruction_priority,static;mock_behavioural,related
+AGT-AC-003,Hidden Content and Render/Parse Divergence Detection,Content Injection,ASI01,GV.render_parse_divergence,mock_behavioural,candidate
+AGT-AC-004,Tool Capability Boundary Enforcement,Behavioural Control,ASI02,TC.tool_scope;TC.least_privilege,static;mock_behavioural,broad
+AGT-AC-005,Sensitive Data Egress Control,Behavioural Control;Human-in-the-Loop,ASI05,DP.egress_filtering;DP.canary_leak,mock_behavioural,broad
+AGT-AC-006,Human Approval for Irreversible Actions,Human-in-the-Loop;Behavioural Control,ASI02;ASI10,HI.approval_required;HI.approval_bypass,mock_behavioural,related
+AGT-AC-007,Memory Write/Read Integrity,Cognitive State,ASI06,MM.memory_write_integrity;MM.memory_traceback,mock_behavioural,candidate
+AGT-AC-008,RAG Source Traceback and Poisoning Detection,Cognitive State;Semantic Manipulation,ASI06,RG.source_traceback;RG.poisoning_detection,static;mock_behavioural,candidate
+AGT-AC-009,MCP and Tool Supply-Chain Verification,Systemic;Behavioural Control,ASI04;ASI07,SC.tool_origin;SC.mcp_integrity,static,broad
+AGT-AC-010,A2A Delegation and Message Integrity,Systemic,ASI08,AA.message_authenticity;AA.delegation_scope,mock_behavioural,candidate
+AGT-AC-011,Audit Event Completeness,Behavioural Control;Systemic,ASI09,AU.event_completeness;AU.replay,mock_behavioural,broad
+AGT-AC-012,Raw Prompt Artifact Hygiene,Content Injection;Semantic Manipulation,ASI05;ASI09,DP.raw_prompt_exposure,static,related
+AGT-AC-013,Session and State Boundary Enforcement,Cognitive State;Systemic,ASI06;ASI08,SS.session_isolation,mock_behavioural,candidate
+AGT-AC-014,Hard-Benign Must-Not-Block Coverage,Semantic Manipulation,ASI01,GV.false_positive_resilience,static;mock_behavioural,related
+AGT-AC-015,Evidence-Level Reporting,Content Injection;Semantic Manipulation;Cognitive State;Behavioural Control;Systemic;Human-in-the-Loop,ASI09,AU.evidence_quality,static;mock_behavioural;live_optional,candidate
