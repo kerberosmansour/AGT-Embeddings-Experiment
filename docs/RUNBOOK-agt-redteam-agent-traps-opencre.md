@@ -264,7 +264,7 @@ The benchmark must produce **honest, reproducible, raw-free evidence** about whi
 | Actors | Benchmark maintainer (trusted); contributor of new scenarios (semi-trusted); downstream reader of reports (trusted-consumer) |
 | Trust boundaries | scenario file → validator; generated artifact → public/upstream boundary; mock tool → (never) real OS/network |
 | Entry points | scenario JSON files; new fixtures; CI job input |
-| Abuse cases | `tm-agtrt-abuse-1`: raw attack payload smuggled into a scenario/report leaks to a public artifact. `tm-agtrt-abuse-2`: a fixture/extractor hides agent-visible content, producing false comfort. `tm-agtrt-abuse-3`: a mock tool is made to perform a real side effect (subprocess/network/file-outside-scratch). `tm-agtrt-abuse-4`: a report asserts or implies official OWASP/OpenCRE certification. `tm-agtrt-abuse-5`: an unsafe attempt blocked at the boundary disappears from evidence (false negative). `tm-agtrt-abuse-6`: a hard-benign input is auto-classified unsafe (false positive). |
+| Abuse cases | `tm-agtrt-abuse-1`: raw attack payload smuggled into a scenario/report leaks to a public artifact. `tm-agtrt-abuse-2`: a fixture/extractor hides agent-visible content, producing false comfort. `tm-agtrt-abuse-3`: a mock tool is made to perform a real side effect (subprocess/network/file-outside-scratch). `tm-agtrt-abuse-4`: a report asserts or implies official OWASP/OpenCRE certification. `tm-agtrt-abuse-5`: an unsafe attempt blocked at the boundary disappears from evidence (false negative). `tm-agtrt-abuse-6`: a hard-benign input is auto-classified unsafe (false positive). `tm-agtrt-abuse-7` (M6): a live run leaks a real secret/raw payload into an L3 trace. `tm-agtrt-abuse-8` (M8): a crafted scenario/control field renders as executable HTML in the shareable scorecard — stored XSS (CWE-79). `tm-agtrt-abuse-9` (M6): a live agent escapes the OS sandbox / reaches cloud-metadata `169.254.169.254` to exfiltrate host credentials — sandbox-escape + SSRF (CWE-918). |
 | Required controls | Closed enums (§4.5); raw-free hygiene gate (M5); stdlib-only import gate; `certification_claim:false` literal; attempted-recorded-even-if-blocked invariant; hard-benign must-not-block cases. |
 | Residual risks | Mock evidence is L2 only — it never proves live-agent safety (owner: runbook; review-by: before any L3/Goose ticket starts). Heuristic raw-free scan can miss novel encodings (owner: M5; mitigated by synthetic-only discipline + review). |
 
@@ -292,7 +292,7 @@ The benchmark must produce **honest, reproducible, raw-free evidence** about whi
 | DW-001 | Content-injection fixture pack deferred from this runbook (curated `promote_to_ticket`) | low | file_github_issue | win/mac | M5 files `/slo-ticket-plan` issue | M5 |
 | DW-002 | Goose live adapter — **now BUILT as M6** (founder pulled it in; sandboxed L3) | low | built_in_milestone | win/mac | M6 (was: file issue) | M6 |
 | DW-003 | OpenCRE relation quality — **now BUILT as M7** (founder pulled it in; relation-quality validator) | med | built_in_milestone | win/mac | M7 (was: file issue) | M7 |
-| DW-004 | `python3` vs `python` + shell-glob portability (Windows) — Win audit Finding 2 | low | fix_now | win | M1 smoke script uses portable invocation + documents Git-Bash/`python` | M1 |
+| DW-004 | `python3` vs `python` + shell-glob portability (Windows) — Win audit Finding 2 | low | fix_now | win | split: M1 validator CLI takes explicit path args (no bare glob) — DONE in M1; M3 `run-smoke.sh` uses a portable invocation (`python`, Git-Bash-documented) | M1 (validator) + M3 (smoke script) |
 
 ---
 
@@ -1011,13 +1011,13 @@ Standard v4 DoD; `certification_claim:false` invariant + no-cert-term + hard-ben
 
 ### Milestone 5 — `Upstream-ready docs + raw-free hygiene gate + PR-boundary packaging (productionize s8)`
 
-**Goal**: A raw-free hygiene gate (test + smoke step) over all generated/committed benchmark artifacts, a `benchmarks/agent-redteam/PROMOTION.md` PR-boundary doc (from s8), and the four deferred routes filed as GitHub issues (DW-001 fixtures, DW-002 Goose, DW-003 OpenCRE research, DW-004 already fixed) — so the benchmark is upstream-ready without a monolithic PR and without leaking raw content.
+**Goal**: A raw-free hygiene gate (test + smoke step) over all generated/committed benchmark artifacts, a `benchmarks/agent-redteam/PROMOTION.md` PR-boundary doc (from s8), and the one remaining deferred route (DW-001 content-fixtures) filed as a GitHub issue — so the benchmark is upstream-ready without a monolithic PR and without leaking raw content. (DW-002 Goose and DW-003 OpenCRE are now **BUILT in M6/M7** per the founder pull-in; DW-004 portability is fixed across M1+M3 — none of these are filed out.)
 
 **Context**: s8 proved a clean promotion split. This milestone makes the hygiene enforceable and files the deferred work, closing the runbook with the experiment's safety posture intact (raw-free, no certification, no monolithic upstream PR).
 
 **Carmack-style reliability goal**: No silent failure — the hygiene gate fails closed on any raw-payload/secret heuristic hit; the Detected Work Ledger is fully disposed.
 
-**Important design rule**: Nothing here opens an upstream PR or claims certification. The hygiene gate is the last line: any generated artifact containing a raw attack payload, secret, or PII heuristic hit fails the build.
+**Important design rule**: Nothing here opens an upstream PR or claims certification. The hygiene gate is the last line: any generated artifact containing a raw attack payload, secret, or PII heuristic hit fails the build. The gate scans **all committed AND generated artifacts under `benchmarks/agent-redteam/**` — explicitly including the committed `scenarios/*.json` and `controls/*.csv`, not only generated reports** (tm-agtrt-abuse-1 is a payload smuggled into a committed scenario, so the scan must cover scenario inputs).
 
 **Refactor budget**: `Minimal local refactor permitted in listed files only` (add hygiene step to `run-smoke.sh`).
 
@@ -1026,7 +1026,7 @@ Standard v4 DoD; `certification_claim:false` invariant + no-cert-term + hard-ben
 | Field | Value |
 |---|---|
 | Inputs | all committed/generated benchmark artifacts |
-| Outputs | hygiene gate pass/fail; `PROMOTION.md`; filed GH issues for DW-001..003 |
+| Outputs | hygiene gate pass/fail; `PROMOTION.md`; filed GH issue for DW-001 (content-fixtures) only (DW-002/003 are built in M6/M7) |
 | Interfaces touched | NEW `benchmarks/agent-redteam/hygiene/raw_free_scan.py`, `PROMOTION.md`, `tests/test_hygiene.py`; EDIT `run-smoke.sh` (add hygiene step) |
 | Files allowed to change | `benchmarks/agent-redteam/hygiene/**`, `benchmarks/agent-redteam/PROMOTION.md`, `benchmarks/agent-redteam/tests/test_hygiene.py`, `benchmarks/agent-redteam/run-smoke.sh` |
 | Files to read before changing anything | `experiments/.../s8-promotion/*` (read-only seed); all `benchmarks/agent-redteam/**` artifacts to scan |
@@ -1067,7 +1067,7 @@ Standard v4 DoD; `certification_claim:false` invariant + no-cert-term + hard-ben
 2. Implement `raw_free_scan.py` (regex heuristics: secret-like, raw-payload markers, PII shapes), fail-closed.
 3. Author `PROMOTION.md` from s8 (schema→harness→smoke→reporter sequence; deferred routes; "no monolithic PR, no certification").
 4. Append hygiene step to `run-smoke.sh`; re-run M3/M4 smoke tests.
-5. File GH issues: DW-001 (content-fixtures `/slo-ticket-plan`), DW-002 (Goose `/slo-ticket-plan`), DW-003 (OpenCRE `/slo-research`); link them in `PROMOTION.md`; mark the Detected Work Ledger disposed.
+5. File GH issue: DW-001 (content-fixtures `/slo-ticket-plan`); link it in `PROMOTION.md`; mark the Detected Work Ledger disposed. (DW-002 Goose → built in M6, DW-003 OpenCRE → built in M7, DW-004 portability → fixed in M1+M3 — none filed out.)
 6. Static gates; run full smoke (now ending in hygiene).
 7. Self-Review; lessons + completion; tracker → all done.
 
@@ -1124,7 +1124,7 @@ Drive **oc-5** as the engineer would, end-to-end via the full chain ending in hy
 #### Smoke Tests
 - [ ] `python benchmarks/agent-redteam/hygiene/raw_free_scan.py benchmarks/agent-redteam` → pass
 - [ ] full `run-smoke.sh` green (ends in hygiene)
-- [ ] GH issues DW-001..003 filed + linked; `git status` clean
+- [ ] GH issue DW-001 (content-fixtures) filed + linked; `git status` clean
 
 #### Evidence Log
 | Step | Command / Check | Expected | Actual | Pass/Fail | Notes |
@@ -1135,7 +1135,7 @@ Drive **oc-5** as the engineer would, end-to-end via the full chain ending in hy
 | Anti-vacuity | planted secret | non-zero exit | | | |
 | Static | `py_compile` + `git diff --check` | clean | | | |
 | Full smoke | run-smoke.sh | exit 0 | | | |
-| Issues filed | `gh issue list` | DW-001..003 present | | | |
+| Issue filed | `gh issue list` | DW-001 present | | | |
 | Cleanup | `git status` | clean | | | |
 
 #### Definition of Done
@@ -1169,7 +1169,7 @@ Standard v4 DoD; hygiene gate fail-closed + anti-vacuity proven; `PROMOTION.md` 
 | New dependencies allowed | **EXCEPTION (this milestone's purpose)**: the Goose runtime + provider SDK — pinned, security/license-reviewed in this Contract Block, **isolated to `adapters/goose/`** and never imported by the default path. Core benchmark stays stdlib-only. |
 | Migration allowed | `no` |
 | Resource bounds | `max_turns`, `timeout_seconds`, `max_tokens` hard caps with a kill-switch; one agent per run |
-| Invariants/assertions required | **OS-level** egress default-deny proven (a real subprocess attempt to a non-allowlisted host — incl. metadata `169.254.169.254` — is blocked at the network layer, not just in-process); no host credential reachable (scrubbed env + no host fs mount; refuse to start otherwise); caps enforced; real effects confined to the sandbox tempdir; `L3_live` tag only on sandbox-executed actions; raw-free |
+| Invariants/assertions required | **OS-level** egress default-deny proven (a real subprocess attempt to a non-allowlisted host — incl. metadata `169.254.169.254` — is blocked at the network layer, not just in-process); no host credential reachable (scrubbed env + no host fs mount; refuse to start otherwise); caps enforced; real effects confined to the sandbox tempdir; `L3_live` tag only on sandbox-executed actions; raw-free; **if the OS-enforced sandbox cannot be established (e.g. no netns/container privileges on the host or CI runner), the adapter REFUSES to run `--live` and exits with a named reason — it NEVER falls back to an in-process guard or emits L3 evidence** (resolves F-SEC-5; no false-trusted L3) |
 | Static analysis gates | `py_compile` + `git diff --check` + **OS-layer sandbox-egress test** (real subprocess egress blocked) + **no-host-credential scan** + **stdlib-only gate scoped to the default path (excludes `adapters/goose/`)** + **dependency-audit gate for `adapters/goose/`** (pinned Goose dep + provider SDK, license + CVE checked) |
 | Forbidden shortcuts | no run against production systems; no real-credential targets; no L3 tag on un-exercised actions; no live deps in the default path |
 | Data classification | `Internal`; live traces scanned for would-be `Confidential` leakage |
@@ -1309,7 +1309,7 @@ Standard v4 DoD; relation-honesty + no-endorsement-overclaim invariants encoded/
 
 **Carmack-style reliability goal**: Make invalid states unrepresentable (no single "score"/badge; `certification_claim:false` literal rendered) + raw-free, self-contained output.
 
-**Important design rule**: The product renders **evidence levels, never a single mystery score or a pass/cert badge**; every rendered artifact carries the no-certification disclaimer prominently; output is raw-free, self-contained (opens offline, no external calls, no telemetry).
+**Important design rule**: The product renders **evidence levels, never a single mystery score or a pass/cert badge**; every rendered artifact carries the no-certification disclaimer **rendered at the TOP of the report as a visually-distinct banner (not buried in a footer)** so a skimming stakeholder cannot misread it as a certification (tm-agtrt-abuse-4; resolves design finding F-DES-1); output is raw-free, self-contained (opens offline, no external calls, no telemetry).
 
 **Refactor budget**: `No refactor permitted beyond direct implementation` (greenfield product layer over the M4 JSON).
 
