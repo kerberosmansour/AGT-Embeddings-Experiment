@@ -46,3 +46,27 @@ Unknown-license and proprietary datasets are excluded from this intake.
   realistic fake values, generate a separate synthetic-variation arm with
   `corpus/round7/reality-check/make_synthetic_variations.py`; see
   `corpus/round7/reality-check/SYNTHETIC_VARIATIONS.md`.
+
+## Novelty supplement (linux-agent, 2026-06-11)
+
+Six rows added to fill confirmed **zero-coverage** gaps — structurally-novel 2024
+techniques the bulk sources above and our normalizer (leet/base64/homoglyph/
+spacing/morse/…) do not handle. These are **structure-faithful, redacted
+representative** rows (the published technique *wrapper* with the harmful target
+reduced to `[HARMFUL_GOAL]`/`[HARMFUL_BEHAVIOR]`), not bulk dataset extracts —
+the detector-relevant signal is the wrapper shape, not harmful content. Each
+`why_novel` names the specific blind spot.
+
+- `artprompt.jsonl`: 2 rows; license=MIT; origin=ArtPrompt (UW-NSL, ACL 2024) — ascii-art cloze masking; per-token normalizers never rebuild the masked word.
+- `cipherchat-selfcipher.jsonl`: 2 rows; license=MIT; origin=CipherChat (RobustNLP, ICLR 2024) — SelfCipher (no real encoding, pure role frame) + Caesar "cipher-expert / do not translate" wrapper.
+- `bon-jailbreaking.jsonl`: 2 rows; license=MIT; origin=Best-of-N (Hughes et al., 2024) — per-sample random capitalization / char-scramble / noise augmentation that defeats canonical-form matching.
+
+### Source Links (novelty supplement)
+
+- ArtPrompt: https://github.com/uw-nsl/ArtPrompt (MIT)
+- CipherChat: https://github.com/RobustNLP/CipherChat (MIT)
+- Best-of-N Jailbreaking: https://github.com/jplhughes/bon-jailbreaking (MIT)
+
+Excluded (license not Apache-2.0/MIT-verifiable at intake time): FlipAttack
+(no LICENSE file at source), llm-past-tense (no LICENSE file at source) — kept
+out of `incoming/` per the license gate until clearance.
