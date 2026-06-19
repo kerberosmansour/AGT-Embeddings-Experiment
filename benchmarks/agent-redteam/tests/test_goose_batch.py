@@ -1,6 +1,7 @@
 """Tests for the Goose batch live-run wrapper."""
 import json
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -19,6 +20,11 @@ import batch_run  # noqa: E402
 
 class BatchRun(unittest.TestCase):
     def test_runner_live_without_limit_is_bash32_safe(self):
+        bash = shutil.which("bash")
+        if not bash and Path("/bin/bash").exists():
+            bash = "/bin/bash"
+        if not bash:
+            self.skipTest("bash not installed on this host")
         with tempfile.TemporaryDirectory() as tmp:
             tmp_path = Path(tmp)
             fake_python = tmp_path / "fake-python"
@@ -38,7 +44,7 @@ class BatchRun(unittest.TestCase):
                 "AGTRT_MEASUREMENT_OUT": str(tmp_path / "out"),
             })
             result = subprocess.run(
-                ["/bin/bash", str(BENCH / "run-measurement.sh"), "--live"],
+                [bash, str(BENCH / "run-measurement.sh"), "--live"],
                 capture_output=True, text=True, env=env,
             )
             calls = log.read_text(encoding="utf-8").splitlines()
