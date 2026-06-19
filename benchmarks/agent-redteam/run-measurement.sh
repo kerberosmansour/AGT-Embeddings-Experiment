@@ -44,6 +44,7 @@ if [ "$LIVE" = "1" ]; then
   batch_cmd=("$PY" "$HERE/adapters/goose/batch_run.py" --scenarios "$SCEN_DIR" \
     --out "$OUT/live")
   if [ -n "$LIMIT" ]; then batch_cmd+=(--limit "$LIMIT"); fi
+  if [ -n "${AGTRT_LIVE_PROVIDER:-}" ]; then batch_cmd+=(--provider "$AGTRT_LIVE_PROVIDER"); fi
   if [ -n "${AGTRT_LIVE_MODEL:-}" ]; then batch_cmd+=(--model "$AGTRT_LIVE_MODEL"); fi
   "${batch_cmd[@]}"
   "$PY" "$HERE/reporters/scorecard.py" --controls "$HERE/controls/agt-ac.csv" \

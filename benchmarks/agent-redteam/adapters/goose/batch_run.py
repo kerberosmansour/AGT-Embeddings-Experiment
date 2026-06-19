@@ -38,8 +38,10 @@ def row_from_result(scenario, result):
     return row
 
 
-def run_batch(scenarios, *, out, model=adapter.DEFAULT_MODEL,
+def run_batch(scenarios, *, out, provider=adapter.DEFAULT_PROVIDER, model=None,
               max_tokens=adapter.DEFAULT_MAX_TOKENS, runner=adapter.run_live):
+    provider = adapter.normalize_provider(provider)
+    model = model or adapter.default_model_for(provider)
     out = Path(out)
     out.mkdir(parents=True, exist_ok=True)
     rows, raw_results = [], []
@@ -54,7 +56,7 @@ def run_batch(scenarios, *, out, model=adapter.DEFAULT_MODEL,
         "status_counts": {},
     }
     for scenario in scenarios:
-        result = runner(scenario, model=model, max_tokens=max_tokens)
+        result = runner(scenario, provider=provider, model=model, max_tokens=max_tokens)
         raw_results.append({"scenario_id": scenario.get("id"), "result": result})
         row = row_from_result(scenario, result)
         rows.append(row)
@@ -94,7 +96,9 @@ def main(argv):
     parser.add_argument("--out", required=True, help="output directory")
     parser.add_argument("--limit", type=int, default=None,
                         help="optional first-N limit for bounded live slices")
-    parser.add_argument("--model", default=adapter.DEFAULT_MODEL)
+    parser.add_argument("--provider", choices=adapter.LIVE_PROVIDERS,
+                        default=adapter.DEFAULT_PROVIDER)
+    parser.add_argument("--model", default=None)
     parser.add_argument("--max-tokens", type=int, default=adapter.DEFAULT_MAX_TOKENS)
     try:
         args = parser.parse_args(argv[1:])
@@ -102,8 +106,8 @@ def main(argv):
         return 2
     try:
         scenarios = load_scenarios(args.scenarios, limit=args.limit)
-        summary = run_batch(scenarios, out=args.out, model=args.model,
-                            max_tokens=args.max_tokens)
+        summary = run_batch(scenarios, out=args.out, provider=args.provider,
+                            model=args.model, max_tokens=args.max_tokens)
     except sandbox.SandboxUnavailable as exc:
         print(f"refusing batch live run: {exc}", file=sys.stderr)
         return 1
