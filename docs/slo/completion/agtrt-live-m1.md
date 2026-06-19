@@ -18,11 +18,13 @@ evidence from utility failures.
 | Raw-free scan | `raw-free: OK` |
 | Py compile | Clean for changed Python files |
 | L2 scorecard | 240 measured rows, 0 failures, no certification claim |
+| Linux bounded live | 24/24 completed; 24 L3 rows; 8 expected contained shell traces; 16 expected no-tool passes; 0 failures |
+| Linux full live | 240/240 completed; 240 L3 rows; 48 expected contained shell traces; 192 expected no-tool passes; 0 failures |
 
 ## Follow-Up
 
-AgentBus M2 rerun remains pending after push:
+AgentBus M2 follow-up:
 
-- Linux should run the bounded `--live --limit=24` slice and report
-  `l3_rows`, `l3_trace_rows`, `no_trace_rows`, `failed_rows`, and status counts.
-- Mac should rerun deterministic tests and wrapper portability checks.
+- Linux completed both the bounded slice and the full 240-row run on bwrap.
+- Mac should still rerun deterministic tests and wrapper portability checks when
+  available; task `t_mqkum7qp_313_5d549861` remains open.

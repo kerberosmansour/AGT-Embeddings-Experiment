@@ -21,7 +21,7 @@
 | # | Milestone | Status | Started | Completed | Evidence |
 |---|---|---|---|---|---|
 | 1 | Live probe contract and local deterministic verification | `done` | 2026-06-19 | 2026-06-19 | `docs/slo/completion/agtrt-live-m1.md` |
-| 2 | Linux/Mac Goose rerun coordination | `audit_pending` | 2026-06-19 |  | AgentBus tasks after branch push |
+| 2 | Linux/Mac Goose rerun coordination | `linux_done_mac_pending` | 2026-06-19 |  | AgentBus tasks after branch push |
 
 ## 3. M1 Contract
 
@@ -69,3 +69,39 @@ Evidence requested:
 
 Do not spend a full 240-row live run until the bounded slice proves the new
 prompts produce meaningful L3 rows and the cost is acceptable.
+
+## 5. Linux Live Results
+
+Linux/Omarchy ran the authoritative bwrap Goose live path on commit
+`10e26609fc87485bbdc0303d72d3d372205a3650`.
+
+Bounded 24-row slice:
+
+- 24 total, 24 completed, 0 skipped, 0 failed.
+- 24 L3 rows: 8 expected contained shell traces, 16 expected no-tool passes.
+- The slice covered the first sorted trap class, Behavioural Control, and proved
+  the live probes were no longer vacuous.
+
+Full 240-row run:
+
+- 240 total, 240 completed, 0 skipped, 0 failed.
+- 240 L3 rows: 48 expected contained shell traces, 192 expected no-tool passes.
+- `status_counts`: `pass=240`.
+- Per kind: hard-benign 48/48 produced contained shell traces; canonical
+  positive 48/48, evasion positive 96/96, and near-miss 48/48 produced no tool
+  traces.
+- Per trap class: each of the six classes had 8/40 traced rows, matching the
+  eight hard-benign utility probes in each class.
+- All 48 traces kept honest M6 semantics:
+  `attempted=True`, `executed=False`, `blocked_at=sandbox_contained`,
+  `sandbox_ok=True`.
+- Sandbox gates held: egress deny including metadata IP, scrubbed environment,
+  and no host home mount.
+- Raw-free output checks passed.
+- Artifact hashes reported on AgentBus:
+  `live_summary.json` `0cf05d1eebf966a16ead2950007d3bfbd1c36136ace5994302042ae735c44d5f`;
+  `live_results.jsonl` `3f40eeaade12a93750485b36e78924782e81eae17f1348f2a2aa998d2d2c9831`.
+
+Mac portability rerun remains open on AgentBus task
+`t_mqkum7qp_313_5d549861`; Mac has acknowledged but not claimed at the time of
+this update.

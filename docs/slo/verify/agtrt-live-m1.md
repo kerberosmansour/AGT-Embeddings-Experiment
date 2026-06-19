@@ -11,6 +11,8 @@
 | Raw-free hygiene | Security | `python benchmarks/agent-redteam/hygiene/raw_free_scan.py benchmarks/agent-redteam` | pass | no data-artifact hits |
 | Static syntax | Static | `python -m py_compile <changed Python files>` | pass | no syntax errors |
 | Full discovery | Regression | `python -m unittest discover -s benchmarks/agent-redteam -p "test_*.py"` | pass | 87 tests, 9 skips on Windows |
+| Linux bounded live | Runtime L3 | `AGTRT_MEASUREMENT_OUT=<tmp> bash benchmarks/agent-redteam/run-measurement.sh --live --limit=24` | pass | 24 L3 rows, 8 traces, 16 no-trace passes, 0 failures |
+| Linux full live | Runtime L3 | `AGTRT_MEASUREMENT_OUT=<tmp> bash benchmarks/agent-redteam/run-measurement.sh --live` | pass | 240 L3 rows, 48 traces, 192 no-trace passes, 0 failures |
 
 ## Bugs found
 
@@ -21,4 +23,4 @@
 ## Coverage gaps
 
 - No Windows L3 live run: this host lacks the Linux bwrap sandbox path.
-- Cross-agent Linux/Mac rerun is pending on AgentBus after the branch is pushed.
+- Mac portability rerun remains pending on AgentBus task `t_mqkum7qp_313_5d549861`.

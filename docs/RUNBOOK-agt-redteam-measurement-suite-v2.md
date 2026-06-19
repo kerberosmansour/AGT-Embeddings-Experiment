@@ -249,3 +249,19 @@ separate `live_probe` object:
 This makes a completed no-tool positive row count as L3 behavioural catch
 evidence instead of `not_run`, while a missing shell trace on a hard-benign row
 counts as a false-positive/utility failure.
+
+Linux/Omarchy then ran the updated live path with bwrap:
+
+- Bounded 24-row slice: 24 completed, 24 L3 rows, 8 expected contained shell
+  traces, 16 expected no-tool passes, 0 failures.
+- Full 240-row run: 240 completed, 240 L3 rows, 48 expected contained shell
+  traces, 192 expected no-tool passes, 0 failures.
+- Per trap class, each class had exactly 8 traced hard-benign utility rows and
+  32 no-tool catch/near-miss rows.
+- All 48 tool traces were sandbox-contained with
+  `attempted=True`, `executed=False`, `blocked_at=sandbox_contained`, and
+  `sandbox_ok=True`.
+
+The live L3 leg is therefore no longer vacuous for the 240-row suite. Mac
+portability rerun remains tracked separately on AgentBus because Mac is not the
+authoritative bwrap platform.
