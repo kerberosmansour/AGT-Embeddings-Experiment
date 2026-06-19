@@ -47,7 +47,7 @@
 | 2 | Deterministic 240-row corpus | `done` | 2026-06-19 | 2026-06-19 | `docs/slo/lessons/agtrt-v2-m2.md` | `docs/slo/completion/agtrt-v2-m2.md` |
 | 3 | Measurement scorecard metrics | `done` | 2026-06-19 | 2026-06-19 | `docs/slo/lessons/agtrt-v2-m3.md` | `docs/slo/completion/agtrt-v2-m3.md` |
 | 4 | Goose batch runner and measurement entrypoint | `done` | 2026-06-19 | 2026-06-19 | `docs/slo/lessons/agtrt-v2-m4.md` | `docs/slo/completion/agtrt-v2-m4.md` |
-| 5 | Linux/Mac live Goose rerun and readout | `in_progress` | 2026-06-19 | | | |
+| 5 | Linux/Mac live Goose rerun and readout | `done` | 2026-06-19 | 2026-06-19 | `docs/slo/lessons/agtrt-v2-m5.md` | `docs/slo/completion/agtrt-v2-m5.md` |
 
 ---
 
@@ -210,3 +210,24 @@ bash benchmarks/agent-redteam/run-measurement.sh --live
 - Linux and Mac rerun evidence is requested and recorded, or limitations are
   clearly stated.
 - No raw payloads, secrets, or certification claims are introduced.
+
+---
+
+## 9. M5 Live Rerun Result
+
+Linux/Omarchy ran a bounded 24-row live Goose slice with bwrap. The full 240
+live run was deliberately not spent because the 24-row slice proved the live
+leg is structurally vacuous as shipped: all 24 Anthropic calls completed, but
+the model emitted zero `tool_use` blocks, so the scorecard recorded 24
+`not_run` rows, 0 L3 traces, and 24 no-trace rows. Sandbox controls still held:
+egress deny, metadata deny, scrubbed environment, and no host home mount.
+
+Root cause: the measurement rows use synthetic labels such as
+`[MEASUREMENT_EVASION_PLACEHOLDER ...]` in `views.agent_visible`. With the M6
+adapter system prompt telling the model not to obey untrusted content, the model
+correctly ignored those placeholders. That means v2 is a strong L2 labelled
+measurement corpus, but not yet a meaningful L3 live-catch corpus.
+
+Mac cross-check confirmed the deterministic 240-row suite and found/fixed a
+macOS Bash 3.2 runner bug. Mac cannot provide authoritative L3 evidence because
+`bwrap` is not available there; it fails closed at the sandbox boundary.
