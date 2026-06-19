@@ -7,6 +7,8 @@ summaries. Fail-fast on the first non-zero step.
 stdlib-only; tests write only to a TemporaryDirectory.
 """
 import json
+import shlex
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -101,10 +103,13 @@ class Portability(unittest.TestCase):
         import os
         real_python = None
         for cand in ("python", "python3"):
+            resolved = shutil.which(cand)
+            if not resolved:
+                continue
             try:
-                if subprocess.run([cand, "-c", "import sys"],
+                if subprocess.run([resolved, "-c", "import sys"],
                                   capture_output=True).returncode == 0:
-                    real_python = cand
+                    real_python = resolved
                     break
             except FileNotFoundError:
                 continue
@@ -116,6 +121,13 @@ class Portability(unittest.TestCase):
                             "echo 'Python was not found' >&2\nexit 9\n",
                             encoding="utf-8")
             stub.chmod(0o755)
+            fallback = Path(tmp) / "python"
+            fallback.write_text(
+                "#!/usr/bin/env bash\n"
+                f"exec {shlex.quote(real_python)} \"$@\"\n",
+                encoding="utf-8",
+            )
+            fallback.chmod(0o755)
             # real interpreter still reachable AFTER the broken python3 shim.
             env = dict(os.environ)
             env["PATH"] = str(tmp) + os.pathsep + env.get("PATH", "")
