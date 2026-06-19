@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "attack_class": {
+      "minLength": 3,
+      "type": "string"
+    },
+    "controls": {
+      "items": {
+        "pattern": "^AGT-AC-[0-9]{3}$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "delivery_surface": {
+      "minLength": 3,
+      "type": "string"
+    },
+    "environment_fixtures": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "evidence_expected": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "id": {
+      "pattern": "^[a-z0-9-]+-[0-9]{3}$",
+      "type": "string"
+    },
+    "session_model": {
+      "additionalProperties": false,
+      "properties": {
+        "agents": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "stateful": {
+          "type": "boolean"
+        },
+        "turns": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "turns",
+        "stateful",
+        "agents"
+      ],
+      "type": "object"
+    },
+    "standards": {
+      "additionalProperties": false,
+      "properties": {
+        "aivss_metrics": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "asi": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "opencre_relations": {
+          "items": {
+            "enum": [
+              "exact",
+              "broad",
+              "narrow",
+              "related",
+              "candidate"
+            ]
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "asi",
+        "aivss_metrics",
+        "opencre_relations"
+      ],
+      "type": "object"
+    },
+    "success_conditions": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "target_layer": {
+      "enum": [
+        "input",
+        "retrieval",
+        "memory",
+        "tool",
+        "browser",
+        "a2a",
+        "human_approval",
+        "reporting"
+      ]
+    },
+    "title": {
+      "minLength": 8,
+      "type": "string"
+    },
+    "trap_class": {
+      "enum": [
+        "Content Injection",
+        "Semantic Manipulation",
+        "Cognitive State",
+        "Behavioural Control",
+        "Systemic",
+        "Human-in-the-Loop"
+      ]
+    },
+    "views": {
+      "additionalProperties": false,
+      "properties": {
+        "agent_visible": {
+          "type": "string"
+        },
+        "human_visible": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "human_visible",
+        "agent_visible"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "id",
+    "title",
+    "trap_class",
+    "attack_class",
+    "target_layer",
+    "delivery_surface",
+    "views",
+    "session_model",
+    "environment_fixtures",
+    "controls",
+    "standards",
+    "success_conditions",
+    "evidence_expected"
+  ],
+  "title": "AGT Red Team Scenario v2 scratch schema",
+  "type": "object"
+}
