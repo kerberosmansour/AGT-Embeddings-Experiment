@@ -68,7 +68,7 @@ Single source of truth for progress. Update as each milestone completes.
 | 2 | Mock behavioural harness + trace schema (productionize s4) | `done` | 2026-06-19 | 2026-06-19 | `docs/slo/lessons/agtrt-m2.md` | `docs/slo/completion/agtrt-m2.md` |
 | 3 | Agent-Traps deterministic smoke suite + CI integration | `done` | 2026-06-19 | 2026-06-19 | `docs/slo/lessons/agtrt-m3.md` | `docs/slo/completion/agtrt-m3.md` |
 | 4 | Control-linked evidence-level reporter (productionize s6) | `done` | 2026-06-19 | 2026-06-19 | `docs/slo/lessons/agtrt-m4.md` | `docs/slo/completion/agtrt-m4.md` |
-| 5 | Upstream-ready docs + raw-free hygiene gate + PR-boundary packaging (productionize s8) | `not_started` | | | | |
+| 5 | Upstream-ready docs + raw-free hygiene gate + PR-boundary packaging (productionize s8) | `done` | 2026-06-19 | 2026-06-19 | `docs/slo/lessons/agtrt-m5.md` | oc-5 green; 46 tests; hygiene gate + PROMOTION.md; DW-001 → issue #29 |
 | 6 | Live Goose adapter — real-agent (L3) assessment in a hermetic sandbox (productionize s7) | `not_started` | | | | |
 | 7 | OpenCRE relation research + relation-quality validator | `not_started` | | | | |
 | 8 | Shareable evidence scorecard product (productionize the scorecard wedge) | `not_started` | | | | |
