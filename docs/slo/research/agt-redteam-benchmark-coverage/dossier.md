@@ -14,9 +14,9 @@ This dossier answers the founder question: how do we make the AGT Red Team bench
 The answer is a two-tier benchmark:
 
 1. Keep the current **24-scenario smoke suite** as the fast reproducibility / CI guard.
-2. Add a **120-scenario measurement suite** for catch-rate and false-positive measurement.
+2. Add a **120-scenario core measurement suite** for catch-rate, evasion catch-rate, and false-positive measurement.
 
-This is the Goldilocks zone: enough rows to measure control behaviour by trap class and benign-vs-adversarial outcome, but not a Cartesian explosion across every possible surface/model/tool combination.
+This is the Goldilocks starting point: enough rows to measure control behaviour by trap class and benign-vs-adversarial outcome, but not a Cartesian explosion across every possible surface/model/tool combination. It is **not** a hard ceiling. If a specific control, evasion family, or false-positive cell is underpowered, the suite should grow with targeted extension packs rather than being forced into 120 rows.
 
 ## Source artifacts used
 
@@ -83,7 +83,7 @@ Purpose:
 
 Do not grow this too much. It is the smoke test, not the measurement corpus.
 
-### Tier 2 — add a 120-row measurement suite
+### Tier 2 — start with a 120-row core measurement suite
 
 Recommended shape:
 
@@ -94,14 +94,37 @@ Recommended shape:
 | Near-miss / ambiguous negatives | 4 | Calibration: checks if controls overfit keywords or superficial features. |
 | **Total per class** | **20** | Enough for directional per-class metrics without corpus bloat. |
 
-Total: **6 trap classes × 20 = 120 scenarios**.
+Core total: **6 trap classes × 20 = 120 scenarios**.
 
 Why 120?
 
 - 24 is too small for catch-rate/FP measurement.
-- 120 gives every class a real positive, evasion-positive, and negative denominator.
+- 120 gives every class a first real positive, evasion-positive, and negative denominator.
 - 120 is still small enough to run in CI/nightly and review manually.
 - It avoids pretending we can exhaustively enumerate the agent-trap space.
+
+Why 120 may not be enough:
+
+- It supports directional class-level measurement; it does **not** guarantee statistically stable per-control × per-evasion-family estimates.
+- Some AGT-AC controls span multiple trap classes, so a fixed 20-per-class layout can still leave individual controls thin.
+- Some evasion families are more important for certain classes than others; forcing equal allocation can hide risk.
+- If a control's canonical catch rate is high but evasion catch rate is unstable or low, the benchmark needs more evasion rows for that control family.
+
+### Expansion rule: targeted packs, not benchmark sprawl
+
+Do not grow the benchmark just to feel more thorough. Grow it when the evidence says a metric cell is underpowered.
+
+Use this rule:
+
+| Trigger | Action |
+|---|---|
+| A reported control has fewer than 5 positive rows | Add a targeted positive pack for that AGT-AC control. |
+| A reported control has fewer than 3 hard-benign / near-miss rows | Add negative calibration rows before reporting FPR for that control. |
+| Evasion degradation is high or noisy | Add a targeted evasion pack for that trap class/control pair. |
+| A new evasion family appears in prompt-injection / agentic prior art | Add it to the research bank first; promote only after review. |
+| L3 result disagrees with L2 mock result | Add a focused live-sampling pack before making broad claims. |
+
+Recommended extension pack size: **+10 rows per trap class or control family** (6 canonical/evasion positives, 2 hard-benign, 2 near-miss). This keeps additions reviewable while avoiding a square-peg/round-hole 120-row cap.
 
 ### Important correction: evasion resistance must be designed in
 
@@ -121,11 +144,11 @@ This changes the interpretation of the earlier `12 adversarial positives` row: t
 
 Without this split, a control could look good on the 120-row suite while still failing under simple evasive transformations.
 
-### Tier 3 — optional research bank, not CI
+### Tier 3 — optional research bank / extension packs, not CI
 
 Optional later bank:
 
-- 240+ rows, generated and curated over time.
+- 180-240+ rows, generated and curated over time as evidence demands.
 - Used for model comparisons, live L3 sampling, and upstream research.
 - Not the primary acceptance gate.
 
@@ -161,7 +184,7 @@ Each new scenario should be one atomic test card:
 7. Explicit session model: single-turn, multi-turn, cross-session, or multi-agent.
 8. Deterministic expected trace semantics: attempted, executed, blocked_at, evidence_level.
 
-## Proposed 120-row allocation
+## Proposed core 120-row allocation
 
 | Trap class | Canonical positive | Evasion positive | Hard-benign | Near-miss | Total |
 |---|---:|---:|---:|---:|---:|
@@ -172,6 +195,8 @@ Each new scenario should be one atomic test card:
 | Systemic | 4 | 8 | 4 | 4 | 20 |
 | Human-in-the-Loop | 4 | 8 | 4 | 4 | 20 |
 | **Total** | **24** | **48** | **24** | **24** | **120** |
+
+This table is the **core suite**, not the final word. The benchmark should preserve this core for stable comparisons, then add named extension packs when specific controls or evasion families need more rows.
 
 ## Evasion technique axis
 
@@ -284,10 +309,10 @@ False-positive rows should include legitimate approvals and reversible low-risk 
 
 To avoid the benchmark becoming theater:
 
-1. Freeze the 120-row measurement suite once accepted.
-2. Keep a separate development bank for new ideas.
+1. Freeze the core 120-row measurement suite once accepted.
+2. Keep separate named extension packs for extra rows, e.g. `content-injection-evasion-pack-01` or `a2a-spoofing-pack-01`.
 3. Do not tune controls on the measurement suite and then report those numbers as evaluation.
-4. Report confidence honestly: 120 rows are enough for directional rates, not definitive model rankings.
+4. Report confidence honestly: 120 rows are enough for directional class-level rates, not definitive model rankings or every per-control/evasion-family estimate.
 5. Keep false positives first-class, not an afterthought.
 6. Keep raw payloads out; test the structure of traps, not copy real dangerous content.
 7. Require every new row to validate against the schema before review.
@@ -298,7 +323,8 @@ To avoid the benchmark becoming theater:
 Open a follow-up runbook or ticket series for **AGT Red Team Measurement Suite v2**:
 
 1. M1: add scenario labels for `canonical_positive | evasion_positive | hard_benign | near_miss`, `evasion_technique`, and `measurement_suite` membership.
-2. M2: author the 120-row suite with BDD fixtures first: 4 canonical positives, 8 evasion positives, 4 hard-benign negatives, and 4 near-miss negatives per trap class.
-3. M3: extend reporter metrics for canonical catch rate, evasion catch rate, evasion degradation, false-positive rate, and utility-preservation rate by class and AGT-AC.
-4. M4: add calibration gates: hard-benign and near-miss rows must not fail by default.
-5. M5: run L3 sampling over a small, representative slice that includes evasion-positive rows only after L2 gates are green.
+2. M2: author the core 120-row suite with BDD fixtures first: 4 canonical positives, 8 evasion positives, 4 hard-benign negatives, and 4 near-miss negatives per trap class.
+3. M3: add an evidence-power check that flags undercovered control/evasion cells and recommends targeted extension packs when 120 is not enough.
+4. M4: extend reporter metrics for canonical catch rate, evasion catch rate, evasion degradation, false-positive rate, and utility-preservation rate by class and AGT-AC.
+5. M5: add calibration gates: hard-benign and near-miss rows must not fail by default.
+6. M6: run L3 sampling over a small, representative slice that includes evasion-positive rows only after L2 gates are green.
