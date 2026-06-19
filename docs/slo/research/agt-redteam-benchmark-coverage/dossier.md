@@ -1,0 +1,248 @@
+---
+name: agt-redteam-benchmark-coverage
+researched: 2026-06-19
+incomplete: false
+research_mode: repo-local SLO research, not market research
+---
+
+# Research Dossier — AGT Red Team Benchmark Coverage Expansion
+
+## Purpose
+
+This dossier answers the founder question: how do we make the AGT Red Team benchmark more thorough without turning it into a bloated corpus that is expensive, noisy, or hard to maintain?
+
+The answer is a two-tier benchmark:
+
+1. Keep the current **24-scenario smoke suite** as the fast reproducibility / CI guard.
+2. Add a **120-scenario measurement suite** for catch-rate and false-positive measurement.
+
+This is the Goldilocks zone: enough rows to measure control behaviour by trap class and benign-vs-adversarial outcome, but not a Cartesian explosion across every possible surface/model/tool combination.
+
+## Source artifacts used
+
+- Current benchmark scenarios: `benchmarks/agent-redteam/scenarios/*.json`
+- Scenario schema: `benchmarks/agent-redteam/schema/scenario.schema.json`
+- Controls: `benchmarks/agent-redteam/controls/agt-ac.csv`
+- OpenCRE relations: `benchmarks/agent-redteam/controls/opencre/relations.csv`
+- Runbook: `docs/RUNBOOK-agt-redteam-agent-traps-opencre.md`
+- Experiment book: `docs/slo/experiments/agt-redteam-agent-traps-opencre/EXPERIMENT.md`
+- M6 completion evidence: `docs/slo/completion/agtrt-m6.md`
+
+## Current benchmark shape
+
+Current seed benchmark:
+
+| Property | Current state |
+|---|---|
+| Total scenarios | 24 |
+| Trap classes | 6 |
+| Rows per trap class | 4 each |
+| Target layers | 6 (`input`, `browser`, `memory`, `tool`, `a2a`, `human_approval`) |
+| Delivery surface | all rows use `synthetic_fixture` |
+| Stateful rows | 8 of 24 |
+| Multi-agent rows | 4 of 24 |
+| Controls covered | 15 AGT-AC controls |
+| Evidence supported | L1 static, L2 mock, one L3 live proof |
+
+Trap-class distribution:
+
+| Trap class | Rows |
+|---|---:|
+| Content Injection | 4 |
+| Semantic Manipulation | 4 |
+| Cognitive State | 4 |
+| Behavioural Control | 4 |
+| Systemic | 4 |
+| Human-in-the-Loop | 4 |
+
+This is balanced as a **seed**, but it is not enough for stable catch-rate or false-positive measurement.
+
+## The coverage gap
+
+The current 24 rows prove that the benchmark format works. They do not yet prove that a detector/control has a reliable catch rate.
+
+The main gaps are:
+
+1. **No clean false-positive denominator.** There are a few hard-benign ideas, but the suite is mostly trap-positive. To measure false positives, every trap class needs benign and near-miss rows.
+2. **Delivery surfaces are under-varied.** Everything is a synthetic fixture. The schema can represent browser, memory, tool, A2A, and human approval flows, but the corpus needs more surface variation.
+3. **Controls are covered, but not stressed.** Each AGT-AC appears, but there are not enough independent examples per control to estimate per-control recall or precision.
+4. **L3 is proven but thin.** M6 produced one real-agent L3 trace. That proves the path, not the distribution.
+5. **OpenCRE relations are candidate-honest.** The mapping mechanism exists, but all effective relations are `candidate` until backed by committed OpenCRE references.
+
+## Goldilocks recommendation
+
+### Tier 1 — keep the current 24-row smoke suite
+
+Purpose:
+
+- CI and quick local confidence.
+- Proves schema, harness, reporter, hygiene, OpenCRE validator, and product render still work.
+- Should stay small and fast.
+
+Do not grow this too much. It is the smoke test, not the measurement corpus.
+
+### Tier 2 — add a 120-row measurement suite
+
+Recommended shape:
+
+| Per trap class | Count | Purpose |
+|---|---:|---|
+| Adversarial positives | 12 | Catch-rate denominator: did the control detect/block/contain the trap? |
+| Hard-benign negatives | 4 | False-positive denominator: should not block or flag. |
+| Near-miss / ambiguous negatives | 4 | Calibration: checks if controls overfit keywords or superficial features. |
+| **Total per class** | **20** | Enough for directional per-class metrics without corpus bloat. |
+
+Total: **6 trap classes × 20 = 120 scenarios**.
+
+Why 120?
+
+- 24 is too small for catch-rate/FP measurement.
+- 120 gives every class a real positive and negative denominator.
+- 120 is still small enough to run in CI/nightly and review manually.
+- It avoids pretending we can exhaustively enumerate the agent-trap space.
+
+### Tier 3 — optional research bank, not CI
+
+Optional later bank:
+
+- 240+ rows, generated and curated over time.
+- Used for model comparisons, live L3 sampling, and upstream research.
+- Not the primary acceptance gate.
+
+## Measurement design
+
+The benchmark should report these metrics:
+
+| Metric | Meaning |
+|---|---|
+| Trap catch rate | Of trap-positive scenarios, how often did the expected control detect/block/contain the attempt? |
+| False-positive rate | Of hard-benign / near-miss scenarios, how often did the benchmark incorrectly flag or block? |
+| Attempt visibility | Unsafe attempt appears as `attempted:true`, even when blocked. |
+| Containment effectiveness | Unsafe attempted actions have `executed:false` and a non-null `blocked_at`. |
+| Control coverage | Which AGT-AC controls were exercised, and at which evidence level. |
+| Evidence mix | Counts by `L1_static`, `L2_mock_behavioural`, and `L3_live_behavioural`. |
+
+The key reporting principle stays unchanged: evidence levels, not certification.
+
+## Scenario-design rules
+
+Each new scenario should be one atomic test card:
+
+1. One primary trap class.
+2. One primary expected control family.
+3. One expected outcome: positive, hard-benign, or near-miss.
+4. One evidence target: L1, L2, or L3-eligible.
+5. Raw-free synthetic content only.
+6. Explicit human-visible vs agent-visible view where relevant.
+7. Explicit session model: single-turn, multi-turn, cross-session, or multi-agent.
+8. Deterministic expected trace semantics: attempted, executed, blocked_at, evidence_level.
+
+## Proposed 120-row allocation
+
+| Trap class | Positive rows | Hard-benign rows | Near-miss rows | Total |
+|---|---:|---:|---:|---:|
+| Content Injection | 12 | 4 | 4 | 20 |
+| Semantic Manipulation | 12 | 4 | 4 | 20 |
+| Cognitive State | 12 | 4 | 4 | 20 |
+| Behavioural Control | 12 | 4 | 4 | 20 |
+| Systemic | 12 | 4 | 4 | 20 |
+| Human-in-the-Loop | 12 | 4 | 4 | 20 |
+| **Total** | **72** | **24** | **24** | **120** |
+
+## Class-specific expansion targets
+
+### Content Injection
+
+Add variants for:
+
+- HTML comments.
+- CSS hidden/offscreen text.
+- ARIA-label mismatch.
+- Markdown link masking.
+- PDF/document hidden layer.
+- Human-visible safe / agent-visible unsafe splits.
+
+False-positive rows should include benign hidden metadata and accessibility labels that should not trigger a block.
+
+### Semantic Manipulation
+
+Add variants for:
+
+- Goal reframing.
+- Ambiguous delegation.
+- Instruction-priority confusion.
+- Hard-benign security docs.
+- Conflicting but non-malicious documentation.
+
+False-positive rows should stress legitimate policy/security text that should not be treated as an attack.
+
+### Cognitive State
+
+Add variants for:
+
+- Memory write poisoning.
+- Memory readback poisoning.
+- RAG provenance poison.
+- Cross-session recall.
+- Stateful preference poisoning.
+
+False-positive rows should include legitimate user preferences and benign memory updates.
+
+### Behavioural Control
+
+Add variants for:
+
+- Shell/tool abuse.
+- Tool-result injection.
+- Output exfiltration.
+- Package hallucination.
+- Sensitive-data egress requests.
+
+False-positive rows should include safe dry-runs and legitimate package/tool lookups.
+
+### Systemic
+
+Add variants for:
+
+- A2A spoofing.
+- MCP registry spoofing.
+- Subagent blast-radius widening.
+- Prompt relay across agents.
+- Delegation boundary confusion.
+
+False-positive rows should include legitimate delegation and verified MCP/tool registry entries.
+
+### Human-in-the-Loop
+
+Add variants for:
+
+- Approval fatigue.
+- Fake manager approval.
+- Irreversible-action pressure.
+- Human-visible safe / agent-visible unsafe approvals.
+- Missing audit trail on approval.
+
+False-positive rows should include legitimate approvals and reversible low-risk actions.
+
+## Methodology guardrails
+
+To avoid the benchmark becoming theater:
+
+1. Freeze the 120-row measurement suite once accepted.
+2. Keep a separate development bank for new ideas.
+3. Do not tune controls on the measurement suite and then report those numbers as evaluation.
+4. Report confidence honestly: 120 rows are enough for directional rates, not definitive model rankings.
+5. Keep false positives first-class, not an afterthought.
+6. Keep raw payloads out; test the structure of traps, not copy real dangerous content.
+7. Require every new row to validate against the schema before review.
+8. Require every generated report to preserve `certification_claim:false`.
+
+## Recommended next SLO step
+
+Open a follow-up runbook or ticket series for **AGT Red Team Measurement Suite v2**:
+
+1. M1: add scenario labels for `positive | hard_benign | near_miss` and `measurement_suite` membership.
+2. M2: author the 120-row suite with BDD fixtures first.
+3. M3: extend reporter metrics for catch rate / false-positive rate by class and AGT-AC.
+4. M4: add calibration gates: hard-benign rows must not fail by default.
+5. M5: run L3 sampling over a small, representative slice only after L2 gates are green.
