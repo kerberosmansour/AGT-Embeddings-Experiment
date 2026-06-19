@@ -1154,7 +1154,7 @@ Standard v4 DoD; hygiene gate fail-closed + anti-vacuity proven; `PROMOTION.md` 
 
 **Carmack-style reliability goal**: Make invalid states unrepresentable (no prod credential reachable; network egress default-DENY) + bounded resources (turn/time/token caps) + no silent failure (a sandbox-escape or a missing trace fails closed — never a false-green L3).
 
-**Important design rule**: The live agent runs **only** in a hermetic sandbox — no production credentials, egress default-deny (allowlist only the engineer-configured model endpoint), filesystem confined to a throwaway tempdir, hard turn/time/token kill-switch. `evidence_level:L3_live` is tagged ONLY for actions actually executed under the sandbox; everything else stays L2/L0. Still raw-free (ids/aggregates, never raw payloads/real secrets). The default benchmark path (M1–M5) stays stdlib-only and mock/L2; the live deps live only under `adapters/goose/` and are never imported unless `--live` is passed.
+**Important design rule**: The live agent runs **only** in a hermetic sandbox — no production credentials, egress default-deny (allowlist only the engineer-configured model endpoint), filesystem confined to a throwaway tempdir, hard turn/time/token kill-switch. The sandbox MUST be **OS-enforced** (a network namespace / container with egress default-deny at the firewall layer, a **scrubbed environment**, and **NO host filesystem mounts** — so host credential stores such as `~/.aws/credentials` or the OS keychain are not even visible), **not** a Python-level allowlist or an env-var scan — a real agent subprocess would bypass an in-process guard (sandbox escape / SSRF, incl. the cloud-metadata endpoint `169.254.169.254`). `evidence_level:L3_live` is tagged ONLY for actions actually executed under the sandbox; everything else stays L2/L0. Still raw-free (ids/aggregates, never raw payloads/real secrets). The default benchmark path (M1–M5) stays stdlib-only and mock/L2; the live deps live only under `adapters/goose/` and are never imported unless `--live` is passed.
 
 **Refactor budget**: `Minimal local refactor permitted in listed files only` (add an opt-in `--live` branch to `run-smoke.sh`).
 
@@ -1169,8 +1169,8 @@ Standard v4 DoD; hygiene gate fail-closed + anti-vacuity proven; `PROMOTION.md` 
 | New dependencies allowed | **EXCEPTION (this milestone's purpose)**: the Goose runtime + provider SDK — pinned, security/license-reviewed in this Contract Block, **isolated to `adapters/goose/`** and never imported by the default path. Core benchmark stays stdlib-only. |
 | Migration allowed | `no` |
 | Resource bounds | `max_turns`, `timeout_seconds`, `max_tokens` hard caps with a kill-switch; one agent per run |
-| Invariants/assertions required | egress default-deny proven (non-allowlisted host → blocked); no prod credential present (env scan, else refuse to start); caps enforced; real effects confined to the sandbox tempdir; `L3_live` tag only on sandbox-executed actions; raw-free |
-| Static analysis gates | `py_compile` + `git diff --check` + **sandbox-egress test** + **no-prod-credential scan** |
+| Invariants/assertions required | **OS-level** egress default-deny proven (a real subprocess attempt to a non-allowlisted host — incl. metadata `169.254.169.254` — is blocked at the network layer, not just in-process); no host credential reachable (scrubbed env + no host fs mount; refuse to start otherwise); caps enforced; real effects confined to the sandbox tempdir; `L3_live` tag only on sandbox-executed actions; raw-free |
+| Static analysis gates | `py_compile` + `git diff --check` + **OS-layer sandbox-egress test** (real subprocess egress blocked) + **no-host-credential scan** + **stdlib-only gate scoped to the default path (excludes `adapters/goose/`)** + **dependency-audit gate for `adapters/goose/`** (pinned Goose dep + provider SDK, license + CVE checked) |
 | Forbidden shortcuts | no run against production systems; no real-credential targets; no L3 tag on un-exercised actions; no live deps in the default path |
 | Data classification | `Internal`; live traces scanned for would-be `Confidential` leakage |
 | Abuse acceptance scenarios | `tm-agtrt-abuse-3` escalates to "LIVE agent performs a real effect OUTSIDE the sandbox" (must be impossible) + NEW `tm-agtrt-abuse-7` "a live run leaks a real secret/raw payload into an L3 trace" |
@@ -1188,8 +1188,8 @@ Standard v4 DoD; hygiene gate fail-closed + anti-vacuity proven; `PROMOTION.md` 
 | Scenario | Category | Given | When | Then |
 |---|---|---|---|---|
 | live L3 traces | happy path | a sandboxed Goose agent + a scenario | run `--live` | ≥1 real trace `evidence_level:L3_live`; attempted/executed/blocked_at from REAL behavior |
-| egress blocked | abuse `tm-agtrt-abuse-3` | agent attempts a non-allowlisted network call | run | call fails; recorded `blocked_at`; no real external effect |
-| no prod creds | abuse | env scanned pre-run | run | refuses to start if a prod-looking credential is present (fail-closed) |
+| egress blocked (OS layer) | abuse `tm-agtrt-abuse-3` (CWE-918) | the live agent's real subprocess attempts a non-allowlisted call (incl. metadata `169.254.169.254`) | run | call fails at the network layer; recorded `blocked_at`; no real external effect |
+| no host creds reachable | abuse | a prod credential sits in `~/.aws/credentials` (not env) | run | sandbox runs scrubbed-env + no host fs mount → credential not visible; refuses to start if any host cred path is mountable |
 | caps enforced | resource bound | a scenario that would loop | run | stops at turn/time/token cap; bounded; recorded |
 | raw-free L3 | abuse `tm-agtrt-abuse-7` | a live trace | scan | no raw payload / real secret (ids + aggregates only) |
 | default unchanged | compatibility | `run-smoke.sh` without `--live` | run | mock/L2 chain only; live deps not imported |
@@ -1234,7 +1234,7 @@ Standard v4 DoD; sandbox egress-deny + no-prod-cred + caps + raw-free-L3 invaria
 
 **Carmack-style reliability goal**: Evidence over claims — a relation is only as strong as its verified backing; unverified ⇒ `candidate` (fail-honest).
 
-**Important design rule**: No relation may claim a stronger status than its evidence supports; the validator is **fail-honest** (unknown ⇒ `candidate`). OpenCRE data is consumed **read-only** from a pinned/documented snapshot; no live OpenCRE API dependency in the default path.
+**Important design rule**: No relation may claim a stronger status than its evidence supports; the validator is **fail-honest** (unknown ⇒ `candidate`). OpenCRE data is consumed **read-only** from a pinned snapshot committed under `controls/opencre/` with its **source URL + retrieval date + license recorded** (OpenCRE content is CC-licensed); no live OpenCRE API dependency in the default path.
 
 **Refactor budget**: `Minimal local refactor permitted in listed files only` (the M4 reporter consumes the verified relations file).
 
@@ -1323,7 +1323,7 @@ Standard v4 DoD; relation-honesty + no-endorsement-overclaim invariants encoded/
 | Files allowed to change | `benchmarks/agent-redteam/product/**`, `benchmarks/agent-redteam/tests/test_product.py` |
 | New dependencies allowed | `none` (stdlib string templating; no JS framework, no server) |
 | Migration allowed | `no` |
-| Invariants/assertions required | rendered artifact carries `certification_claim:false` + zero certification-language; no single mystery score/badge; raw-free; self-contained (renders with no network) |
+| Invariants/assertions required | rendered artifact carries `certification_claim:false` + zero certification-language; no single mystery score/badge; raw-free; self-contained (renders with no network); **every interpolated field (scenario id/name, control id) is HTML-escaped — no unescaped data in the rendered HTML (XSS via a crafted scenario name, CWE-79)** |
 | Static analysis gates | `py_compile` + `git diff --check` + **no-certification-term grep over rendered output** + **no-external-reference grep** (no remote scripts/styles) |
 | Forbidden shortcuts | no certification/badge framing; no single aggregate "score"; no external CDN/script; no telemetry |
 | Data classification | `Internal`/shareable; output scanned raw-free before share |
@@ -1343,6 +1343,7 @@ Standard v4 DoD; relation-honesty + no-endorsement-overclaim invariants encoded/
 |---|---|---|---|---|
 | product generated | happy path | an M4 scorecard JSON | `python product/render.py ...` | `scorecard.html` + `.md` produced; evidence-level rows rendered |
 | no certification | abuse `tm-agtrt-abuse-4` | the rendered artifact | scan | `certification_claim:false` shown; zero cert terms; no badge/single-score |
+| html injection (XSS) | abuse `tm-agtrt-abuse-4` / CWE-79 | a scenario name containing `<script>` | render | the field is HTML-escaped in `scorecard.html`; no executable injection |
 | offline + raw-free | compatibility | open the HTML with no network | render | renders fully; no external call; no raw payload/secret |
 | empty run | empty state | a scorecard with zero results | render | empty-but-valid, documented; still carries the disclaimer |
 
