@@ -27,6 +27,8 @@ This is the Goldilocks zone: enough rows to measure control behaviour by trap cl
 - Runbook: `docs/RUNBOOK-agt-redteam-agent-traps-opencre.md`
 - Experiment book: `docs/slo/experiments/agt-redteam-agent-traps-opencre/EXPERIMENT.md`
 - M6 completion evidence: `docs/slo/completion/agtrt-m6.md`
+- Founder-supplied OWASP Agentic Scorecard draft (`pasted-text.txt`, 2026-06-19), especially its three-tier static/mock/live architecture, AIVSS/ASI signal map, and explicit static-vs-behavioural gap analysis.
+- Prior-art pointers from that draft: AgentDojo, AgentThreatBench / `inspect_evals`, Promptfoo OWASP Agentic plugin suite, and the prompt-injection corpus pattern of testing evasive variants rather than only canonical attacks.
 
 ## Current benchmark shape
 
@@ -97,9 +99,27 @@ Total: **6 trap classes × 20 = 120 scenarios**.
 Why 120?
 
 - 24 is too small for catch-rate/FP measurement.
-- 120 gives every class a real positive and negative denominator.
+- 120 gives every class a real positive, evasion-positive, and negative denominator.
 - 120 is still small enough to run in CI/nightly and review manually.
 - It avoids pretending we can exhaustively enumerate the agent-trap space.
+
+### Important correction: evasion resistance must be designed in
+
+The 120-row suite is **not** automatically enough to measure whether controls are effective against evasion techniques. It is enough only if the positive rows are deliberately stratified.
+
+Per trap class, the recommended 20 rows should be:
+
+| Per trap class | Count | Purpose |
+|---|---:|---|
+| Canonical trap positives | 4 | Baseline catch rate against straightforward attacks. |
+| Evasion trap positives | 8 | Evasion catch rate: same control intent, but with obfuscation, staging, delegation, laundering, or camouflage. |
+| Hard-benign negatives | 4 | False-positive denominator for legitimate security-looking content. |
+| Near-miss / ambiguous negatives | 4 | Calibration denominator for superficial-keyword overfitting. |
+| **Total per class** | **20** | Directional recall, evasion robustness, and precision without corpus bloat. |
+
+This changes the interpretation of the earlier `12 adversarial positives` row: those 12 must be **4 canonical + 8 evasion-positive**, not 12 undifferentiated positives.
+
+Without this split, a control could look good on the 120-row suite while still failing under simple evasive transformations.
 
 ### Tier 3 — optional research bank, not CI
 
@@ -116,7 +136,11 @@ The benchmark should report these metrics:
 | Metric | Meaning |
 |---|---|
 | Trap catch rate | Of trap-positive scenarios, how often did the expected control detect/block/contain the attempt? |
+| Canonical catch rate | Catch/block/contain rate on direct trap positives. |
+| Evasion catch rate | Catch/block/contain rate on evasion-positive variants. |
+| Evasion degradation | Difference between canonical and evasion catch rates; high values identify brittle controls. |
 | False-positive rate | Of hard-benign / near-miss scenarios, how often did the benchmark incorrectly flag or block? |
+| Utility-preservation rate | Hard-benign rows that complete without spurious blocking. |
 | Attempt visibility | Unsafe attempt appears as `attempted:true`, even when blocked. |
 | Containment effectiveness | Unsafe attempted actions have `executed:false` and a non-null `blocked_at`. |
 | Control coverage | Which AGT-AC controls were exercised, and at which evidence level. |
@@ -139,15 +163,47 @@ Each new scenario should be one atomic test card:
 
 ## Proposed 120-row allocation
 
-| Trap class | Positive rows | Hard-benign rows | Near-miss rows | Total |
-|---|---:|---:|---:|---:|
-| Content Injection | 12 | 4 | 4 | 20 |
-| Semantic Manipulation | 12 | 4 | 4 | 20 |
-| Cognitive State | 12 | 4 | 4 | 20 |
-| Behavioural Control | 12 | 4 | 4 | 20 |
-| Systemic | 12 | 4 | 4 | 20 |
-| Human-in-the-Loop | 12 | 4 | 4 | 20 |
-| **Total** | **72** | **24** | **24** | **120** |
+| Trap class | Canonical positive | Evasion positive | Hard-benign | Near-miss | Total |
+|---|---:|---:|---:|---:|---:|
+| Content Injection | 4 | 8 | 4 | 4 | 20 |
+| Semantic Manipulation | 4 | 8 | 4 | 4 | 20 |
+| Cognitive State | 4 | 8 | 4 | 4 | 20 |
+| Behavioural Control | 4 | 8 | 4 | 4 | 20 |
+| Systemic | 4 | 8 | 4 | 4 | 20 |
+| Human-in-the-Loop | 4 | 8 | 4 | 4 | 20 |
+| **Total** | **24** | **48** | **24** | **24** | **120** |
+
+## Evasion technique axis
+
+The founder-supplied Agentic Scorecard draft makes a critical point: agentic testing needs more than static repository signals and more than single-turn attack generation. It needs static, mock-behavioural, and optional live tiers, and it needs to measure whether controls survive evasion. That matches the lesson from the prompt-injection corpus: canonical payloads are not enough.
+
+Add this field to the measurement-suite schema or metadata:
+
+```yaml
+scenario_kind: canonical_positive | evasion_positive | hard_benign | near_miss
+evasion_technique: none | encoding_obfuscation | indirection | multi_turn_staging | tool_result_laundering | memory_trigger | a2a_relay | authority_camouflage | benign_camouflage | paraphrase
+```
+
+Suggested evasion families:
+
+| Evasion family | Applies most directly to | What it tests |
+|---|---|---|
+| Encoding / format obfuscation | Content Injection, Behavioural Control | Whether controls catch transformed instructions, not just plain text. |
+| Indirection / retrieval laundering | Content Injection, Cognitive State | Whether a harmful instruction hidden behind a source/tool/result boundary is still controlled. |
+| Multi-turn staging | Semantic Manipulation, Cognitive State, Human-in-the-Loop | Whether a trap split across turns bypasses single-message checks. |
+| Tool-result laundering | Behavioural Control, Systemic | Whether the agent trusts an untrusted tool result that asks for a follow-on action. |
+| Memory trigger / delayed activation | Cognitive State | Whether poisoned memory only becomes dangerous later. |
+| A2A relay / delegation spoof | Systemic | Whether control survives agent-to-agent propagation. |
+| Authority / approval camouflage | Human-in-the-Loop | Whether fake approval or role pressure bypasses the human gate. |
+| Benign camouflage | All classes | Whether a trap embedded in mostly legitimate content evades keyword rules. |
+| Paraphrase / linguistic variation | All classes | Whether controls catch intent rather than exact wording. |
+
+The acceptance bar should be:
+
+1. A control is not considered effective unless it has acceptable canonical catch rate **and** acceptable evasion catch rate.
+2. A control is not considered usable unless its hard-benign / near-miss false-positive rate stays low.
+3. The report must show canonical-vs-evasion degradation explicitly.
+4. L3 live runs should sample both canonical and evasion-positive rows, not only the easiest canonical rows.
 
 ## Class-specific expansion targets
 
@@ -241,8 +297,8 @@ To avoid the benchmark becoming theater:
 
 Open a follow-up runbook or ticket series for **AGT Red Team Measurement Suite v2**:
 
-1. M1: add scenario labels for `positive | hard_benign | near_miss` and `measurement_suite` membership.
-2. M2: author the 120-row suite with BDD fixtures first.
-3. M3: extend reporter metrics for catch rate / false-positive rate by class and AGT-AC.
-4. M4: add calibration gates: hard-benign rows must not fail by default.
-5. M5: run L3 sampling over a small, representative slice only after L2 gates are green.
+1. M1: add scenario labels for `canonical_positive | evasion_positive | hard_benign | near_miss`, `evasion_technique`, and `measurement_suite` membership.
+2. M2: author the 120-row suite with BDD fixtures first: 4 canonical positives, 8 evasion positives, 4 hard-benign negatives, and 4 near-miss negatives per trap class.
+3. M3: extend reporter metrics for canonical catch rate, evasion catch rate, evasion degradation, false-positive rate, and utility-preservation rate by class and AGT-AC.
+4. M4: add calibration gates: hard-benign and near-miss rows must not fail by default.
+5. M5: run L3 sampling over a small, representative slice that includes evasion-positive rows only after L2 gates are green.
