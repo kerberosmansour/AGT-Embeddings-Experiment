@@ -31,15 +31,18 @@ PY="$(pick_python)" || { echo "[smoke] FAIL: no working python interpreter found
 SCEN_DIR="${AGTRT_SCENARIOS:-$HERE/scenarios}"
 scenarios=("$SCEN_DIR"/*.json)
 
-echo "[smoke] 1/3 validate scenarios (${#scenarios[@]} files)"
+echo "[smoke] 1/4 validate scenarios (${#scenarios[@]} files)"
 "$PY" "$HERE/schema/validate_scenarios.py" "${scenarios[@]}"
 
-echo "[smoke] 2/3 mock harness"
+echo "[smoke] 2/4 mock harness"
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
 "$PY" "$HERE/harness/runner.py" --out "$TMP"
 
-echo "[smoke] 3/3 evidence-level scorecard"
+echo "[smoke] 3/4 evidence-level scorecard"
 "$PY" "$HERE/reporters/scorecard.py" --controls "$HERE/controls/agt-ac.csv" --from-scenarios "$SCEN_DIR" --out "$TMP"
+
+echo "[smoke] 4/4 raw-free hygiene gate"
+"$PY" "$HERE/hygiene/raw_free_scan.py" "$HERE"
 
 echo "[smoke] OK"
