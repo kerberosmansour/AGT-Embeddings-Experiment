@@ -6,14 +6,14 @@
 > **How to use**: Work milestones sequentially. Complete the Global Entry/Exit Protocols around each. Never skip ahead. Treat this document as an execution contract.
 > **Prerequisite reading**: [EXPERIMENT.md](slo/experiments/agt-redteam-agent-traps-opencre/EXPERIMENT.md) (the authoritative Experiment Book — §6 PrecisionModel carries the falsifiable thresholds; §10 is the handoff seed this runbook implements), [handoff.md](slo/experiments/agt-redteam-agent-traps-opencre/handoff.md), [demo.md](slo/experiments/agt-redteam-agent-traps-opencre/demo.md), [README.md](../README.md), `.github/workflows/readiness.yml`.
 
-> **Provenance**: Authored by `/slo-plan` from the `promote_to_runbook` handoff. The scratch evidence (`experiments/agt-redteam-agent-traps-opencre/s1..s8`) is the seed material; this runbook re-implements that evidence as durable benchmark code under `benchmarks/agent-redteam/`. **Authored autonomously on a founder-greenlit loop; milestone contracts are flagged for `/slo-critique` before `/slo-execute` runs any milestone** (substitutes for the normal per-milestone live confirmation).
+> **Provenance**: Authored by `/slo-plan` from the `promote_to_runbook` handoff. The scratch evidence (`experiments/agt-redteam-agent-traps-opencre/s1..s8`) is the seed material; this runbook re-implements that evidence as durable benchmark code under `benchmarks/agent-redteam/`. **Authored autonomously on a founder-greenlit loop; the outcome-first contract and M6-M8 expansion were critiqued before milestone execution, and M1/M2 are now merged on this branch.**
 
 ---
 
 ## 0. How To Use This Template
 
 1. Fill Runbook Metadata, Architecture, and Milestone Plan before implementation (done — this document).
-2. Work milestones sequentially (M1 → M5).
+2. Work milestones sequentially (M1 → M8).
 3. Before each milestone, complete the Global Entry Protocol (§7).
 4. During implementation, follow §4 (Carmack-Style Best Practices) and the milestone Contract Block literally.
 5. After each milestone, complete the Global Exit Protocol (§8) and fill the Evidence Log.
@@ -64,8 +64,8 @@ Single source of truth for progress. Update as each milestone completes.
 
 | # | Milestone | Status | Started | Completed | Lessons File | Completion Summary |
 |---|---|---|---|---|---|---|
-| 1 | Scenario schema + validator (productionize s1) | `not_started` | | | | |
-| 2 | Mock behavioural harness + trace schema (productionize s4) | `not_started` | | | | |
+| 1 | Scenario schema + validator (productionize s1) | `done` | 2026-06-19 | 2026-06-19 | `docs/slo/lessons/agtrt-m1.md` | `docs/slo/completion/agtrt-m1.md` |
+| 2 | Mock behavioural harness + trace schema (productionize s4) | `done` | 2026-06-19 | 2026-06-19 | `docs/slo/lessons/agtrt-m2.md` | `docs/slo/completion/agtrt-m2.md` |
 | 3 | Agent-Traps deterministic smoke suite + CI integration | `not_started` | | | | |
 | 4 | Control-linked evidence-level reporter (productionize s6) | `not_started` | | | | |
 | 5 | Upstream-ready docs + raw-free hygiene gate + PR-boundary packaging (productionize s8) | `not_started` | | | | |
@@ -231,7 +231,7 @@ The benchmark must produce **honest, reproducible, raw-free evidence** about whi
 
 ## 5B. Secure Value and Security Contract
 
-**Required** — this runbook is **security-relevant**: it models AI-agent red-team flows, simulates dangerous tools (shell/email/memory/registry), and produces artifacts intended for a public/upstream boundary and CI/CD. (It is not "value-bearing" in the user-facing sense, so §5A/§5C are N/A, but the security contract applies.)
+**Required** — this runbook is **security-relevant** and value-bearing for the assessing engineer: it models AI-agent red-team flows, simulates dangerous tools (shell/email/memory/registry), produces artifacts intended for a public/upstream boundary and CI/CD, and gives the engineer actionable front-to-end evidence. Therefore §5A, §5B, and §5C all apply.
 
 ### Value Wedge
 
@@ -313,17 +313,21 @@ The benchmark must produce **honest, reproducible, raw-free evidence** about whi
 | oc-3 | "Run the whole assessment in one command" | scenarios → `run-smoke.sh` (validate → harness → report) → single pass/fail + summaries | script | M3 |
 | oc-4 | "Get an evidence-level scorecard I can act on" | traces + controls → reporter → JSON+Markdown scorecard by trap-class / AGT-AC control / evidence-level, `certification_claim:false` | CLI | M4 |
 | oc-5 | "Trust it's safe to share / upstream" | all artifacts → raw-free hygiene gate → pass (no raw payload/secret/PII) + `PROMOTION.md` boundary | CLI | M5 |
+| oc-6 | "Assess my real Goose agent safely" | engineer-configured Goose agent → hermetic sandbox live run → `L3_live` traces with containment proof | CLI + sandbox | M6 |
+| oc-7 | "Trust the control relation quality" | AGT-AC controls + OpenCRE snapshot → relation validator → verified/candidate relation report with provenance | CLI + research artifact | M7 |
+| oc-8 | "Share an honest scorecard" | run results → static Markdown/HTML scorecard → offline, raw-free, no-certification stakeholder artifact | CLI + generated file | M8 |
 
 ### Critical User Journeys (assessing engineer)
 
 - **cuj-1 Assess**: the engineer points the benchmark at a scenario set and gets back a complete, raw-free evidence report — which layer each scenario hit, and whether unsafe actions were blocked — in one command, with zero real side effect.
 - **cuj-2 Extend**: the engineer adds a new scenario; the validator accepts it, or rejects it with a clear, actionable reason, without hand-editing internals.
 - **cuj-3 Regression-watch**: a weakening in the agent's controls surfaces as a changed scorecard / a newly-`executed` unsafe action — the benchmark *surfaces* the regression instead of hiding it.
+- **cuj-4 Share**: the engineer exports a presentable static scorecard and shares it; it renders offline, raw-free, and prominently states `certification_claim:false`.
 
 ### How the outcome is validated
 
 - **Top-level front-to-end test** — `run-smoke.sh` run exactly as the engineer would run it (the real validate→harness→report→hygiene chain, not mocks of itself), asserting observable engineer-facing outputs: trap-class coverage counts, ≥4 blocked-but-recorded unsafe attempts, `certification_claim:false`, and a raw-free pass.
-- **Stage-level front-to-end outcome test in EVERY milestone (M1..M5)** — each milestone adds/extends a `#### Front-to-End Outcome Test (stage-level)` that drives the engineer-facing capability available *so far* from its CLI/script entrypoint, end-to-end, and asserts the engineer-visible result.
+- **Stage-level front-to-end outcome test in EVERY milestone (M1..M8)** — each milestone adds/extends a `#### Front-to-End Outcome Test (stage-level)` that drives the engineer-facing capability available *so far* from its CLI/script entrypoint, end-to-end, and asserts the engineer-visible result.
 - **Outcome-first DoD (founder law #1634)**: a milestone is DONE only when its stage-level front-to-end outcome works for the assessing engineer **AND** all prior stages' front-to-end outcomes still pass — never on unit/component green alone.
 
 ---
@@ -1139,7 +1143,7 @@ Drive **oc-5** as the engineer would, end-to-end via the full chain ending in hy
 | Cleanup | `git status` | clean | | | |
 
 #### Definition of Done
-Standard v4 DoD; hygiene gate fail-closed + anti-vacuity proven; `PROMOTION.md` complete; DW-001 (content-injection fixtures) filed as an issue and that ledger row disposed — **DW-002 (Goose) / DW-003 (OpenCRE) / the scorecard product are now BUILT in M6/M7/M8, not filed-out**; no premature upstream PR / no certification; full chain green; lessons + completion; tracker M1–M5 `done`; **AND the stage-level Front-to-End Outcome Test (oc-5) passes** — the engineer has a raw-free, shareable, packaged benchmark front-to-end (outcome-first gate). M6–M8 then extend the benchmark (live adapter, control research, product); `/slo-critique` the whole runbook before any `/slo-execute`.
+Standard v4 DoD; hygiene gate fail-closed + anti-vacuity proven; `PROMOTION.md` complete; DW-001 (content-injection fixtures) filed as an issue and that ledger row disposed — **DW-002 (Goose) / DW-003 (OpenCRE) / the scorecard product are now BUILT in M6/M7/M8, not filed-out**; no premature upstream PR / no certification; full chain green; lessons + completion; tracker M1–M5 `done`; **AND the stage-level Front-to-End Outcome Test (oc-5) passes** — the engineer has a raw-free, shareable, packaged benchmark front-to-end (outcome-first gate). Before starting M6, refresh `/slo-critique` only if M1–M5 execution changed the M6–M8 assumptions.
 
 #### Post-Flight
 - **ARCHITECTURE.md**: add hygiene gate + packaging. **README.md**: add "raw-free, evidence-level, not certified" benchmark summary + PROMOTION.md pointer.
@@ -1372,7 +1376,7 @@ Standard v4 DoD; relation-honesty + no-endorsement-overclaim invariants encoded/
 | No-overclaim across reporter + product | yes | no-cert-term grep on both | pass |
 
 #### Definition of Done
-Standard v4 DoD; no-certification + no-mystery-score + offline + raw-free invariants encoded/tested; §5A stakeholder-comprehension deliverable recorded; **AND the stage-level Front-to-End Outcome Test (oc-8) passes** — the engineer has a shareable, honest scorecard product front-to-end (outcome-first gate). Lessons + completion; **tracker all `done`** (M8 is the terminal milestone). Then `/slo-critique` the whole 8-milestone runbook before any `/slo-execute`.
+Standard v4 DoD; no-certification + no-mystery-score + offline + raw-free invariants encoded/tested; §5A stakeholder-comprehension deliverable recorded; **AND the stage-level Front-to-End Outcome Test (oc-8) passes** — the engineer has a shareable, honest scorecard product front-to-end (outcome-first gate). Lessons + completion; **tracker all `done`** (M8 is the terminal milestone). Then run final `/slo-critique` before any external publication or upstream proposal.
 
 #### Post-Flight
 - **ARCHITECTURE.md**: add the product render layer. **README.md**: add the shareable-scorecard pointer + "evidence, not certification" disclaimer.
@@ -1402,4 +1406,4 @@ Standard v4 DoD; no-certification + no-mystery-score + offline + raw-free invari
 
 ## 20. Source Basis
 
-v4 runbook produced by `/slo-plan` from `EXP-agt-redteam-agent-traps-opencre` (exit `promote_to_runbook`). Seed evidence: `experiments/agt-redteam-agent-traps-opencre/s1..s8` (audited PASS on Windows + Mac). Curation §8 dispositions are authoritative for what is in-runbook vs routed out. Next step after this runbook: `/slo-critique` (adversarial review) before `/slo-execute M1`.
+v4 runbook produced by `/slo-plan` from `EXP-agt-redteam-agent-traps-opencre` (exit `promote_to_runbook`). Seed evidence: `experiments/agt-redteam-agent-traps-opencre/s1..s8` (audited PASS on Windows + Mac). Curation §8 dispositions are authoritative for what is in-runbook vs routed out. `/slo-critique` has run for the outcome-first reframe; M1 and M2 are merged. Next execution step: `/slo-execute M3` after a fresh AgentBus ownership check.
