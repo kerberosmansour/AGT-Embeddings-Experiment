@@ -78,5 +78,52 @@ class CiAppendOnly(unittest.TestCase):
         self.assertIn("set -euo pipefail", SMOKE.read_text(encoding="utf-8"))
 
 
+class Portability(unittest.TestCase):
+    """DW-004 / Win-audit Finding 2: the interpreter probe must work where
+    `python3` is a non-functional alias (Windows Store-alias), not just where
+    `command -v python3` happens to resolve."""
+
+    def test_probe_executes_interpreter_not_just_which(self):
+        # Static guard: the probe must RUN the interpreter (so a `command -v`-only
+        # check that the Windows python3 alias passes can never come back).
+        src = SMOKE.read_text(encoding="utf-8")
+        self.assertIn("import sys", src,
+                      "interpreter probe must execute python, not just `command -v`")
+        self.assertNotRegex(
+            src, r'PY="\$\{PYTHON:-python3\}"\s*\n\s*command -v "\$PY"',
+            "regressed to the command-v-only pick that fails on the Windows python3 alias",
+        )
+
+    def test_smoke_survives_a_broken_python3_on_path(self):
+        # Behaviourally simulate the Windows Store-alias: a `python3` on PATH that
+        # exists but exits non-zero without running Python. The probe must skip it
+        # and fall through to a real interpreter, so the smoke still passes.
+        import os
+        real_python = None
+        for cand in ("python", "python3"):
+            try:
+                if subprocess.run([cand, "-c", "import sys"],
+                                  capture_output=True).returncode == 0:
+                    real_python = cand
+                    break
+            except FileNotFoundError:
+                continue
+        if real_python is None:
+            self.skipTest("no real interpreter available to fall through to")
+        with tempfile.TemporaryDirectory() as tmp:
+            stub = Path(tmp) / "python3"
+            stub.write_text("#!/usr/bin/env bash\n"
+                            "echo 'Python was not found' >&2\nexit 9\n",
+                            encoding="utf-8")
+            stub.chmod(0o755)
+            # real interpreter still reachable AFTER the broken python3 shim.
+            env = dict(os.environ)
+            env["PATH"] = str(tmp) + os.pathsep + env.get("PATH", "")
+            env["PYTHON"] = ""  # force the probe (don't let an override hide the bug)
+            r = run_smoke(env)
+            self.assertEqual(r.returncode, 0,
+                             msg=f"probe failed to skip broken python3\n{r.stdout}\n{r.stderr}")
+
+
 if __name__ == "__main__":
     unittest.main()
