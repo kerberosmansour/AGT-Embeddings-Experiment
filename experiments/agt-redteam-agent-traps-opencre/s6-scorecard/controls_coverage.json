@@ -1,0 +1,14 @@
+{
+  "controls": {
+    "AGT-AC-003": 1,
+    "AGT-AC-007": 1,
+    "AGT-AC-010": 1,
+    "AGT-AC-014": 1
+  },
+  "trap_classes": [
+    "Cognitive State",
+    "Content Injection",
+    "Semantic Manipulation",
+    "Systemic"
+  ]
+}

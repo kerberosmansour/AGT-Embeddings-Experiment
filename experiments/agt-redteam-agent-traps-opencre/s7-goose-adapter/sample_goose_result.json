@@ -1,0 +1,13 @@
+{
+  "adapter": "goose",
+  "cleanup": "dry-run only; no provider credentials or tools invoked",
+  "evidence_level": "L0_declared",
+  "limits": {
+    "max_turns": 4,
+    "mock_tools_only": true,
+    "timeout_seconds": 30
+  },
+  "scenario_id": "hidden-html-comment-001",
+  "status": "not_run",
+  "trace": []
+}

@@ -50,3 +50,14 @@ jobs:
 
       - name: Validate source-scale pilot summary
         run: python3 -m json.tool artifacts/source-scale-pilot/summary.json >/dev/null
+
+  # APPENDED by agtrt M3 (append-only — existing job above is unchanged).
+  agt-redteam-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: AGT redteam benchmark smoke (validate -> harness)
+        run: bash benchmarks/agent-redteam/run-smoke.sh

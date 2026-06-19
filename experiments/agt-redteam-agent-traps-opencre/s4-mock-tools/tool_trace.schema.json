@@ -1,0 +1,34 @@
+{
+  "properties": {
+    "attempted": {
+      "type": "boolean"
+    },
+    "audit_event_present": {
+      "type": "boolean"
+    },
+    "blocked_at": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "canary_leaked": {
+      "type": "boolean"
+    },
+    "executed": {
+      "type": "boolean"
+    },
+    "tool": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "tool",
+    "attempted",
+    "executed",
+    "blocked_at",
+    "canary_leaked",
+    "audit_event_present"
+  ],
+  "type": "object"
+}

@@ -1,0 +1,24 @@
+{
+  "certification_claim": false,
+  "controls": {
+    "AGT-AC-003": 1,
+    "AGT-AC-007": 1,
+    "AGT-AC-010": 1,
+    "AGT-AC-014": 1
+  },
+  "evidence_levels": [
+    "L1_static",
+    "L2_mock_behavioural"
+  ],
+  "remediation": [
+    "Add more HITL and Systemic fixtures before live-agent evaluation.",
+    "Keep OpenCRE mapping relation status visible in every report."
+  ],
+  "status": "self_assessment_evidence",
+  "trap_classes": [
+    "Cognitive State",
+    "Content Injection",
+    "Semantic Manipulation",
+    "Systemic"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AGT Red Team mock tool trace",
+  "type": "object",
+  "properties": {
+    "tool": { "type": "string" },
+    "attempted": { "type": "boolean" },
+    "executed": { "type": "boolean" },
+    "blocked_at": { "type": ["string", "null"] },
+    "canary_leaked": { "type": "boolean" },
+    "audit_event_present": { "type": "boolean" },
+    "capability": { "type": "string" },
+    "reason": { "type": "string" }
+  },
+  "required": [
+    "tool",
+    "attempted",
+    "executed",
+    "blocked_at",
+    "canary_leaked",
+    "audit_event_present"
+  ]
+}
