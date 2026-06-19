@@ -52,3 +52,4 @@ corpus/round4/*-smoke-metrics.json
 .venv-round6/
 .cache/round6-embeddings/
 artifacts/round6-cascade/**/*.tmp
+benchmarks/agent-redteam/**/__pycache__/
