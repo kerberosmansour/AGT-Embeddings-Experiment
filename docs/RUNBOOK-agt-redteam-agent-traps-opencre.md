@@ -64,9 +64,9 @@ Single source of truth for progress. Update as each milestone completes.
 
 | # | Milestone | Status | Started | Completed | Lessons File | Completion Summary |
 |---|---|---|---|---|---|---|
-| 1 | Scenario schema + validator (productionize s1) | `not_started` | | | | |
-| 2 | Mock behavioural harness + trace schema (productionize s4) | `not_started` | | | | |
-| 3 | Agent-Traps deterministic smoke suite + CI integration | `not_started` | | | | |
+| 1 | Scenario schema + validator (productionize s1) | `done` | 2026-06-19 | 2026-06-19 | docs/slo/lessons/agtrt-m1.md | oc-1 green; 16 tests; PR #24 merged |
+| 2 | Mock behavioural harness + trace schema (productionize s4) | `done` | 2026-06-19 | 2026-06-19 | docs/slo/lessons/agtrt-m2.md | oc-2 green; 25 tests; PR #25 merged |
+| 3 | Agent-Traps deterministic smoke suite + CI integration | `done` | 2026-06-19 | 2026-06-19 | docs/slo/lessons/agtrt-m3.md | oc-3 green; 30 tests; one-command smoke + appended CI job |
 | 4 | Control-linked evidence-level reporter (productionize s6) | `not_started` | | | | |
 | 5 | Upstream-ready docs + raw-free hygiene gate + PR-boundary packaging (productionize s8) | `not_started` | | | | |
 | 6 | Live Goose adapter — real-agent (L3) assessment in a hermetic sandbox (productionize s7) | `not_started` | | | | |
