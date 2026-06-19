@@ -69,6 +69,9 @@ Single source of truth for progress. Update as each milestone completes.
 | 3 | Agent-Traps deterministic smoke suite + CI integration | `not_started` | | | | |
 | 4 | Control-linked evidence-level reporter (productionize s6) | `not_started` | | | | |
 | 5 | Upstream-ready docs + raw-free hygiene gate + PR-boundary packaging (productionize s8) | `not_started` | | | | |
+| 6 | Live Goose adapter — real-agent (L3) assessment in a hermetic sandbox (productionize s7) | `not_started` | | | | |
+| 7 | OpenCRE relation research + relation-quality validator | `not_started` | | | | |
+| 8 | Shareable evidence scorecard product (productionize the scorecard wedge) | `not_started` | | | | |
 
 <!-- Status values: not_started | in_progress | blocked | done -->
 <!-- Honest exit states (optional): human_review_required | blocked_by_operator | blocked_by_upstream | issue_filed | accepted_risk -->
@@ -77,7 +80,7 @@ Single source of truth for progress. Update as each milestone completes.
 
 ### Scope reconciliation (raw §10 seed → runbook milestones)
 
-The §10 handoff listed 7 raw milestone candidates, which exceeds the 5-milestone cap **and** mixes routes. Curation (§8 of the Experiment Book) is the authoritative disposition gate, so this runbook implements only the three `promote_to_runbook` candidates plus the connective tissue that makes them a usable benchmark, and **routes the rest out** to their curated destinations:
+The §10 handoff listed 7 raw milestone candidates. **Founder directive (2026-06-19): the milestone cap is lifted for this runbook** — the previously-routed-out Goose adapter, OpenCRE research, and scorecard-product are pulled **IN** as full milestones (M6/M7/M8), each outcome-first with a stage-level front-to-end test, so the benchmark is delivered end-to-end (not deferred to separate tickets). Only the content-injection **fixture pack** stays routed out (DW-001). Updated dispositions:
 
 | Raw §10 candidate | Curated disposition | Where it lives in this plan |
 |---|---|---|
@@ -87,9 +90,9 @@ The §10 handoff listed 7 raw milestone candidates, which exceeds the 5-mileston
 | Control-linked reporter | (connective, with §6/scorecard evidence) | **M4** |
 | Upstream PR boundary draft | `promote_to_runbook` | **M5** |
 | Content-injection fixture pack | `promote_to_ticket` | **OUT → `/slo-ticket-plan`** (M5 files it; harness leaves a typed seam) |
-| Goose adapter dry-run | `promote_to_ticket` (after harness) | **OUT → `/slo-ticket-plan`** (M5 files it; adapter contract from s7 is the spec) |
-| OpenCRE-backed AGT-AC catalog | `promote_to_research` | **OUT → `/slo-research`** (M4 consumes the s5 control ids read-only; relation quality is research) |
-| Evidence-level scorecard (as product) | `promote_to_idea` | **OUT → `/slo-ideate`** (M4 ships the *internal* reporter; the *product* wedge is an idea) |
+| Goose adapter dry-run | now `promote_to_runbook` (founder) | **IN → M6** (real sandboxed L3 live adapter; s7 contract is the spec) |
+| OpenCRE-backed AGT-AC catalog | now `promote_to_runbook` (founder) | **IN → M7** (relation research + relation-quality validator; M4 consumes verified relations) |
+| Evidence-level scorecard (as product) | now `promote_to_runbook` (founder) | **IN → M8** (shareable scorecard product built on M4's internal reporter) |
 
 ---
 
@@ -222,7 +225,7 @@ The benchmark must produce **honest, reproducible, raw-free evidence** about whi
 
 ## 5A. Measurement Contract
 
-`N/A — not a value-bearing feature.` This runbook builds **internal security-benchmark tooling** (a stdlib library + CLI + CI suite for security/benchmark engineers), not a user-facing product capability. Telemetry/behavioural-event instrumentation does not apply. The *product* wedge (an external-facing scorecard) was curated to `promote_to_idea` and is routed to `/slo-ideate` in M5 — that idea, if pursued, will carry its own Measurement Contract.
+**Reframed per founder directive (2026-06-19): the user IS the assessing engineer.** The persona is the **engineer responsible for the AI agent being assessed** (see §5C). They run this benchmark — a **CLI + scripts**, not a hosted product — to learn, reproducibly and raw-free, which agent-control layer each scenario exercises and whether an unsafe action was *attempted-but-blocked* vs *executed*. Product-grade telemetry/hosted-behavioural-event instrumentation stays out of scope (the external scorecard *product* remains the `/slo-ideate` route), but **"did the engineer get an actionable result?" is a first-class, measured success signal**: every front-to-end run either emits a complete, parseable, raw-free evidence report (exit 0) or **fails closed with a named reason** — never a silent, partial, or ambiguous result. That signal is asserted by the §5C front-to-end outcome test and by each milestone's stage-level front-to-end outcome test.
 
 ---
 
@@ -287,15 +290,41 @@ The benchmark must produce **honest, reproducible, raw-free evidence** about whi
 | ID | Finding | Severity | Disposition | Owner | Evidence/link | Due |
 |---|---|---:|---|---|---|---|
 | DW-001 | Content-injection fixture pack deferred from this runbook (curated `promote_to_ticket`) | low | file_github_issue | win/mac | M5 files `/slo-ticket-plan` issue | M5 |
-| DW-002 | Goose live adapter deferred (curated `promote_to_ticket` after harness) | low | file_github_issue | win/mac | M5 files `/slo-ticket-plan` issue | M5 |
-| DW-003 | OpenCRE relation quality needs research before any upstream contribution | med | file_github_issue | win/mac | M5 files `/slo-research` issue | M5 |
+| DW-002 | Goose live adapter — **now BUILT as M6** (founder pulled it in; sandboxed L3) | low | built_in_milestone | win/mac | M6 (was: file issue) | M6 |
+| DW-003 | OpenCRE relation quality — **now BUILT as M7** (founder pulled it in; relation-quality validator) | med | built_in_milestone | win/mac | M7 (was: file issue) | M7 |
 | DW-004 | `python3` vs `python` + shell-glob portability (Windows) — Win audit Finding 2 | low | fix_now | win | M1 smoke script uses portable invocation + documents Git-Bash/`python` | M1 |
 
 ---
 
 ## 5C. Outcome Validation Contract
 
-`N/A — not value-bearing.` This is internal benchmark tooling (library + CLI + CI), with no end-user UI surface or user-facing outcome. The "outcome" — reproducible raw-free evidence — is validated by the §5B Security Test Plan, the §5.5 invariants, and the M3 smoke suite rather than by `oc-`/`cuj-` UI journeys. If the curated `/slo-ideate` scorecard product (M5 route) is later pursued, that runbook will carry a real §5C.
+**Required — founder directive 2026-06-19.** This benchmark HAS a user and a real front-to-end outcome; the earlier "N/A — not value-bearing" was wrong and is corrected here. The interface is a **CLI + scripts (not a web app)**, but the capability must be exercised in **FULL, front-to-end**, and validated **as an outcome at every milestone** — not by component/unit checks alone.
+
+### Persona
+
+**Agent Assessment Engineer** — the engineer responsible for the AI agent (or the agent-control policy set) that is being assessed. They need honest, reproducible, raw-free evidence about how their agent behaves against the six Agent-Traps classes: which control layer each scenario exercises, and whether an unsafe action was *attempted but blocked* vs *executed*. They are not a UI end-user; their "front end" is the benchmark **CLI and the report files it emits**, run locally or in their CI.
+
+### Front-to-End Outcomes (the capability, end to end)
+
+| # | Engineer-facing outcome | Front-to-end path (input → … → result) | Interface | Lands |
+|---|---|---|---|---|
+| oc-1 | "Validate my scenario set" | scenario JSON → `validate_scenarios.py <paths>` → pass/fail + per-trap-class coverage (JSON + exit code) | CLI | M1 |
+| oc-2 | "See attempted-vs-executed for my scenarios" | validated scenarios → harness runner → per-tool JSONL traces with `attempted`/`executed`/`blocked_at` | CLI | M2 |
+| oc-3 | "Run the whole assessment in one command" | scenarios → `run-smoke.sh` (validate → harness → report) → single pass/fail + summaries | script | M3 |
+| oc-4 | "Get an evidence-level scorecard I can act on" | traces + controls → reporter → JSON+Markdown scorecard by trap-class / AGT-AC control / evidence-level, `certification_claim:false` | CLI | M4 |
+| oc-5 | "Trust it's safe to share / upstream" | all artifacts → raw-free hygiene gate → pass (no raw payload/secret/PII) + `PROMOTION.md` boundary | CLI | M5 |
+
+### Critical User Journeys (assessing engineer)
+
+- **cuj-1 Assess**: the engineer points the benchmark at a scenario set and gets back a complete, raw-free evidence report — which layer each scenario hit, and whether unsafe actions were blocked — in one command, with zero real side effect.
+- **cuj-2 Extend**: the engineer adds a new scenario; the validator accepts it, or rejects it with a clear, actionable reason, without hand-editing internals.
+- **cuj-3 Regression-watch**: a weakening in the agent's controls surfaces as a changed scorecard / a newly-`executed` unsafe action — the benchmark *surfaces* the regression instead of hiding it.
+
+### How the outcome is validated
+
+- **Top-level front-to-end test** — `run-smoke.sh` run exactly as the engineer would run it (the real validate→harness→report→hygiene chain, not mocks of itself), asserting observable engineer-facing outputs: trap-class coverage counts, ≥4 blocked-but-recorded unsafe attempts, `certification_claim:false`, and a raw-free pass.
+- **Stage-level front-to-end outcome test in EVERY milestone (M1..M5)** — each milestone adds/extends a `#### Front-to-End Outcome Test (stage-level)` that drives the engineer-facing capability available *so far* from its CLI/script entrypoint, end-to-end, and asserts the engineer-visible result.
+- **Outcome-first DoD (founder law #1634)**: a milestone is DONE only when its stage-level front-to-end outcome works for the assessing engineer **AND** all prior stages' front-to-end outcomes still pass — never on unit/component green alone.
 
 ---
 
@@ -357,7 +386,7 @@ See §3. End state: `benchmarks/agent-redteam/{schema,scenarios,harness,controls
 - **NEW** `docs/slo/lessons/agtrt-m*.md`, `docs/slo/completion/agtrt-m*.md`, and `docs/RUNBOOK-...` tracker updates.
 
 ### Global Red Lines
-No unrelated refactors; no new dependencies; no schema migrations; no edits to mac-owned experiment scratch; no live agents/providers/network; no certification claims; no raw payloads/secrets in any artifact; no unbounded growth; no silent gap-swallowing.
+No unrelated refactors; no new dependencies; no schema migrations; no edits to mac-owned experiment scratch; no live agents/providers/network; no certification claims; no raw payloads/secrets in any artifact; no unbounded growth; no silent gap-swallowing. **M6 carve-out (founder-approved):** M6 introduces a sandboxed live Goose agent + one isolated, security/license-reviewed dependency under `adapters/goose/` ONLY — egress-denied, no prod credentials, opt-in (`--live`); the DEFAULT path (M1–M5) stays stdlib-only / no-live / no-network. Every other red line (raw-free, no certification, no edits to experiment scratch, bounded resources) holds across **all** milestones including M6–M8.
 
 ---
 
@@ -453,9 +482,9 @@ Path: `docs/slo/completion/agtrt-m<N>.md` — standard v4 completion template.
 | Data classification | `Internal` (synthetic scenarios only) |
 | Proactive controls in play | OWASP `C4 Address Security from the Start` (closed enums, fail-closed validation), `C3 Validate all Input` (strict field/enum validation) |
 | Abuse acceptance scenarios | `tm-agtrt-abuse-1` (raw payload in a scenario) and `tm-agtrt-abuse-4` (certification term in a scenario) — see BDD rows |
-| Measurement deliverables | `N/A — not value-bearing (internal tooling)` |
-| Outcome Validation deliverables | `N/A — not value-bearing` |
-| Critical user journeys | `N/A — not value-bearing` |
+| Measurement deliverables | actionable-result signal (§5A): the validator emits a complete coverage report OR fails closed with a named reason — never a silent/partial result |
+| Outcome Validation deliverables | **oc-1** front-to-end (validate a scenario set → coverage report); see the stage-level F2E Outcome Test below |
+| Critical user journeys | **cuj-2 Extend** (engineer adds/rejects a scenario with an actionable reason) |
 
 #### Out of Scope / Must Not Do
 - No harness, reporter, fixtures, adapters, or CI changes (later milestones).
@@ -499,10 +528,21 @@ Path: `docs/slo/completion/agtrt-m<N>.md` — standard v4 completion template.
 | certification term | abuse `tm-agtrt-abuse-4` | a scenario containing "OWASP-certified" | run the no-overclaim check | flagged by test |
 
 #### Outcome Scenarios
-`N/A — not value-bearing (internal tooling), see §5C.`
+- **oc-1 (M1 delivers it)**: the assessing engineer runs the validator over a folder of scenario JSON and gets, front-to-end, a pass/fail + per-trap-class coverage report — the first usable engineer-facing capability.
 
 #### Critical User Journeys
-`N/A — not value-bearing.`
+- **cuj-2 Extend (stage-level)**: the engineer adds a scenario and it is accepted, or rejected with a clear, actionable reason (named file + reason) — no internals hand-edited.
+
+#### Front-to-End Outcome Test (stage-level)
+Drive **oc-1** exactly as the assessing engineer would, from the CLI entrypoint, end-to-end:
+
+| F2E step | Engineer action | Engineer-visible outcome (assert) |
+|---|---|---|
+| valid set | `python benchmarks/agent-redteam/schema/validate_scenarios.py benchmarks/agent-redteam/scenarios/*.json` | exit 0; stdout JSON `validated=24`; each of 6 trap classes count=4 |
+| bad scenario | run the validator on a malformed / unknown-enum scenario | non-zero exit; stderr names the file + the actionable reason |
+| empty invocation | run the validator with no path args | exit 2 + usage message (never a silent pass) |
+
+**Outcome gate (founder-first):** M1 is not `done` until this stage-level F2E outcome passes — i.e. the engineer can validate a scenario set front-to-end and get an actionable result.
 
 #### Core Capability Regression Matrix
 
@@ -549,7 +589,7 @@ Path: `docs/slo/completion/agtrt-m<N>.md` — standard v4 completion template.
 | Cleanup | `git status` | clean | | | |
 
 #### Definition of Done
-Standard v4 DoD (all BDD pass; static gates clean; stdlib-only proven; 24 seeds validate across six classes; invariants §5.5 encoded+tested; `git status` clean; lessons + completion written; tracker updated). Outcome/CUJ rows `N/A — not value-bearing`.
+Standard v4 DoD (all BDD pass; static gates clean; stdlib-only proven; 24 seeds validate across six classes; invariants §5.5 encoded+tested; `git status` clean; lessons + completion written; tracker updated) **AND the stage-level Front-to-End Outcome Test (oc-1) passes** — the engineer can validate a scenario set front-to-end (outcome-first gate, not optional).
 
 #### Post-Flight
 - **ARCHITECTURE.md**: add `benchmarks/agent-redteam/` schema component.
@@ -594,9 +634,9 @@ Standard v4 DoD (all BDD pass; static gates clean; stdlib-only proven; 24 seeds 
 | Data classification | `Internal` |
 | Proactive controls in play | OWASP `C5 Validate All Inputs / Handle Errors` and `C9 Implement Security Logging and Monitoring` (every trace has an audit event); `C4 Address Security from the Start` (structurally side-effect-free) |
 | Abuse acceptance scenarios | `tm-agtrt-abuse-3` (mock made to perform a real effect) and `tm-agtrt-abuse-5` (blocked unsafe attempt disappears) — BDD rows |
-| Measurement deliverables | `N/A — not value-bearing` |
-| Outcome Validation deliverables | `N/A — not value-bearing` |
-| Critical user journeys | `N/A — not value-bearing` |
+| Measurement deliverables | actionable-result signal (§5A): the harness emits complete attempted/executed traces or fails closed with a named reason |
+| Outcome Validation deliverables | **oc-2** front-to-end (validated scenario → traces showing attempted/executed/blocked); stage-level F2E Outcome Test below |
+| Critical user journeys | **cuj-1 Assess (partial)** + **cuj-3 Regression-watch** (a newly-`executed` unsafe action stays visible, not hidden) |
 
 #### Out of Scope / Must Not Do
 - No live Goose/provider/network (DW-002 ticket). No content fixtures (DW-001). No reporter (M4). No CI change (M3).
@@ -636,7 +676,19 @@ Standard v4 DoD (all BDD pass; static gates clean; stdlib-only proven; 24 seeds 
 | trace schema conformance | compatibility | every emitted trace | validate vs `tool_trace.schema.json` | all conform |
 
 #### Outcome Scenarios / Critical User Journeys
-`N/A — not value-bearing, see §5C.`
+- **oc-2 (M2 delivers it)**: the assessing engineer runs the harness over a validated scenario and gets, front-to-end, per-tool traces showing whether each unsafe action was *attempted but blocked* vs *executed* — with no real side effect.
+- **cuj-3 Regression-watch (stage-level)**: an unsafe action that becomes `executed` (a weakened control) shows up in the trace instead of disappearing.
+
+#### Front-to-End Outcome Test (stage-level)
+Drive **oc-2** as the assessing engineer would, from the runner entrypoint, end-to-end:
+
+| F2E step | Engineer action | Engineer-visible outcome (assert) |
+|---|---|---|
+| run harness | `python benchmarks/agent-redteam/harness/runner.py` over a validated scenario | ≥5 JSONL traces; ≥4 unsafe actions `executed:false` with `blocked_at` set AND `attempted:true` (blocked attempts stay visible) |
+| benign action | run a declared-benign action | `executed:true`, no `blocked_at` |
+| safety proof | inspect harness source / traces | zero real side effects (no subprocess/socket) — the engineer's result is trustworthy |
+
+**Outcome gate:** M2 is not `done` until oc-2 passes front-to-end — the engineer can see attempted-vs-executed for a scenario.
 
 #### Core Capability Regression Matrix
 
@@ -677,7 +729,7 @@ Standard v4 DoD (all BDD pass; static gates clean; stdlib-only proven; 24 seeds 
 | Cleanup | `git status` | clean | | | |
 
 #### Definition of Done
-Standard v4 DoD; invariants §5.5 (no-real-side-effect, attempt-recorded, audit-present) encoded + tested; bounds encoded; stdlib-only + no-dangerous-import proven; lessons + completion; tracker. Outcome/CUJ `N/A`.
+Standard v4 DoD; invariants §5.5 (no-real-side-effect, attempt-recorded, audit-present) encoded + tested; bounds encoded; stdlib-only + no-dangerous-import proven; lessons + completion; tracker; **AND the stage-level Front-to-End Outcome Test (oc-2) passes** — the engineer can see attempted-vs-executed front-to-end (outcome-first gate).
 
 #### Post-Flight
 - **ARCHITECTURE.md**: add harness + trace schema. **README.md**: add harness command.
@@ -721,9 +773,9 @@ Standard v4 DoD; invariants §5.5 (no-real-side-effect, attempt-recorded, audit-
 | Data classification | `Internal` |
 | Proactive controls in play | OWASP `C9 Security Logging and Monitoring` (CI is the monitoring guardrail) |
 | Abuse acceptance scenarios | `N/A — no new runtime surface introduced` (CI runs the same in-process, side-effect-free benchmark; the new "surface" is a CI job, covered by the append-only invariant test) |
-| Measurement deliverables | `N/A — not value-bearing` |
-| Outcome Validation deliverables | `N/A — not value-bearing` |
-| Critical user journeys | `N/A — not value-bearing` |
+| Measurement deliverables | actionable-result signal (§5A): one-command run prints validate+harness summaries or fails fast with the named failing step |
+| Outcome Validation deliverables | **oc-3** front-to-end (scenarios → `run-smoke.sh` → single pass/fail) — the integrated front-to-end milestone; stage-level F2E Outcome Test below |
+| Critical user journeys | **cuj-1 Assess** (engineer runs the whole assessment in one command) |
 
 #### Out of Scope / Must Not Do
 - No reporter logic (M4). No new CI for unrelated areas. No reordering existing `readiness.yml`.
@@ -759,7 +811,19 @@ Standard v4 DoD; invariants §5.5 (no-real-side-effect, attempt-recorded, audit-
 | portability | invalid input | run under Git-Bash on Windows | run smoke | `python` resolves; no bare-glob dependency |
 
 #### Outcome Scenarios / Critical User Journeys
-`N/A — not value-bearing.`
+- **oc-3 (M3 delivers it — the integrated front-to-end)**: the assessing engineer runs the WHOLE assessment in one command (`run-smoke.sh`: validate → harness → report-check) and gets a single pass/fail plus validate+harness summaries — and CI runs the same chain so a regression is caught automatically.
+- **cuj-1 Assess (stage-level)**: one command, raw-free, no real side effect, fail-fast with a named step if anything breaks.
+
+#### Front-to-End Outcome Test (stage-level)
+Drive **oc-3** as the engineer would, from the single script entrypoint, end-to-end:
+
+| F2E step | Engineer action | Engineer-visible outcome (assert) |
+|---|---|---|
+| one-command run | `bash benchmarks/agent-redteam/run-smoke.sh` | exit 0; prints validate summary (24 / 6 classes) + harness summary (≥5 traces / ≥4 blocked) |
+| fail-fast | a step returns non-zero | smoke stops, non-zero exit, names the failing step (no false green) |
+| CI parity | the appended `readiness.yml` job | same smoke runs in CI; existing jobs byte-identical (append-only) |
+
+**Outcome gate:** M3 is not `done` until oc-3 passes front-to-end — the engineer can run the whole assessment in one command, locally and in CI.
 
 #### Core Capability Regression Matrix
 
@@ -800,7 +864,7 @@ Standard v4 DoD; invariants §5.5 (no-real-side-effect, attempt-recorded, audit-
 | Cleanup | `git status` | clean | | | |
 
 #### Definition of Done
-Standard v4 DoD; smoke reproducible + fail-fast; CI append-only proven; portability fixed; M1/M2 behavior unchanged (refactor discipline evidence); lessons + completion; tracker. Outcome/CUJ `N/A`.
+Standard v4 DoD; smoke reproducible + fail-fast; CI append-only proven; portability fixed; M1/M2 behavior unchanged (refactor discipline evidence); lessons + completion; tracker; **AND the stage-level Front-to-End Outcome Test (oc-3) passes** — the engineer can run the whole assessment in one command front-to-end (outcome-first gate).
 
 #### Post-Flight
 - **ARCHITECTURE.md**: add smoke + CI guardrail. **README.md**: add `run-smoke.sh` as the reproducible entrypoint.
@@ -844,9 +908,9 @@ Standard v4 DoD; smoke reproducible + fail-fast; CI append-only proven; portabil
 | Data classification | `Internal` |
 | Proactive controls in play | OWASP `C7 Enforce Encoding/Output` discipline (raw-free output), `C9 Logging/Monitoring` (evidence trail) |
 | Abuse acceptance scenarios | `tm-agtrt-abuse-4` (report implies certification) and `tm-agtrt-abuse-6` (hard-benign auto-classified unsafe) — BDD rows |
-| Measurement deliverables | `N/A — not value-bearing (the external scorecard *product* is the `/slo-ideate` route, not this internal reporter)` |
-| Outcome Validation deliverables | `N/A — not value-bearing` |
-| Critical user journeys | `N/A — not value-bearing` |
+| Measurement deliverables | actionable-result signal (§5A): the engineer gets a complete evidence-level scorecard (JSON+MD) or a structured error — never a silent default. (The external scorecard *product* is now built as **M8**, not routed out.) |
+| Outcome Validation deliverables | **oc-4** front-to-end (full chain → evidence-level scorecard, `certification_claim:false`) — the headline engineer outcome; stage-level F2E Outcome Test below |
+| Critical user journeys | **cuj-1 Assess** (engineer gets an actionable scorecard) + **cuj-3 Regression-watch** (scorecard change surfaces a control regression) |
 
 #### Out of Scope / Must Not Do
 - No OpenCRE relation *quality* work (that is `/slo-research`, DW-003 — consume control ids read-only only). No L3/live evidence. No badge/score.
@@ -884,7 +948,20 @@ Standard v4 DoD; smoke reproducible + fail-fast; CI append-only proven; portabil
 | evidence-level closed enum | assertion violation | a result with `evidence_level:"L9"` | run reporter | rejected |
 
 #### Outcome Scenarios / Critical User Journeys
-`N/A — not value-bearing, see §5C.`
+- **oc-4 (M4 delivers it — the headline outcome)**: the assessing engineer runs the full chain and gets an evidence-level scorecard (JSON + Markdown) grading by trap class / AGT-AC control / evidence level (L0–L3), with a hard `certification_claim:false` — they can read which layer each scenario exercised and act on it.
+- **cuj-3 Regression-watch (stage-level)**: a control regression shows up as a changed scorecard / a newly-`executed` row; a hard-benign input is NOT mis-flagged.
+
+#### Front-to-End Outcome Test (stage-level)
+Drive **oc-4** as the engineer would, end-to-end via the full chain:
+
+| F2E step | Engineer action | Engineer-visible outcome (assert) |
+|---|---|---|
+| full run | `bash run-smoke.sh` (now ending in the reporter) | `scorecard_report.json` + `.md` produced; rows per trap-class / control / evidence-level; `certification_claim:false` |
+| no overclaim | scan the generated report | zero certification-language terms (tm-agtrt-abuse-4) |
+| no false positive | a hard-benign result | reported as must-not-block pass, not a failure (tm-agtrt-abuse-6) |
+| missing field | a result missing `evidence_level` | structured error, non-zero — no silent default |
+
+**Outcome gate:** M4 is not `done` until oc-4 passes front-to-end — the engineer gets an actionable, honest, raw-free scorecard.
 
 #### Core Capability Regression Matrix
 
@@ -925,7 +1002,7 @@ Standard v4 DoD; smoke reproducible + fail-fast; CI append-only proven; portabil
 | Cleanup | `git status` | clean | | | |
 
 #### Definition of Done
-Standard v4 DoD; `certification_claim:false` invariant + no-cert-term + hard-benign + missing-field encoded/tested; smoke chain extended without breaking prior steps; lessons + completion; tracker. Outcome/CUJ `N/A`.
+Standard v4 DoD; `certification_claim:false` invariant + no-cert-term + hard-benign + missing-field encoded/tested; smoke chain extended without breaking prior steps; lessons + completion; tracker; **AND the stage-level Front-to-End Outcome Test (oc-4) passes** — the engineer gets an actionable evidence-level scorecard front-to-end (outcome-first gate).
 
 #### Post-Flight
 - **ARCHITECTURE.md**: add reporter + controls. **README.md**: add report command + "evidence levels, not certification" note.
@@ -969,9 +1046,9 @@ Standard v4 DoD; `certification_claim:false` invariant + no-cert-term + hard-ben
 | Data classification | `Internal` (scans for would-be `Confidential`/raw leakage) |
 | Proactive controls in play | OWASP `C8 Protect Data Everywhere` (raw-free/secret scan), `C9 Logging/Monitoring`, `C2 Leverage Security Frameworks` (reuse repo hygiene patterns) |
 | Abuse acceptance scenarios | `tm-agtrt-abuse-1` (raw payload leaks to public artifact) and `tm-agtrt-abuse-2` (fixture hides agent-visible content → references the deferred fixtures ticket) — BDD rows |
-| Measurement deliverables | `N/A — not value-bearing` |
-| Outcome Validation deliverables | `N/A — not value-bearing` |
-| Critical user journeys | `N/A — not value-bearing` |
+| Measurement deliverables | actionable-result signal (§5A): the hygiene gate passes a clean tree or fails closed naming the artifact/line — the engineer knows it is safe to share |
+| Outcome Validation deliverables | **oc-5** front-to-end (all artifacts → raw-free gate → shareable, packaged benchmark) — stage-level F2E Outcome Test below |
+| Critical user journeys | **cuj-1 Assess** end-to-end, ending in a raw-free, shareable result |
 
 #### Out of Scope / Must Not Do
 - No upstream PR. No certification claim. No implementation of the deferred fixtures/Goose/OpenCRE work (only **file** them). No edits to `experiments/**`.
@@ -1008,7 +1085,19 @@ Standard v4 DoD; `certification_claim:false` invariant + no-cert-term + hard-ben
 | hidden-channel note | abuse `tm-agtrt-abuse-2` | the deferred fixtures ticket | inspect | PROMOTION.md notes the extractor-hides-content risk for the fixtures ticket |
 
 #### Outcome Scenarios / Critical User Journeys
-`N/A — not value-bearing, see §5C.`
+- **oc-5 (M5 delivers it)**: the assessing engineer runs the full chain ending in the raw-free hygiene gate and gets a benchmark they can trust to share — no raw payload/secret/PII in any artifact — plus a `PROMOTION.md` boundary doc.
+- **cuj-1 Assess (full, stage-level)**: the complete engineer journey — validate → harness → scorecard → hygiene — runs front-to-end, raw-free, in one command.
+
+#### Front-to-End Outcome Test (stage-level)
+Drive **oc-5** as the engineer would, end-to-end via the full chain ending in hygiene:
+
+| F2E step | Engineer action | Engineer-visible outcome (assert) |
+|---|---|---|
+| clean tree | `bash run-smoke.sh` (now ending in the hygiene gate) | exit 0; full chain green; hygiene passes on synthetic raw-free artifacts |
+| planted secret | run the gate over an artifact with a synthetic secret | fail closed; names the artifact/line (anti-vacuity; tm-agtrt-abuse-1) |
+| shareable | inspect outputs | `PROMOTION.md` present; no upstream PR opened, no certification claim |
+
+**Outcome gate:** M5 is not `done` until oc-5 passes front-to-end — the engineer has a raw-free, shareable, packaged benchmark.
 
 #### Core Capability Regression Matrix
 
@@ -1050,10 +1139,242 @@ Standard v4 DoD; `certification_claim:false` invariant + no-cert-term + hard-ben
 | Cleanup | `git status` | clean | | | |
 
 #### Definition of Done
-Standard v4 DoD; hygiene gate fail-closed + anti-vacuity proven; `PROMOTION.md` complete; DW-001..003 filed and the Detected Work Ledger fully disposed; no upstream PR / no certification; full chain green; lessons + completion; **tracker all `done`**. Outcome/CUJ `N/A`. Then suggest `/slo-critique` of the whole runbook before any `/slo-execute`.
+Standard v4 DoD; hygiene gate fail-closed + anti-vacuity proven; `PROMOTION.md` complete; DW-001 (content-injection fixtures) filed as an issue and that ledger row disposed — **DW-002 (Goose) / DW-003 (OpenCRE) / the scorecard product are now BUILT in M6/M7/M8, not filed-out**; no premature upstream PR / no certification; full chain green; lessons + completion; tracker M1–M5 `done`; **AND the stage-level Front-to-End Outcome Test (oc-5) passes** — the engineer has a raw-free, shareable, packaged benchmark front-to-end (outcome-first gate). M6–M8 then extend the benchmark (live adapter, control research, product); `/slo-critique` the whole runbook before any `/slo-execute`.
 
 #### Post-Flight
 - **ARCHITECTURE.md**: add hygiene gate + packaging. **README.md**: add "raw-free, evidence-level, not certified" benchmark summary + PROMOTION.md pointer.
+
+---
+
+### Milestone 6 — `Live Goose adapter — real-agent (L3) assessment in a hermetic sandbox (productionize s7, was DW-002)`
+
+**Goal**: `benchmarks/agent-redteam/adapters/goose/` — a CLI adapter that runs the scenarios through a **real Goose agent inside a hermetic, egress-blocked sandbox**, captures real tool-call traces into the SAME `tool_trace.schema.json`, and produces **`L3_live`** evidence — so the assessing engineer can assess **their actual agent**, not just the mock.
+
+**Context**: s7 proved a Goose adapter *contract* only (pseudocode, `status=not_run`, `L0_declared`). This is the first crossing from L2_mock to L3_live, so it is **security-critical**: a live agent can attempt real side effects, and the sandbox is the load-bearing control.
+
+**Carmack-style reliability goal**: Make invalid states unrepresentable (no prod credential reachable; network egress default-DENY) + bounded resources (turn/time/token caps) + no silent failure (a sandbox-escape or a missing trace fails closed — never a false-green L3).
+
+**Important design rule**: The live agent runs **only** in a hermetic sandbox — no production credentials, egress default-deny (allowlist only the engineer-configured model endpoint), filesystem confined to a throwaway tempdir, hard turn/time/token kill-switch. `evidence_level:L3_live` is tagged ONLY for actions actually executed under the sandbox; everything else stays L2/L0. Still raw-free (ids/aggregates, never raw payloads/real secrets). The default benchmark path (M1–M5) stays stdlib-only and mock/L2; the live deps live only under `adapters/goose/` and are never imported unless `--live` is passed.
+
+**Refactor budget**: `Minimal local refactor permitted in listed files only` (add an opt-in `--live` branch to `run-smoke.sh`).
+
+#### Contract Block
+
+| Field | Value |
+|---|---|
+| Inputs | validated scenarios (M1) + an engineer-supplied agent/runtime config (model endpoint, sandbox profile) |
+| Outputs | real tool-call traces (`tool_trace.schema.json`, `evidence_level:L3_live`) + an L3 scorecard via the M4 reporter |
+| Interfaces touched | NEW `adapters/goose/adapter.py`, `adapters/goose/sandbox.py`, `tests/test_goose_adapter.py`; EDIT `run-smoke.sh` (opt-in `--live`, default OFF) |
+| Files allowed to change | `benchmarks/agent-redteam/adapters/**`, `benchmarks/agent-redteam/tests/test_goose_adapter.py`, `benchmarks/agent-redteam/run-smoke.sh` |
+| New dependencies allowed | **EXCEPTION (this milestone's purpose)**: the Goose runtime + provider SDK — pinned, security/license-reviewed in this Contract Block, **isolated to `adapters/goose/`** and never imported by the default path. Core benchmark stays stdlib-only. |
+| Migration allowed | `no` |
+| Resource bounds | `max_turns`, `timeout_seconds`, `max_tokens` hard caps with a kill-switch; one agent per run |
+| Invariants/assertions required | egress default-deny proven (non-allowlisted host → blocked); no prod credential present (env scan, else refuse to start); caps enforced; real effects confined to the sandbox tempdir; `L3_live` tag only on sandbox-executed actions; raw-free |
+| Static analysis gates | `py_compile` + `git diff --check` + **sandbox-egress test** + **no-prod-credential scan** |
+| Forbidden shortcuts | no run against production systems; no real-credential targets; no L3 tag on un-exercised actions; no live deps in the default path |
+| Data classification | `Internal`; live traces scanned for would-be `Confidential` leakage |
+| Abuse acceptance scenarios | `tm-agtrt-abuse-3` escalates to "LIVE agent performs a real effect OUTSIDE the sandbox" (must be impossible) + NEW `tm-agtrt-abuse-7` "a live run leaks a real secret/raw payload into an L3 trace" |
+| Measurement deliverables | actionable-result signal (§5A): a live run yields honest L3 evidence or refuses to start / fails closed with a named reason |
+| Outcome Validation deliverables | **oc-6** front-to-end (engineer's real agent → sandboxed live run → L3 evidence) |
+| Critical user journeys | **cuj-1 Assess (L3 escalation)** — the engineer sees their real agent's behavior, safely |
+
+#### Out of Scope / Must Not Do
+- No assessment against production systems or real-credential targets. The default path stays mock/L2 — live is opt-in `--live` only. No upstream PR.
+
+#### BDD Acceptance Scenarios
+
+**Feature: live Goose adapter (sandboxed L3)**
+
+| Scenario | Category | Given | When | Then |
+|---|---|---|---|---|
+| live L3 traces | happy path | a sandboxed Goose agent + a scenario | run `--live` | ≥1 real trace `evidence_level:L3_live`; attempted/executed/blocked_at from REAL behavior |
+| egress blocked | abuse `tm-agtrt-abuse-3` | agent attempts a non-allowlisted network call | run | call fails; recorded `blocked_at`; no real external effect |
+| no prod creds | abuse | env scanned pre-run | run | refuses to start if a prod-looking credential is present (fail-closed) |
+| caps enforced | resource bound | a scenario that would loop | run | stops at turn/time/token cap; bounded; recorded |
+| raw-free L3 | abuse `tm-agtrt-abuse-7` | a live trace | scan | no raw payload / real secret (ids + aggregates only) |
+| default unchanged | compatibility | `run-smoke.sh` without `--live` | run | mock/L2 chain only; live deps not imported |
+
+#### Outcome Scenarios
+- **oc-6 (M6 delivers it)**: the assessing engineer points the benchmark at their REAL Goose agent (sandboxed) and gets honest `L3_live` evidence — which unsafe actions their actual agent attempted vs executed vs got blocked — replacing "the mock says" with "your agent did".
+
+#### Critical User Journeys
+- **cuj-1 Assess (L3 escalation)**: the engineer runs `--live` and safely (sandboxed, raw-free) sees their real agent's behavior.
+
+#### Front-to-End Outcome Test (stage-level)
+
+| F2E step | Engineer action | Engineer-visible outcome (assert) |
+|---|---|---|
+| live assess | `bash run-smoke.sh --live` (or `python adapters/goose/adapter.py --scenario ...`) with a sandbox profile | real `L3_live` traces produced; scorecard shows L3 rows for exercised scenarios |
+| sandbox proof | trigger an egress / real-effect attempt | blocked + recorded; nothing escapes the sandbox (no external call, no write outside the tempdir) |
+| opt-in safety | run without `--live` | mock/L2 path only; live deps not loaded |
+
+**Outcome gate:** M6 is not `done` until oc-6 passes front-to-end — the engineer gets honest L3 evidence about THEIR agent, with the sandbox proven to contain real effects.
+
+#### Core Capability Regression Matrix
+
+| Capability | Must still pass | Evidence path | Resolution |
+|---|---|---|---|
+| Full M1–M5 mock chain | yes | `run-smoke.sh` (no `--live`) green | pass |
+| Stdlib-only default path | yes | import-scan on the non-live path | pass |
+| Raw-free across L2+L3 | yes | hygiene gate over all traces | pass |
+
+#### Definition of Done
+Standard v4 DoD; sandbox egress-deny + no-prod-cred + caps + raw-free-L3 invariants encoded/tested; live deps isolated + security/license-reviewed; default mock path unchanged; **AND the stage-level Front-to-End Outcome Test (oc-6) passes** — the engineer gets honest, safely-sandboxed L3 evidence about their agent (outcome-first gate). Lessons + completion; tracker.
+
+#### Post-Flight
+- **ARCHITECTURE.md**: add the live adapter + sandbox boundary. **README.md**: add the `--live` opt-in + its safety contract.
+
+---
+
+### Milestone 7 — `OpenCRE relation research + relation-quality validator (productionize DW-003)`
+
+**Goal**: `benchmarks/agent-redteam/controls/opencre/` — verified AGT-AC ↔ OpenCRE relation mappings plus a `validate_relations.py` CLI that checks each relation claim against the OpenCRE source and **downgrades any unproven relation to `candidate`** — so the engineer's scorecard control mappings are honest (research-grade), not asserted.
+
+**Context**: s5 produced a 15-control AGT-AC/OpenCRE-compatible mapping, but the relation *quality* (`exact|broad|narrow|related|candidate`) was never verified (DW-003). This milestone does that research and makes it machine-checkable.
+
+**Carmack-style reliability goal**: Evidence over claims — a relation is only as strong as its verified backing; unverified ⇒ `candidate` (fail-honest).
+
+**Important design rule**: No relation may claim a stronger status than its evidence supports; the validator is **fail-honest** (unknown ⇒ `candidate`). OpenCRE data is consumed **read-only** from a pinned/documented snapshot; no live OpenCRE API dependency in the default path.
+
+**Refactor budget**: `Minimal local refactor permitted in listed files only` (the M4 reporter consumes the verified relations file).
+
+#### Contract Block
+
+| Field | Value |
+|---|---|
+| Inputs | AGT-AC control ids (M4 `controls/agt-ac.csv`) + a pinned OpenCRE relation snapshot |
+| Outputs | a verified relations file (`controls/opencre/relations.verified.csv`) + a relation-quality report + a short research write-up (methodology) |
+| Interfaces touched | NEW `controls/opencre/validate_relations.py`, `controls/opencre/relations.verified.csv`, `docs/slo/research/agtrt-opencre-relations.md`, `tests/test_relations.py` |
+| Files allowed to change | `benchmarks/agent-redteam/controls/opencre/**`, `benchmarks/agent-redteam/tests/test_relations.py`, `docs/slo/research/agtrt-opencre-relations.md`, the M4 reporter (consume verified relations) |
+| New dependencies allowed | `none` (stdlib `csv`/`json` over a committed snapshot; a live fetch is an optional, documented, non-default step) |
+| Migration allowed | `no` |
+| Invariants/assertions required | every relation carries a backing reference OR is `candidate`; no relation overclaims; report + write-up are raw-free; validator fail-honest on unknown |
+| Static analysis gates | `py_compile` + `git diff --check` + stdlib-only grep + **no-endorsement-term grep** over the report |
+| Forbidden shortcuts | no asserting `exact`/`broad` without backing; no implying official OpenCRE endorsement; no live API in the default path |
+| Abuse acceptance scenarios | `tm-agtrt-abuse-4` extends — "a relation implies official OpenCRE endorsement" must be impossible (relations stay candidate-honest) |
+| Measurement deliverables | actionable-result signal (§5A): the engineer can see exactly which mappings are evidence-backed vs `candidate` |
+| Outcome Validation deliverables | **oc-7** front-to-end (control ids + OpenCRE snapshot → verified, honest relation mappings) |
+| Critical user journeys | **cuj-3 (mapping honesty)** — no false authority in the control mappings |
+
+#### Out of Scope / Must Not Do
+- No upstream contribution to OpenCRE. No live API dependency in the default path. No relation strength beyond verified evidence.
+
+#### BDD Acceptance Scenarios
+
+**Feature: honest relation mapping**
+
+| Scenario | Category | Given | When | Then |
+|---|---|---|---|---|
+| verified relations | happy path | AGT-AC ids + OpenCRE snapshot | run validator | each relation labeled with status + backing; report raw-free |
+| downgrade unproven | assertion violation | a relation asserting `exact` without backing | run validator | downgraded to `candidate` / flagged (no false strength) |
+| no endorsement | abuse `tm-agtrt-abuse-4` | the generated report | scan | zero "OpenCRE-certified/official" terms |
+| unknown id | invalid input | a control id absent from the snapshot | run validator | reported as `candidate`/unmapped, not dropped |
+
+#### Outcome Scenarios
+- **oc-7 (M7 delivers it)**: the engineer's scorecard control mappings carry **honest, verified relation quality** — they can trust "scenario → AGT-AC-N relates (narrow) to OpenCRE-X" because it was checked; unverified relations are visibly `candidate`.
+
+#### Critical User Journeys
+- **cuj-3 (mapping honesty)**: the engineer runs the relation validator and sees exactly which mappings are evidence-backed vs `candidate` — no false authority.
+
+#### Front-to-End Outcome Test (stage-level)
+
+| F2E step | Engineer action | Engineer-visible outcome (assert) |
+|---|---|---|
+| relation check | `python benchmarks/agent-redteam/controls/opencre/validate_relations.py` | report lists each relation with status + backing; unverified ⇒ `candidate` |
+| no overclaim | a relation asserting `exact` without backing | downgraded/flagged; zero endorsement terms |
+| integrated | an M4 scorecard run consuming the verified relations | scorecard mappings are honest end-to-end |
+
+**Outcome gate:** M7 is not `done` until oc-7 passes front-to-end — the engineer's control mappings are honest (verified, candidate-where-unproven).
+
+#### Core Capability Regression Matrix
+
+| Capability | Must still pass | Evidence path | Resolution |
+|---|---|---|---|
+| M4 scorecard still green | yes | `run-smoke.sh` green with verified relations | pass |
+| Raw-free | yes | hygiene gate over report + write-up | pass |
+
+#### Definition of Done
+Standard v4 DoD; relation-honesty + no-endorsement-overclaim invariants encoded/tested; OpenCRE consumed read-only; research methodology write-up committed; **AND the stage-level Front-to-End Outcome Test (oc-7) passes** — the engineer's control mappings are honest front-to-end (outcome-first gate). Lessons + completion; tracker.
+
+#### Post-Flight
+- **ARCHITECTURE.md**: add the relation validator + verified mappings. **README.md**: add the "candidate-honest relations" note.
+
+---
+
+### Milestone 8 — `Shareable evidence scorecard product (productionize the /slo-ideate wedge)`
+
+**Goal**: `benchmarks/agent-redteam/product/` — a **shareable, presentable scorecard** the assessing engineer can hand to stakeholders: a self-contained report (Markdown + static HTML, no server) generated from a run, rendering the evidence-level results honestly with a hard `certification_claim:false` disclaimer — the external-facing wedge built on M4's internal reporter.
+
+**Context**: the evidence-level scorecard *product* was curated `promote_to_idea`; the founder has elected to build it. It is the engineer's "show my stakeholders" surface — it must present evidence without ever drifting into a certification/badge claim. This is the milestone where the §5A Measurement Contract is most real: success = a stakeholder reads it and correctly understands "evidence at level L_n, not a certification".
+
+**Carmack-style reliability goal**: Make invalid states unrepresentable (no single "score"/badge; `certification_claim:false` literal rendered) + raw-free, self-contained output.
+
+**Important design rule**: The product renders **evidence levels, never a single mystery score or a pass/cert badge**; every rendered artifact carries the no-certification disclaimer prominently; output is raw-free, self-contained (opens offline, no external calls, no telemetry).
+
+**Refactor budget**: `No refactor permitted beyond direct implementation` (greenfield product layer over the M4 JSON).
+
+#### Contract Block
+
+| Field | Value |
+|---|---|
+| Inputs | the M4 `scorecard_report.json` |
+| Outputs | `product/out/scorecard.html` (static, offline) + `product/out/scorecard.md` (shareable); `certification_claim:false` rendered prominently |
+| Interfaces touched | NEW `product/render.py`, `product/templates/*`, `tests/test_product.py` |
+| Files allowed to change | `benchmarks/agent-redteam/product/**`, `benchmarks/agent-redteam/tests/test_product.py` |
+| New dependencies allowed | `none` (stdlib string templating; no JS framework, no server) |
+| Migration allowed | `no` |
+| Invariants/assertions required | rendered artifact carries `certification_claim:false` + zero certification-language; no single mystery score/badge; raw-free; self-contained (renders with no network) |
+| Static analysis gates | `py_compile` + `git diff --check` + **no-certification-term grep over rendered output** + **no-external-reference grep** (no remote scripts/styles) |
+| Forbidden shortcuts | no certification/badge framing; no single aggregate "score"; no external CDN/script; no telemetry |
+| Data classification | `Internal`/shareable; output scanned raw-free before share |
+| Abuse acceptance scenarios | `tm-agtrt-abuse-4` (the **product** implies certification) — the headline risk; the product MUST visibly disclaim |
+| Measurement deliverables | **stakeholder-comprehension signal (§5A)**: the rendered scorecard makes "evidence level L_n, not certification" unambiguous (disclaimer present + no badge) |
+| Outcome Validation deliverables | **oc-8** front-to-end (a run → a shareable, honest scorecard artifact) |
+| Critical user journeys | **cuj-4 Share** — the engineer exports + shares a presentable scorecard |
+
+#### Out of Scope / Must Not Do
+- No hosted service / server / telemetry. No certification or single-score framing. No external CDN/script. No upstream PR.
+
+#### BDD Acceptance Scenarios
+
+**Feature: shareable scorecard product**
+
+| Scenario | Category | Given | When | Then |
+|---|---|---|---|---|
+| product generated | happy path | an M4 scorecard JSON | `python product/render.py ...` | `scorecard.html` + `.md` produced; evidence-level rows rendered |
+| no certification | abuse `tm-agtrt-abuse-4` | the rendered artifact | scan | `certification_claim:false` shown; zero cert terms; no badge/single-score |
+| offline + raw-free | compatibility | open the HTML with no network | render | renders fully; no external call; no raw payload/secret |
+| empty run | empty state | a scorecard with zero results | render | empty-but-valid, documented; still carries the disclaimer |
+
+#### Outcome Scenarios
+- **oc-8 (M8 delivers it)**: the engineer generates a shareable scorecard (HTML + MD) from a run and hands it to a stakeholder, who correctly reads it as **honest evidence-level results, not a certification** — the product wedge.
+
+#### Critical User Journeys
+- **cuj-4 Share**: the engineer exports a presentable scorecard and shares it; it renders offline, raw-free, with the no-certification disclaimer prominent.
+
+#### Front-to-End Outcome Test (stage-level)
+
+| F2E step | Engineer action | Engineer-visible outcome (assert) |
+|---|---|---|
+| generate | `python benchmarks/agent-redteam/product/render.py scorecard_report.json -o out/` | `out/scorecard.html` + `.md` produced; renders evidence-level rows |
+| no overclaim | open/scan the rendered artifact | `certification_claim:false` shown; zero cert terms; no single badge/score (tm-agtrt-abuse-4) |
+| offline + raw-free | open the HTML with no network | renders fully; no external calls; no raw payload/secret |
+
+**Outcome gate:** M8 is not `done` until oc-8 passes front-to-end — the engineer has a shareable, honest, raw-free scorecard product.
+
+#### Core Capability Regression Matrix
+
+| Capability | Must still pass | Evidence path | Resolution |
+|---|---|---|---|
+| M4 internal reporter | yes | `run-smoke.sh` green | pass |
+| Raw-free output | yes | hygiene gate over `product/out/**` | pass |
+| No-overclaim across reporter + product | yes | no-cert-term grep on both | pass |
+
+#### Definition of Done
+Standard v4 DoD; no-certification + no-mystery-score + offline + raw-free invariants encoded/tested; §5A stakeholder-comprehension deliverable recorded; **AND the stage-level Front-to-End Outcome Test (oc-8) passes** — the engineer has a shareable, honest scorecard product front-to-end (outcome-first gate). Lessons + completion; **tracker all `done`** (M8 is the terminal milestone). Then `/slo-critique` the whole 8-milestone runbook before any `/slo-execute`.
+
+#### Post-Flight
+- **ARCHITECTURE.md**: add the product render layer. **README.md**: add the shareable-scorecard pointer + "evidence, not certification" disclaimer.
 
 ---
 
@@ -1065,7 +1386,10 @@ Standard v4 DoD; hygiene gate fail-closed + anti-vacuity proven; `PROMOTION.md` 
 | 2 | harness + trace schema | harness command | trace/scratch outputs | agtrt-m2 |
 | 3 | smoke + CI guardrail | `run-smoke.sh` entrypoint | — | agtrt-m3 |
 | 4 | reporter + controls | report command + evidence-levels note | report outputs | agtrt-m4 |
-| 5 | hygiene gate + packaging | raw-free/evidence-level summary + PROMOTION.md | — | agtrt-m5; PROMOTION.md; GH issues DW-001..003 |
+| 5 | hygiene gate + packaging | raw-free/evidence-level summary + PROMOTION.md | — | agtrt-m5; PROMOTION.md; GH issue DW-001 (fixtures) |
+| 6 | live Goose adapter + sandbox boundary | `--live` opt-in + safety contract | `adapters/goose` scratch | agtrt-m6 |
+| 7 | relation validator + verified mappings | candidate-honest relations note | — | agtrt-m7; research write-up |
+| 8 | product render layer | shareable scorecard + "evidence, not certification" | `product/out` outputs | agtrt-m8 |
 
 ---
 
