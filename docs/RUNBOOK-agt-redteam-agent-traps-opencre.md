@@ -71,7 +71,7 @@ Single source of truth for progress. Update as each milestone completes.
 | 5 | Upstream-ready docs + raw-free hygiene gate + PR-boundary packaging (productionize s8) | `done` | 2026-06-19 | 2026-06-19 | `docs/slo/lessons/agtrt-m5.md` | oc-5 green; 46 tests; hygiene gate + PROMOTION.md; DW-001 → issue #29 |
 | 6 | Live Goose adapter — real-agent (L3) assessment in a hermetic sandbox (productionize s7) | `not_started` | | | | |
 | 7 | OpenCRE relation research + relation-quality validator | `done` | 2026-06-19 | 2026-06-19 | `docs/slo/lessons/agtrt-m7.md` | oc-7 green; 47 tests; fail-honest validator (15 candidate, 9 downgraded) |
-| 8 | Shareable evidence scorecard product (productionize the scorecard wedge) | `not_started` | | | | |
+| 8 | Shareable evidence scorecard product (productionize the scorecard wedge) | `done` | 2026-06-19 | 2026-06-19 | `docs/slo/lessons/agtrt-m8.md` | oc-8 green; 46 tests; offline HTML+MD, HTML-escaped, cert=false |
 
 <!-- Status values: not_started | in_progress | blocked | done -->
 <!-- Honest exit states (optional): human_review_required | blocked_by_operator | blocked_by_upstream | issue_filed | accepted_risk -->
