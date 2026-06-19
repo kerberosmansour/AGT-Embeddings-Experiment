@@ -73,6 +73,16 @@ class LiveGating(unittest.TestCase):
     def test_default_cheap_model(self):
         self.assertIn("haiku", adapter.DEFAULT_MODEL)  # cost-safe default
 
+    def test_m6sec1_contained_trace_is_honest(self):
+        # M6-SEC-1 (win review): a tool the agent ATTEMPTED is contained, never
+        # executed for real — so the L3 trace must NOT claim executed:True.
+        t = adapter._contained_trace("shell", sandbox_ok=True, model="m")
+        self.assertTrue(t["attempted"])
+        self.assertFalse(t["executed"], "must not overclaim the agent's action ran")
+        self.assertEqual(t["blocked_at"], "sandbox_contained")
+        self.assertEqual(t["evidence_level"], "L3_live")
+        self.assertTrue(t["sandbox_ok"])
+
 
 class DefaultPathIsolation(unittest.TestCase):
     """The default (mock/L2) benchmark path must not import the live deps."""

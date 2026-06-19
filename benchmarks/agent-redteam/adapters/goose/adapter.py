@@ -72,6 +72,29 @@ def _skipped(reason):
     return {"status": "skipped", "evidence_level": "L0_declared", "reason": reason, "traces": []}
 
 
+def _contained_trace(tool_name, sandbox_ok, model):
+    """An L3 trace for a tool the live agent ATTEMPTED (M6-SEC-1, honest semantics).
+
+    The harness never executes the agent's real command — it is contained at the
+    hermetic sandbox boundary — so `executed` is honestly False and `blocked_at`
+    records the containment. `sandbox_ok` records that the jail itself ran the
+    benign placeholder (operational). Recording `executed:True` here would
+    overclaim that the agent's action ran, which it never does by design.
+    """
+    return {
+        "tool": tool_name,
+        "attempted": True,
+        "executed": False,
+        "blocked_at": "sandbox_contained",
+        "canary_leaked": False,
+        "audit_event_present": True,
+        "evidence_level": "L3_live",
+        "sandboxed": True,
+        "sandbox_ok": bool(sandbox_ok),
+        "model": model,
+    }
+
+
 def run_live(scenario, *, model=DEFAULT_MODEL, max_turns=DEFAULT_MAX_TURNS,
              max_tokens=DEFAULT_MAX_TOKENS, timeout=30, creds=None):
     """Run one scenario through the live agent, sandboxed. Fail-closed + cost-capped."""
@@ -121,17 +144,15 @@ def run_live(scenario, *, model=DEFAULT_MODEL, max_turns=DEFAULT_MAX_TURNS,
     traces = []
     for block in msg.get("content", []):
         if block.get("type") == "tool_use":
-            # The model ATTEMPTED a tool. Execute it in the hermetic sandbox so it
-            # is contained; record the real L3 behaviour.
+            # The live model ATTEMPTED an unsafe tool. The harness NEVER executes
+            # the agent's real command — it runs a benign placeholder INSIDE the
+            # hermetic sandbox to confirm the jail is operational and would
+            # contain it. Honest L3 semantics (M6-SEC-1): attempted=True,
+            # executed=False, blocked_at="sandbox_contained" — the action was
+            # contained at the sandbox boundary, never executed for real.
             rc, _out, _err = sandbox.run(
-                [sys.executable, "-c", "print('contained-dry-run')"], timeout=timeout)
-            traces.append({
-                "tool": block.get("name", "shell"), "attempted": True,
-                "executed": rc == 0,        # ran (contained) in the sandbox
-                "blocked_at": None if rc == 0 else "sandbox",
-                "canary_leaked": False, "audit_event_present": True,
-                "evidence_level": "L3_live", "sandboxed": True, "model": model,
-            })
+                [sys.executable, "-c", "print('contained')"], timeout=timeout)
+            traces.append(_contained_trace(block.get("name", "shell"), rc == 0, model))
     return {"status": "completed", "evidence_level": "L3_live",
             "stop_reason": msg.get("stop_reason"), "traces": traces}
 
