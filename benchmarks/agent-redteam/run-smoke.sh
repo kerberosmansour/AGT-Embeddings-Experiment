@@ -11,8 +11,22 @@ set -euo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-PY="${PYTHON:-python3}"
-command -v "$PY" >/dev/null 2>&1 || PY=python
+# Portable interpreter pick (DW-004). A `command -v` check is NOT enough on
+# Windows: `python3` there is a Store-alias that PASSES `command -v` but does not
+# actually run Python (it prints an install hint and exits non-zero), so the old
+# `command -v "$PY" || PY=python` never fell back and the smoke failed (exit 49)
+# under Git-Bash. Probe by ACTUALLY RUNNING each candidate; `PYTHON` overrides.
+pick_python() {
+  if [ -n "${PYTHON:-}" ]; then printf '%s\n' "$PYTHON"; return 0; fi
+  local c
+  for c in python3 python; do
+    if command -v "$c" >/dev/null 2>&1 && "$c" -c 'import sys' >/dev/null 2>&1; then
+      printf '%s\n' "$c"; return 0
+    fi
+  done
+  return 1
+}
+PY="$(pick_python)" || { echo "[smoke] FAIL: no working python interpreter found" >&2; exit 1; }
 
 SCEN_DIR="${AGTRT_SCENARIOS:-$HERE/scenarios}"
 scenarios=("$SCEN_DIR"/*.json)
