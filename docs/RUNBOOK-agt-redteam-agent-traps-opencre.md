@@ -6,14 +6,14 @@
 > **How to use**: Work milestones sequentially. Complete the Global Entry/Exit Protocols around each. Never skip ahead. Treat this document as an execution contract.
 > **Prerequisite reading**: [EXPERIMENT.md](slo/experiments/agt-redteam-agent-traps-opencre/EXPERIMENT.md) (the authoritative Experiment Book — §6 PrecisionModel carries the falsifiable thresholds; §10 is the handoff seed this runbook implements), [handoff.md](slo/experiments/agt-redteam-agent-traps-opencre/handoff.md), [demo.md](slo/experiments/agt-redteam-agent-traps-opencre/demo.md), [README.md](../README.md), `.github/workflows/readiness.yml`.
 
-> **Provenance**: Authored by `/slo-plan` from the `promote_to_runbook` handoff. The scratch evidence (`experiments/agt-redteam-agent-traps-opencre/s1..s8`) is the seed material; this runbook re-implements that evidence as durable benchmark code under `benchmarks/agent-redteam/`. **Authored autonomously on a founder-greenlit loop; milestone contracts are flagged for `/slo-critique` before `/slo-execute` runs any milestone** (substitutes for the normal per-milestone live confirmation).
+> **Provenance**: Authored by `/slo-plan` from the `promote_to_runbook` handoff. The scratch evidence (`experiments/agt-redteam-agent-traps-opencre/s1..s8`) is the seed material; this runbook re-implements that evidence as durable benchmark code under `benchmarks/agent-redteam/`. **Authored autonomously on a founder-greenlit loop; the outcome-first contract and M6-M8 expansion were critiqued before milestone execution, and M1/M2 are now merged on this branch.**
 
 ---
 
 ## 0. How To Use This Template
 
 1. Fill Runbook Metadata, Architecture, and Milestone Plan before implementation (done — this document).
-2. Work milestones sequentially (M1 → M5).
+2. Work milestones sequentially (M1 → M8).
 3. Before each milestone, complete the Global Entry Protocol (§7).
 4. During implementation, follow §4 (Carmack-Style Best Practices) and the milestone Contract Block literally.
 5. After each milestone, complete the Global Exit Protocol (§8) and fill the Evidence Log.
@@ -64,9 +64,9 @@ Single source of truth for progress. Update as each milestone completes.
 
 | # | Milestone | Status | Started | Completed | Lessons File | Completion Summary |
 |---|---|---|---|---|---|---|
-| 1 | Scenario schema + validator (productionize s1) | `done` | 2026-06-19 | 2026-06-19 | docs/slo/lessons/agtrt-m1.md | oc-1 green; 16 tests; PR #24 merged |
-| 2 | Mock behavioural harness + trace schema (productionize s4) | `done` | 2026-06-19 | 2026-06-19 | docs/slo/lessons/agtrt-m2.md | oc-2 green; 25 tests; PR #25 merged |
-| 3 | Agent-Traps deterministic smoke suite + CI integration | `done` | 2026-06-19 | 2026-06-19 | docs/slo/lessons/agtrt-m3.md | oc-3 green; 30 tests; one-command smoke + appended CI job |
+| 1 | Scenario schema + validator (productionize s1) | `done` | 2026-06-19 | 2026-06-19 | `docs/slo/lessons/agtrt-m1.md` | `docs/slo/completion/agtrt-m1.md` |
+| 2 | Mock behavioural harness + trace schema (productionize s4) | `done` | 2026-06-19 | 2026-06-19 | `docs/slo/lessons/agtrt-m2.md` | `docs/slo/completion/agtrt-m2.md` |
+| 3 | Agent-Traps deterministic smoke suite + CI integration | `done` | 2026-06-19 | 2026-06-19 | `docs/slo/lessons/agtrt-m3.md` | `docs/slo/completion/agtrt-m3.md` |
 | 4 | Control-linked evidence-level reporter (productionize s6) | `not_started` | | | | |
 | 5 | Upstream-ready docs + raw-free hygiene gate + PR-boundary packaging (productionize s8) | `not_started` | | | | |
 | 6 | Live Goose adapter — real-agent (L3) assessment in a hermetic sandbox (productionize s7) | `not_started` | | | | |
@@ -231,7 +231,7 @@ The benchmark must produce **honest, reproducible, raw-free evidence** about whi
 
 ## 5B. Secure Value and Security Contract
 
-**Required** — this runbook is **security-relevant**: it models AI-agent red-team flows, simulates dangerous tools (shell/email/memory/registry), and produces artifacts intended for a public/upstream boundary and CI/CD. (It is not "value-bearing" in the user-facing sense, so §5A/§5C are N/A, but the security contract applies.)
+**Required** — this runbook is **security-relevant** and value-bearing for the assessing engineer: it models AI-agent red-team flows, simulates dangerous tools (shell/email/memory/registry), produces artifacts intended for a public/upstream boundary and CI/CD, and gives the engineer actionable front-to-end evidence. Therefore §5A, §5B, and §5C all apply.
 
 ### Value Wedge
 
@@ -264,7 +264,7 @@ The benchmark must produce **honest, reproducible, raw-free evidence** about whi
 | Actors | Benchmark maintainer (trusted); contributor of new scenarios (semi-trusted); downstream reader of reports (trusted-consumer) |
 | Trust boundaries | scenario file → validator; generated artifact → public/upstream boundary; mock tool → (never) real OS/network |
 | Entry points | scenario JSON files; new fixtures; CI job input |
-| Abuse cases | `tm-agtrt-abuse-1`: raw attack payload smuggled into a scenario/report leaks to a public artifact. `tm-agtrt-abuse-2`: a fixture/extractor hides agent-visible content, producing false comfort. `tm-agtrt-abuse-3`: a mock tool is made to perform a real side effect (subprocess/network/file-outside-scratch). `tm-agtrt-abuse-4`: a report asserts or implies official OWASP/OpenCRE certification. `tm-agtrt-abuse-5`: an unsafe attempt blocked at the boundary disappears from evidence (false negative). `tm-agtrt-abuse-6`: a hard-benign input is auto-classified unsafe (false positive). |
+| Abuse cases | `tm-agtrt-abuse-1`: raw attack payload smuggled into a scenario/report leaks to a public artifact. `tm-agtrt-abuse-2`: a fixture/extractor hides agent-visible content, producing false comfort. `tm-agtrt-abuse-3`: a mock tool is made to perform a real side effect (subprocess/network/file-outside-scratch). `tm-agtrt-abuse-4`: a report asserts or implies official OWASP/OpenCRE certification. `tm-agtrt-abuse-5`: an unsafe attempt blocked at the boundary disappears from evidence (false negative). `tm-agtrt-abuse-6`: a hard-benign input is auto-classified unsafe (false positive). `tm-agtrt-abuse-7` (M6): a live run leaks a real secret/raw payload into an L3 trace. `tm-agtrt-abuse-8` (M8): a crafted scenario/control field renders as executable HTML in the shareable scorecard — stored XSS (CWE-79). `tm-agtrt-abuse-9` (M6): a live agent escapes the OS sandbox / reaches cloud-metadata `169.254.169.254` to exfiltrate host credentials — sandbox-escape + SSRF (CWE-918). |
 | Required controls | Closed enums (§4.5); raw-free hygiene gate (M5); stdlib-only import gate; `certification_claim:false` literal; attempted-recorded-even-if-blocked invariant; hard-benign must-not-block cases. |
 | Residual risks | Mock evidence is L2 only — it never proves live-agent safety (owner: runbook; review-by: before any L3/Goose ticket starts). Heuristic raw-free scan can miss novel encodings (owner: M5; mitigated by synthetic-only discipline + review). |
 
@@ -292,7 +292,7 @@ The benchmark must produce **honest, reproducible, raw-free evidence** about whi
 | DW-001 | Content-injection fixture pack deferred from this runbook (curated `promote_to_ticket`) | low | file_github_issue | win/mac | M5 files `/slo-ticket-plan` issue | M5 |
 | DW-002 | Goose live adapter — **now BUILT as M6** (founder pulled it in; sandboxed L3) | low | built_in_milestone | win/mac | M6 (was: file issue) | M6 |
 | DW-003 | OpenCRE relation quality — **now BUILT as M7** (founder pulled it in; relation-quality validator) | med | built_in_milestone | win/mac | M7 (was: file issue) | M7 |
-| DW-004 | `python3` vs `python` + shell-glob portability (Windows) — Win audit Finding 2 | low | fix_now | win | M1 smoke script uses portable invocation + documents Git-Bash/`python` | M1 |
+| DW-004 | `python3` vs `python` + shell-glob portability (Windows) — Win audit Finding 2 | low | fix_now | win | split: M1 validator CLI takes explicit path args (no bare glob) — DONE in M1; M3 `run-smoke.sh` uses a portable invocation (`python`, Git-Bash-documented) | M1 (validator) + M3 (smoke script) |
 
 ---
 
@@ -313,17 +313,21 @@ The benchmark must produce **honest, reproducible, raw-free evidence** about whi
 | oc-3 | "Run the whole assessment in one command" | scenarios → `run-smoke.sh` (validate → harness → report) → single pass/fail + summaries | script | M3 |
 | oc-4 | "Get an evidence-level scorecard I can act on" | traces + controls → reporter → JSON+Markdown scorecard by trap-class / AGT-AC control / evidence-level, `certification_claim:false` | CLI | M4 |
 | oc-5 | "Trust it's safe to share / upstream" | all artifacts → raw-free hygiene gate → pass (no raw payload/secret/PII) + `PROMOTION.md` boundary | CLI | M5 |
+| oc-6 | "Assess my real Goose agent safely" | engineer-configured Goose agent → hermetic sandbox live run → `L3_live` traces with containment proof | CLI + sandbox | M6 |
+| oc-7 | "Trust the control relation quality" | AGT-AC controls + OpenCRE snapshot → relation validator → verified/candidate relation report with provenance | CLI + research artifact | M7 |
+| oc-8 | "Share an honest scorecard" | run results → static Markdown/HTML scorecard → offline, raw-free, no-certification stakeholder artifact | CLI + generated file | M8 |
 
 ### Critical User Journeys (assessing engineer)
 
 - **cuj-1 Assess**: the engineer points the benchmark at a scenario set and gets back a complete, raw-free evidence report — which layer each scenario hit, and whether unsafe actions were blocked — in one command, with zero real side effect.
 - **cuj-2 Extend**: the engineer adds a new scenario; the validator accepts it, or rejects it with a clear, actionable reason, without hand-editing internals.
 - **cuj-3 Regression-watch**: a weakening in the agent's controls surfaces as a changed scorecard / a newly-`executed` unsafe action — the benchmark *surfaces* the regression instead of hiding it.
+- **cuj-4 Share**: the engineer exports a presentable static scorecard and shares it; it renders offline, raw-free, and prominently states `certification_claim:false`.
 
 ### How the outcome is validated
 
 - **Top-level front-to-end test** — `run-smoke.sh` run exactly as the engineer would run it (the real validate→harness→report→hygiene chain, not mocks of itself), asserting observable engineer-facing outputs: trap-class coverage counts, ≥4 blocked-but-recorded unsafe attempts, `certification_claim:false`, and a raw-free pass.
-- **Stage-level front-to-end outcome test in EVERY milestone (M1..M5)** — each milestone adds/extends a `#### Front-to-End Outcome Test (stage-level)` that drives the engineer-facing capability available *so far* from its CLI/script entrypoint, end-to-end, and asserts the engineer-visible result.
+- **Stage-level front-to-end outcome test in EVERY milestone (M1..M8)** — each milestone adds/extends a `#### Front-to-End Outcome Test (stage-level)` that drives the engineer-facing capability available *so far* from its CLI/script entrypoint, end-to-end, and asserts the engineer-visible result.
 - **Outcome-first DoD (founder law #1634)**: a milestone is DONE only when its stage-level front-to-end outcome works for the assessing engineer **AND** all prior stages' front-to-end outcomes still pass — never on unit/component green alone.
 
 ---
@@ -1011,13 +1015,13 @@ Standard v4 DoD; `certification_claim:false` invariant + no-cert-term + hard-ben
 
 ### Milestone 5 — `Upstream-ready docs + raw-free hygiene gate + PR-boundary packaging (productionize s8)`
 
-**Goal**: A raw-free hygiene gate (test + smoke step) over all generated/committed benchmark artifacts, a `benchmarks/agent-redteam/PROMOTION.md` PR-boundary doc (from s8), and the four deferred routes filed as GitHub issues (DW-001 fixtures, DW-002 Goose, DW-003 OpenCRE research, DW-004 already fixed) — so the benchmark is upstream-ready without a monolithic PR and without leaking raw content.
+**Goal**: A raw-free hygiene gate (test + smoke step) over all generated/committed benchmark artifacts, a `benchmarks/agent-redteam/PROMOTION.md` PR-boundary doc (from s8), and the one remaining deferred route (DW-001 content-fixtures) filed as a GitHub issue — so the benchmark is upstream-ready without a monolithic PR and without leaking raw content. (DW-002 Goose and DW-003 OpenCRE are now **BUILT in M6/M7** per the founder pull-in; DW-004 portability is fixed across M1+M3 — none of these are filed out.)
 
 **Context**: s8 proved a clean promotion split. This milestone makes the hygiene enforceable and files the deferred work, closing the runbook with the experiment's safety posture intact (raw-free, no certification, no monolithic upstream PR).
 
 **Carmack-style reliability goal**: No silent failure — the hygiene gate fails closed on any raw-payload/secret heuristic hit; the Detected Work Ledger is fully disposed.
 
-**Important design rule**: Nothing here opens an upstream PR or claims certification. The hygiene gate is the last line: any generated artifact containing a raw attack payload, secret, or PII heuristic hit fails the build.
+**Important design rule**: Nothing here opens an upstream PR or claims certification. The hygiene gate is the last line: any generated artifact containing a raw attack payload, secret, or PII heuristic hit fails the build. The gate scans **all committed AND generated artifacts under `benchmarks/agent-redteam/**` — explicitly including the committed `scenarios/*.json` and `controls/*.csv`, not only generated reports** (tm-agtrt-abuse-1 is a payload smuggled into a committed scenario, so the scan must cover scenario inputs).
 
 **Refactor budget**: `Minimal local refactor permitted in listed files only` (add hygiene step to `run-smoke.sh`).
 
@@ -1026,7 +1030,7 @@ Standard v4 DoD; `certification_claim:false` invariant + no-cert-term + hard-ben
 | Field | Value |
 |---|---|
 | Inputs | all committed/generated benchmark artifacts |
-| Outputs | hygiene gate pass/fail; `PROMOTION.md`; filed GH issues for DW-001..003 |
+| Outputs | hygiene gate pass/fail; `PROMOTION.md`; filed GH issue for DW-001 (content-fixtures) only (DW-002/003 are built in M6/M7) |
 | Interfaces touched | NEW `benchmarks/agent-redteam/hygiene/raw_free_scan.py`, `PROMOTION.md`, `tests/test_hygiene.py`; EDIT `run-smoke.sh` (add hygiene step) |
 | Files allowed to change | `benchmarks/agent-redteam/hygiene/**`, `benchmarks/agent-redteam/PROMOTION.md`, `benchmarks/agent-redteam/tests/test_hygiene.py`, `benchmarks/agent-redteam/run-smoke.sh` |
 | Files to read before changing anything | `experiments/.../s8-promotion/*` (read-only seed); all `benchmarks/agent-redteam/**` artifacts to scan |
@@ -1067,7 +1071,7 @@ Standard v4 DoD; `certification_claim:false` invariant + no-cert-term + hard-ben
 2. Implement `raw_free_scan.py` (regex heuristics: secret-like, raw-payload markers, PII shapes), fail-closed.
 3. Author `PROMOTION.md` from s8 (schema→harness→smoke→reporter sequence; deferred routes; "no monolithic PR, no certification").
 4. Append hygiene step to `run-smoke.sh`; re-run M3/M4 smoke tests.
-5. File GH issues: DW-001 (content-fixtures `/slo-ticket-plan`), DW-002 (Goose `/slo-ticket-plan`), DW-003 (OpenCRE `/slo-research`); link them in `PROMOTION.md`; mark the Detected Work Ledger disposed.
+5. File GH issue: DW-001 (content-fixtures `/slo-ticket-plan`); link it in `PROMOTION.md`; mark the Detected Work Ledger disposed. (DW-002 Goose → built in M6, DW-003 OpenCRE → built in M7, DW-004 portability → fixed in M1+M3 — none filed out.)
 6. Static gates; run full smoke (now ending in hygiene).
 7. Self-Review; lessons + completion; tracker → all done.
 
@@ -1124,7 +1128,7 @@ Drive **oc-5** as the engineer would, end-to-end via the full chain ending in hy
 #### Smoke Tests
 - [ ] `python benchmarks/agent-redteam/hygiene/raw_free_scan.py benchmarks/agent-redteam` → pass
 - [ ] full `run-smoke.sh` green (ends in hygiene)
-- [ ] GH issues DW-001..003 filed + linked; `git status` clean
+- [ ] GH issue DW-001 (content-fixtures) filed + linked; `git status` clean
 
 #### Evidence Log
 | Step | Command / Check | Expected | Actual | Pass/Fail | Notes |
@@ -1135,11 +1139,11 @@ Drive **oc-5** as the engineer would, end-to-end via the full chain ending in hy
 | Anti-vacuity | planted secret | non-zero exit | | | |
 | Static | `py_compile` + `git diff --check` | clean | | | |
 | Full smoke | run-smoke.sh | exit 0 | | | |
-| Issues filed | `gh issue list` | DW-001..003 present | | | |
+| Issue filed | `gh issue list` | DW-001 present | | | |
 | Cleanup | `git status` | clean | | | |
 
 #### Definition of Done
-Standard v4 DoD; hygiene gate fail-closed + anti-vacuity proven; `PROMOTION.md` complete; DW-001 (content-injection fixtures) filed as an issue and that ledger row disposed — **DW-002 (Goose) / DW-003 (OpenCRE) / the scorecard product are now BUILT in M6/M7/M8, not filed-out**; no premature upstream PR / no certification; full chain green; lessons + completion; tracker M1–M5 `done`; **AND the stage-level Front-to-End Outcome Test (oc-5) passes** — the engineer has a raw-free, shareable, packaged benchmark front-to-end (outcome-first gate). M6–M8 then extend the benchmark (live adapter, control research, product); `/slo-critique` the whole runbook before any `/slo-execute`.
+Standard v4 DoD; hygiene gate fail-closed + anti-vacuity proven; `PROMOTION.md` complete; DW-001 (content-injection fixtures) filed as an issue and that ledger row disposed — **DW-002 (Goose) / DW-003 (OpenCRE) / the scorecard product are now BUILT in M6/M7/M8, not filed-out**; no premature upstream PR / no certification; full chain green; lessons + completion; tracker M1–M5 `done`; **AND the stage-level Front-to-End Outcome Test (oc-5) passes** — the engineer has a raw-free, shareable, packaged benchmark front-to-end (outcome-first gate). Before starting M6, refresh `/slo-critique` only if M1–M5 execution changed the M6–M8 assumptions.
 
 #### Post-Flight
 - **ARCHITECTURE.md**: add hygiene gate + packaging. **README.md**: add "raw-free, evidence-level, not certified" benchmark summary + PROMOTION.md pointer.
@@ -1169,7 +1173,7 @@ Standard v4 DoD; hygiene gate fail-closed + anti-vacuity proven; `PROMOTION.md` 
 | New dependencies allowed | **EXCEPTION (this milestone's purpose)**: the Goose runtime + provider SDK — pinned, security/license-reviewed in this Contract Block, **isolated to `adapters/goose/`** and never imported by the default path. Core benchmark stays stdlib-only. |
 | Migration allowed | `no` |
 | Resource bounds | `max_turns`, `timeout_seconds`, `max_tokens` hard caps with a kill-switch; one agent per run |
-| Invariants/assertions required | **OS-level** egress default-deny proven (a real subprocess attempt to a non-allowlisted host — incl. metadata `169.254.169.254` — is blocked at the network layer, not just in-process); no host credential reachable (scrubbed env + no host fs mount; refuse to start otherwise); caps enforced; real effects confined to the sandbox tempdir; `L3_live` tag only on sandbox-executed actions; raw-free |
+| Invariants/assertions required | **OS-level** egress default-deny proven (a real subprocess attempt to a non-allowlisted host — incl. metadata `169.254.169.254` — is blocked at the network layer, not just in-process); no host credential reachable (scrubbed env + no host fs mount; refuse to start otherwise); caps enforced; real effects confined to the sandbox tempdir; `L3_live` tag only on sandbox-executed actions; raw-free; **if the OS-enforced sandbox cannot be established (e.g. no netns/container privileges on the host or CI runner), the adapter REFUSES to run `--live` and exits with a named reason — it NEVER falls back to an in-process guard or emits L3 evidence** (resolves F-SEC-5; no false-trusted L3) |
 | Static analysis gates | `py_compile` + `git diff --check` + **OS-layer sandbox-egress test** (real subprocess egress blocked) + **no-host-credential scan** + **stdlib-only gate scoped to the default path (excludes `adapters/goose/`)** + **dependency-audit gate for `adapters/goose/`** (pinned Goose dep + provider SDK, license + CVE checked) |
 | Forbidden shortcuts | no run against production systems; no real-credential targets; no L3 tag on un-exercised actions; no live deps in the default path |
 | Data classification | `Internal`; live traces scanned for would-be `Confidential` leakage |
@@ -1309,7 +1313,7 @@ Standard v4 DoD; relation-honesty + no-endorsement-overclaim invariants encoded/
 
 **Carmack-style reliability goal**: Make invalid states unrepresentable (no single "score"/badge; `certification_claim:false` literal rendered) + raw-free, self-contained output.
 
-**Important design rule**: The product renders **evidence levels, never a single mystery score or a pass/cert badge**; every rendered artifact carries the no-certification disclaimer prominently; output is raw-free, self-contained (opens offline, no external calls, no telemetry).
+**Important design rule**: The product renders **evidence levels, never a single mystery score or a pass/cert badge**; every rendered artifact carries the no-certification disclaimer **rendered at the TOP of the report as a visually-distinct banner (not buried in a footer)** so a skimming stakeholder cannot misread it as a certification (tm-agtrt-abuse-4; resolves design finding F-DES-1); output is raw-free, self-contained (opens offline, no external calls, no telemetry).
 
 **Refactor budget**: `No refactor permitted beyond direct implementation` (greenfield product layer over the M4 JSON).
 
@@ -1372,7 +1376,7 @@ Standard v4 DoD; relation-honesty + no-endorsement-overclaim invariants encoded/
 | No-overclaim across reporter + product | yes | no-cert-term grep on both | pass |
 
 #### Definition of Done
-Standard v4 DoD; no-certification + no-mystery-score + offline + raw-free invariants encoded/tested; §5A stakeholder-comprehension deliverable recorded; **AND the stage-level Front-to-End Outcome Test (oc-8) passes** — the engineer has a shareable, honest scorecard product front-to-end (outcome-first gate). Lessons + completion; **tracker all `done`** (M8 is the terminal milestone). Then `/slo-critique` the whole 8-milestone runbook before any `/slo-execute`.
+Standard v4 DoD; no-certification + no-mystery-score + offline + raw-free invariants encoded/tested; §5A stakeholder-comprehension deliverable recorded; **AND the stage-level Front-to-End Outcome Test (oc-8) passes** — the engineer has a shareable, honest scorecard product front-to-end (outcome-first gate). Lessons + completion; **tracker all `done`** (M8 is the terminal milestone). Then run final `/slo-critique` before any external publication or upstream proposal.
 
 #### Post-Flight
 - **ARCHITECTURE.md**: add the product render layer. **README.md**: add the shareable-scorecard pointer + "evidence, not certification" disclaimer.
@@ -1402,4 +1406,4 @@ Standard v4 DoD; no-certification + no-mystery-score + offline + raw-free invari
 
 ## 20. Source Basis
 
-v4 runbook produced by `/slo-plan` from `EXP-agt-redteam-agent-traps-opencre` (exit `promote_to_runbook`). Seed evidence: `experiments/agt-redteam-agent-traps-opencre/s1..s8` (audited PASS on Windows + Mac). Curation §8 dispositions are authoritative for what is in-runbook vs routed out. Next step after this runbook: `/slo-critique` (adversarial review) before `/slo-execute M1`.
+v4 runbook produced by `/slo-plan` from `EXP-agt-redteam-agent-traps-opencre` (exit `promote_to_runbook`). Seed evidence: `experiments/agt-redteam-agent-traps-opencre/s1..s8` (audited PASS on Windows + Mac). Curation §8 dispositions are authoritative for what is in-runbook vs routed out. `/slo-critique` has run for the outcome-first reframe; M1 and M2 are merged. Next execution step: `/slo-execute M3` after a fresh AgentBus ownership check.
