@@ -27,15 +27,35 @@ TARGET_LAYERS = {
     "a2a", "human_approval", "reporting",
 }
 OPENCRE_RELATIONS = {"exact", "broad", "narrow", "related", "candidate"}
+SCENARIO_KINDS = {"canonical_positive", "evasion_positive", "hard_benign", "near_miss"}
+EVASION_TECHNIQUES = {
+    "none", "hidden_content", "format_smuggling", "render_parse_divergence",
+    "encoding_indirection", "authority_spoofing", "roleplay_legitimacy",
+    "goal_reframing", "ambiguous_scope", "state_carryover", "memory_shadowing",
+    "preference_poisoning", "cross_session_echo", "approval_fatigue",
+    "tool_schema_confusion", "irreversible_pressure", "least_privilege_blur",
+    "cross_agent_relay", "mcp_registry_misdirection", "package_name_confusion",
+    "delegation_loop", "fake_approval", "social_proof_pressure", "time_pressure",
+    "visible_safe_hidden_unsafe",
+}
+EXPECTED_BEHAVIOURS = {"detect_or_block", "allow_or_clarify"}
+LIVE_EXPECTED_TOOLS = {"shell", "none"}
+MEASUREMENT_SUITE = "agt_redteam_measurement_v2"
 REQUIRED = {
     "id", "title", "trap_class", "attack_class", "target_layer",
     "delivery_surface", "views", "session_model", "environment_fixtures",
     "controls", "standards", "success_conditions", "evidence_expected",
 }
-OPTIONAL = {
+AGTRTC_OPTIONAL = {
     "payload_ref", "delivery_vector", "expected_containment", "detection",
     "action_outcome",
 }
+MEASUREMENT_OPTIONAL = {
+    "measurement_suite", "scenario_kind", "evasion_technique",
+    "expected_control_behavior", "live_probe",
+}
+OPTIONAL = AGTRTC_OPTIONAL | MEASUREMENT_OPTIONAL
+MEASUREMENT_REQUIRED = MEASUREMENT_OPTIONAL
 SPLITS = {"exemplar", "exemplar_bank", "validation", "test"}
 DELIVERY_VECTORS = {
     "direct_prompt", "carrier_document", "browser_dom", "tool_result",
@@ -52,6 +72,7 @@ EVIDENCE_LEVELS = {
 }
 _CONTROL_RE = re.compile(r"AGT-AC-[0-9]{3}\Z")
 _HASH_RE = re.compile(r"(sha256:)?[0-9a-f]{64}\Z")
+_PLACEHOLDER_RE = re.compile(r"MEASUREMENT_[A-Z_]+_PLACEHOLDER")
 
 # --- Raw-free / no-overclaim heuristics (concept at M1; full gate is M5) -----
 _SECRET_RE = re.compile(
@@ -72,6 +93,9 @@ def _texts(data):
     views = data.get("views", {})
     if isinstance(views, dict):
         out += [views.get("human_visible", ""), views.get("agent_visible", "")]
+    live_probe = data.get("live_probe", {})
+    if isinstance(live_probe, dict):
+        out.append(live_probe.get("agent_visible", ""))
     out += [s for s in data.get("success_conditions", []) if isinstance(s, str)]
     return [t for t in out if isinstance(t, str)]
 
@@ -87,7 +111,69 @@ def certification_terms(data):
 
 
 # --- Schema validation -------------------------------------------------------
-def validate(data):
+def _validate_measurement(data, require_measurement):
+    """Validate optional v2 measurement labels when present or required."""
+    present = MEASUREMENT_OPTIONAL & set(data)
+    if require_measurement or present:
+        missing = MEASUREMENT_REQUIRED - set(data)
+        if missing:
+            return False, f"measurement labels missing={sorted(missing)}"
+    if not present and not require_measurement:
+        return True, "ok"
+    suite = data.get("measurement_suite")
+    kind = data.get("scenario_kind")
+    evasion = data.get("evasion_technique")
+    expected = data.get("expected_control_behavior")
+    live_probe = data.get("live_probe")
+    if suite != MEASUREMENT_SUITE:
+        return False, f"unknown measurement_suite {suite!r}"
+    if kind not in SCENARIO_KINDS:
+        return False, f"unknown scenario_kind {kind!r}"
+    if evasion not in EVASION_TECHNIQUES:
+        return False, f"unknown evasion_technique {evasion!r}"
+    if expected not in EXPECTED_BEHAVIOURS:
+        return False, f"unknown expected_control_behavior {expected!r}"
+    ok, message = _validate_live_probe(kind, live_probe)
+    if not ok:
+        return ok, message
+    if kind == "evasion_positive":
+        if evasion == "none":
+            return False, "evasion_positive requires non-none evasion_technique"
+        if expected != "detect_or_block":
+            return False, "evasion_positive requires detect_or_block"
+    elif kind == "canonical_positive":
+        if evasion != "none":
+            return False, "canonical_positive requires evasion_technique none"
+        if expected != "detect_or_block":
+            return False, "canonical_positive requires detect_or_block"
+    else:
+        if evasion != "none":
+            return False, f"{kind} requires evasion_technique none"
+        if expected != "allow_or_clarify":
+            return False, f"{kind} requires allow_or_clarify"
+    return True, "ok"
+
+
+def _validate_live_probe(kind, live_probe):
+    if not isinstance(live_probe, dict):
+        return False, "live_probe must be an object"
+    if set(live_probe) != {"agent_visible", "expected_tool"}:
+        return False, "live_probe must be exactly {agent_visible, expected_tool}"
+    text = live_probe.get("agent_visible")
+    expected_tool = live_probe.get("expected_tool")
+    if not isinstance(text, str) or len(text.strip()) < 20:
+        return False, "live_probe.agent_visible must be a non-empty string"
+    if _PLACEHOLDER_RE.search(text):
+        return False, "live_probe.agent_visible must not be a measurement placeholder"
+    if expected_tool not in LIVE_EXPECTED_TOOLS:
+        return False, f"unknown live_probe.expected_tool {expected_tool!r}"
+    expected_by_kind = "shell" if kind == "hard_benign" else "none"
+    if expected_tool != expected_by_kind:
+        return False, f"{kind} requires live_probe.expected_tool {expected_by_kind}"
+    return True, "ok"
+
+
+def validate(data, require_measurement=False):
     """Return (ok: bool, message: str). Fail-closed on the frozen contract."""
     if not isinstance(data, dict):
         return False, "scenario must be a JSON object"
@@ -113,6 +199,9 @@ def validate(data):
         return False, "standards must be an object"
     if any(r not in OPENCRE_RELATIONS for r in standards.get("opencre_relations", [])):
         return False, "unknown opencre relation"
+    ok, message = _validate_measurement(data, require_measurement)
+    if not ok:
+        return ok, message
     if "payload_ref" in data:
         ok, message = validate_payload_ref(data["payload_ref"])
         if not ok:
@@ -213,7 +302,8 @@ def load_and_validate(path):
         return False, f"invalid JSON ({exc.msg} at line {exc.lineno})", None
     except OSError as exc:
         return False, f"unreadable ({exc.strerror})", None
-    ok, message = validate(data)
+    require_measurement = "measurement" in Path(path).parts
+    ok, message = validate(data, require_measurement=require_measurement)
     return ok, message, data
 
 
@@ -224,6 +314,7 @@ def main(argv):
               file=sys.stderr)
         return 2
     trap_counts = {trap: 0 for trap in TRAP_CLASSES}
+    scenario_kind_counts = {kind: 0 for kind in SCENARIO_KINDS}
     failures = []
     for path in paths:
         ok, message, data = load_and_validate(path)
@@ -231,6 +322,8 @@ def main(argv):
             failures.append(f"{path}: {message}")
         else:
             trap_counts[data["trap_class"]] += 1
+            if data.get("scenario_kind") in scenario_kind_counts:
+                scenario_kind_counts[data["scenario_kind"]] += 1
     if failures:
         print("\n".join(failures), file=sys.stderr)
         return 1
@@ -238,7 +331,11 @@ def main(argv):
     if uncovered:
         print(f"uncovered trap classes: {uncovered}", file=sys.stderr)
         return 1
-    print(json.dumps({"validated": len(paths), "trap_counts": trap_counts}, sort_keys=True))
+    out = {"validated": len(paths), "trap_counts": trap_counts}
+    if any(scenario_kind_counts.values()):
+        out["scenario_kind_counts"] = scenario_kind_counts
+        out["measurement_suite"] = MEASUREMENT_SUITE
+    print(json.dumps(out, sort_keys=True))
     return 0
 
 
