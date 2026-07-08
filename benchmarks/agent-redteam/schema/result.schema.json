@@ -2,6 +2,60 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
   "properties": {
+    "action_outcome": {
+      "enum": [
+        "attempted",
+        "executed",
+        "blocked",
+        "contained"
+      ]
+    },
+    "controls": {
+      "items": {
+        "pattern": "^AGT-AC-[0-9]{3}$",
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "delivery_vector": {
+      "enum": [
+        "direct_prompt",
+        "carrier_document",
+        "browser_dom",
+        "tool_result",
+        "memory_record",
+        "a2a_message",
+        "approval_request",
+        "reporting_artifact"
+      ]
+    },
+    "detection": {
+      "additionalProperties": false,
+      "properties": {
+        "config_hash": {
+          "pattern": "^(sha256:)?[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "detector_id": {
+          "minLength": 3,
+          "type": "string"
+        },
+        "evidence_level": {
+          "const": "L1_static"
+        },
+        "verdict": {
+          "enum": [
+            "flagged",
+            "clean",
+            "not_run"
+          ]
+        }
+      },
+      "required": [
+        "verdict"
+      ],
+      "type": "object"
+    },
     "evidence_level": {
       "enum": [
         "L0_declared",
@@ -9,6 +63,48 @@
         "L2_mock_behavioural",
         "L3_live_behavioural"
       ]
+    },
+    "expected_containment": {
+      "enum": [
+        "allow",
+        "require_approval",
+        "quarantine",
+        "block",
+        "contain",
+        "not_applicable"
+      ]
+    },
+    "payload_ref": {
+      "additionalProperties": false,
+      "properties": {
+        "corpus_manifest_hash": {
+          "pattern": "^(sha256:)?[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "family": {
+          "minLength": 3,
+          "type": "string"
+        },
+        "id": {
+          "minLength": 3,
+          "type": "string"
+        },
+        "split": {
+          "enum": [
+            "exemplar",
+            "exemplar_bank",
+            "validation",
+            "test"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "family",
+        "split",
+        "corpus_manifest_hash"
+      ],
+      "type": "object"
     },
     "scenario_id": {
       "type": "string"
@@ -19,6 +115,16 @@
         "fail",
         "blocked",
         "not_run"
+      ]
+    },
+    "trap_class": {
+      "enum": [
+        "Content Injection",
+        "Semantic Manipulation",
+        "Cognitive State",
+        "Behavioural Control",
+        "Systemic",
+        "Human-in-the-Loop"
       ]
     },
     "trace": {

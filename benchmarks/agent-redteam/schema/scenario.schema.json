@@ -18,6 +18,45 @@
       "minLength": 3,
       "type": "string"
     },
+    "delivery_vector": {
+      "enum": [
+        "direct_prompt",
+        "carrier_document",
+        "browser_dom",
+        "tool_result",
+        "memory_record",
+        "a2a_message",
+        "approval_request",
+        "reporting_artifact"
+      ]
+    },
+    "detection": {
+      "additionalProperties": false,
+      "properties": {
+        "config_hash": {
+          "pattern": "^(sha256:)?[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "detector_id": {
+          "minLength": 3,
+          "type": "string"
+        },
+        "evidence_level": {
+          "const": "L1_static"
+        },
+        "verdict": {
+          "enum": [
+            "flagged",
+            "clean",
+            "not_run"
+          ]
+        }
+      },
+      "required": [
+        "verdict"
+      ],
+      "type": "object"
+    },
     "environment_fixtures": {
       "items": {
         "type": "string"
@@ -59,25 +98,35 @@
         "social_proof_pressure",
         "time_pressure",
         "visible_safe_hidden_unsafe"
-      ],
-      "type": "string"
+      ]
     },
     "expected_control_behavior": {
       "enum": [
         "detect_or_block",
         "allow_or_clarify"
-      ],
-      "type": "string"
+      ]
+    },
+    "expected_containment": {
+      "enum": [
+        "allow",
+        "require_approval",
+        "quarantine",
+        "block",
+        "contain",
+        "not_applicable"
+      ]
     },
     "id": {
       "pattern": "^[a-z0-9-]+-[0-9]{3}$",
       "type": "string"
     },
-    "measurement_suite": {
+    "action_outcome": {
       "enum": [
-        "agt_redteam_measurement_v2"
-      ],
-      "type": "string"
+        "attempted",
+        "executed",
+        "blocked",
+        "contained"
+      ]
     },
     "live_probe": {
       "additionalProperties": false,
@@ -90,8 +139,7 @@
           "enum": [
             "shell",
             "none"
-          ],
-          "type": "string"
+          ]
         }
       },
       "required": [
@@ -100,14 +148,40 @@
       ],
       "type": "object"
     },
-    "scenario_kind": {
-      "enum": [
-        "canonical_positive",
-        "evasion_positive",
-        "hard_benign",
-        "near_miss"
+    "measurement_suite": {
+      "const": "agt_redteam_measurement_v2"
+    },
+    "payload_ref": {
+      "additionalProperties": false,
+      "properties": {
+        "corpus_manifest_hash": {
+          "pattern": "^(sha256:)?[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "family": {
+          "minLength": 3,
+          "type": "string"
+        },
+        "id": {
+          "minLength": 3,
+          "type": "string"
+        },
+        "split": {
+          "enum": [
+            "exemplar",
+            "exemplar_bank",
+            "validation",
+            "test"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "family",
+        "split",
+        "corpus_manifest_hash"
       ],
-      "type": "string"
+      "type": "object"
     },
     "session_model": {
       "additionalProperties": false,
@@ -130,6 +204,14 @@
         "agents"
       ],
       "type": "object"
+    },
+    "scenario_kind": {
+      "enum": [
+        "canonical_positive",
+        "evasion_positive",
+        "hard_benign",
+        "near_miss"
+      ]
     },
     "standards": {
       "additionalProperties": false,

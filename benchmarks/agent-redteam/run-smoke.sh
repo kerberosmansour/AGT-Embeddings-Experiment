@@ -69,12 +69,13 @@ if [ "$LIVE" = "1" ]; then
 }
 JSON
   fi
-  model_args=()
   if [ -n "${AGTRT_LIVE_MODEL:-}" ]; then
-    model_args=(--model "$AGTRT_LIVE_MODEL")
+    "$PY" "$HERE/adapters/goose/adapter.py" --live --require-trace \
+      --model "$AGTRT_LIVE_MODEL" --scenario "$LIVE_SCENARIO" --out "$TMP"
+  else
+    "$PY" "$HERE/adapters/goose/adapter.py" --live --require-trace \
+      --scenario "$LIVE_SCENARIO" --out "$TMP"
   fi
-  "$PY" "$HERE/adapters/goose/adapter.py" --live --require-trace "${model_args[@]}" \
-    --scenario "$LIVE_SCENARIO" --out "$TMP"
   "$PY" "$HERE/reporters/scorecard.py" --controls "$HERE/controls/agt-ac.csv" \
     --results "$TMP/live_results.jsonl" --out "$TMP/live-scorecard"
 fi
