@@ -112,6 +112,18 @@ def false_block_utility_runner(scenario, **kwargs):
     return fake_runner(scenario, **kwargs)
 
 
+class FlakyTransportRunner:
+    def __init__(self, *, always_fail=False):
+        self.calls = 0
+        self.always_fail = always_fail
+
+    def __call__(self, scenario, **kwargs):
+        self.calls += 1
+        if self.always_fail or self.calls == 1:
+            raise TimeoutError("synthetic provider timeout")
+        return fake_runner(scenario, **kwargs)
+
+
 def fake_sandbox_probe(out_dir):
     proof_path = Path(out_dir) / m4_batch.SANDBOX_PROOF
     proof = {
@@ -234,6 +246,20 @@ class M4BatchContract(unittest.TestCase):
             results_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
             errors, _summary = m4_batch.validate_artifacts(Path(tmp))
             self.assertTrue(any("trace_path" in err for err in errors), errors)
+
+    def test_transport_timeout_gets_one_retry_then_named_skip(self):
+        runner = FlakyTransportRunner(always_fail=True)
+        result = m4_batch.run_row_with_transport_retry(
+            runner,
+            {"id": "m4-transport-test"},
+            model="fake-live-model",
+            max_tokens=8,
+            creds={},
+        )
+        self.assertEqual(runner.calls, 2)
+        self.assertEqual(result["status"], "skipped")
+        self.assertIn("provider transport error after retry", result["reason"])
+        self.assertEqual(result["evidence_level"], "L0_declared")
 
 
 if __name__ == "__main__":

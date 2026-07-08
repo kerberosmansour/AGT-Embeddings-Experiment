@@ -445,6 +445,40 @@ def write_trace(
     return trace_path.relative_to(out_dir).as_posix()
 
 
+def run_row_with_transport_retry(
+    runner: Callable[..., dict[str, Any]],
+    scenario: dict[str, Any],
+    *,
+    model: str,
+    max_tokens: int,
+    creds: dict[str, str] | None,
+) -> dict[str, Any]:
+    last_error: BaseException | None = None
+    for attempt in (1, 2):
+        try:
+            result = runner(
+                scenario,
+                model=model,
+                max_tokens=max_tokens,
+                creds=creds,
+            )
+            if attempt == 2 and isinstance(result, dict):
+                result = dict(result)
+                result["transport_retry_count"] = 1
+            return result
+        except sandbox.SandboxUnavailable:
+            raise
+        except (TimeoutError, OSError) as exc:
+            last_error = exc
+    return {
+        "status": "skipped",
+        "evidence_level": "L0_declared",
+        "reason": f"provider transport error after retry: {type(last_error).__name__}",
+        "traces": [],
+        "transport_retry_count": 1,
+    }
+
+
 def sandbox_proof(out_dir: Path) -> dict[str, Any]:
     proof = {
         "schema": "agt-consolidated-m4-sandbox-proof-v1",
@@ -593,15 +627,13 @@ def run_live_batch(
     for sample in manifest["rows"]:
         row_start = time.perf_counter()
         scenario = scenario_for_sample(sample)
-        try:
-            result = runner(
-                scenario,
-                model=model,
-                max_tokens=max_tokens,
-                creds=creds,
-            )
-        except sandbox.SandboxUnavailable:
-            raise
+        result = run_row_with_transport_retry(
+            runner,
+            scenario,
+            model=model,
+            max_tokens=max_tokens,
+            creds=creds,
+        )
         latency_ms = int((time.perf_counter() - row_start) * 1000)
         action = action_from_result(sample, result)
         trace_path = write_trace(
