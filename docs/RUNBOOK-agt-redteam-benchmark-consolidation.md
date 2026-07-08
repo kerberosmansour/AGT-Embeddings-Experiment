@@ -71,7 +71,7 @@
 | 1 | Crosswalk + additive schema/result contracts | `done` | 2026-07-08 | 2026-07-08 | `docs/slo/lessons/agtrtc-m1.md` | `docs/slo/completion/agtrtc-m1.md` |
 | 2 | Indirect-injection one-family end-to-end slice | `done` | 2026-07-08 | 2026-07-08 | `docs/slo/lessons/agtrtc-m2.md` | `docs/slo/completion/agtrtc-m2.md` |
 | 3 | L1 full-corpus static detector tier | `done` | 2026-07-08 | 2026-07-08 | `docs/slo/lessons/agtrtc-m3.md` | `docs/slo/completion/agtrtc-m3.md` |
-| 4 | L3 stratified live sample + benign utility arm | `blocked_by_operator` | 2026-07-08 | | `docs/slo/lessons/agtrtc-m4.md` | `docs/slo/completion/agtrtc-m4.md` |
+| 4 | L3 stratified live sample + benign utility arm | `done` | 2026-07-08 | 2026-07-08 | `docs/slo/lessons/agtrtc-m4.md` | `docs/slo/completion/agtrtc-m4.md` |
 | 5 | Joint outcome reporting + frozen release gate | `not_started` | | | `docs/slo/lessons/agtrtc-m5.md` | `docs/slo/completion/agtrtc-m5.md` |
 
 <!-- Status values: not_started | in_progress | blocked | done -->
@@ -685,13 +685,14 @@ decision. No post-hoc reselection.
 
 | Prerequisite | Required For | Current Evidence | Status |
 |---|---|---|---|
-| OS sandbox (`bwrap`/netns) | any L3 live row | `command -v bwrap` returned absent on this Mac; `bash benchmarks/agent-redteam/run-smoke.sh --live` now refuses with `bwrap not found; refusing the live sandbox path` before provider/model execution. | blocked_by_operator |
-| Provider key and model budget | live provider/model call | `OPENAI_API_KEY` absent in local environment; no provider credential or spend approval is available in this checkout/session. | blocked_by_operator |
-| No fake L3 | M4 security gate | `python3 -m unittest benchmarks/agent-redteam/tests/test_goose_adapter.py -v` passes; regression ensures the no-model-override live wrapper reaches sandbox refusal rather than shell failure; no L3 rows emitted locally. | pass |
+| OS sandbox (`bwrap`/netns) | any L3 live row | Linux `/tmp/agtrtc-m4-live` at commit `d08b1c8` proved bwrap sandbox controls: internet egress blocked, metadata egress blocked, env scrubbed, no host home. | pass |
+| Provider key and model budget | live provider/model call | Operator approved bounded cheap-model run; Anthropic key was provisioned out-of-band into gitignored `.agtrt-goose.env` on Linux, never printed or posted. Model `claude-haiku-4-5`; live call cap `250`. | pass |
+| No fake L3 | M4 security gate | Full M4 batch produced `250` L3 live rows from the frozen manifest, `0` skipped rows, validation errors `0`, raw-free OK, and utility false-block Wilson upper `0.08762160119728664 <= 0.10`. | pass |
 
-M4 is not complete. The failure bar intentionally prevents marking this milestone
-done until an OS-enforced sandbox host and explicit provider/model budget are
-available and a frozen M4 sample manifest has produced real L3/utility evidence.
+M4 is complete. Evidence artifacts are under
+`/tmp/agtrtc-m4-full-20260708224509` on the Linux host and are recorded on
+AgentBus task `t_mrckfw8z_251_8ed66ad8` with sha256 hashes. Public repo
+changes remain the reproducible runner/validator, not raw live outputs.
 
 ---
 
