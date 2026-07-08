@@ -7,6 +7,7 @@ gated on keys and skips cleanly without them.
 stdlib-only; the default (mock/L2) path must not import the live deps.
 """
 import os
+import subprocess
 import sys
 import unittest
 from pathlib import Path
@@ -131,6 +132,29 @@ class DefaultPathIsolation(unittest.TestCase):
             self.skipTest("creds provisioned; live path active")
         result = adapter.run_live({"views": {"agent_visible": "x"}, "title": "t"}, creds=None)
         self.assertFalse([t for t in result["traces"] if t.get("evidence_level") == "L3_live"])
+
+
+class LiveSmokeWrapper(unittest.TestCase):
+    """The shell wrapper must reach the live sandbox gate, even with no model override."""
+
+    @unittest.skipIf(HAVE_BWRAP, "sandbox-present hosts exercise the live/skip path instead")
+    def test_live_smoke_no_model_override_reaches_sandbox_refusal(self):
+        env = os.environ.copy()
+        env.pop("AGTRT_LIVE_MODEL", None)
+        env.pop("ANTHROPIC_API_KEY", None)
+        env.pop("OPENAI_API_KEY", None)
+        proc = subprocess.run(
+            ["bash", str(BENCH / "run-smoke.sh"), "--live"],
+            cwd=str(BENCH.parents[1]),
+            env=env,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        combined = proc.stdout + proc.stderr
+        self.assertNotEqual(proc.returncode, 0, combined)
+        self.assertIn("bwrap not found; refusing the live sandbox path", combined)
+        self.assertNotIn("unbound variable", combined)
 
 
 if __name__ == "__main__":

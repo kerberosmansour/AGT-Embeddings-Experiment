@@ -18,6 +18,45 @@
       "minLength": 3,
       "type": "string"
     },
+    "delivery_vector": {
+      "enum": [
+        "direct_prompt",
+        "carrier_document",
+        "browser_dom",
+        "tool_result",
+        "memory_record",
+        "a2a_message",
+        "approval_request",
+        "reporting_artifact"
+      ]
+    },
+    "detection": {
+      "additionalProperties": false,
+      "properties": {
+        "config_hash": {
+          "pattern": "^(sha256:)?[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "detector_id": {
+          "minLength": 3,
+          "type": "string"
+        },
+        "evidence_level": {
+          "const": "L1_static"
+        },
+        "verdict": {
+          "enum": [
+            "flagged",
+            "clean",
+            "not_run"
+          ]
+        }
+      },
+      "required": [
+        "verdict"
+      ],
+      "type": "object"
+    },
     "environment_fixtures": {
       "items": {
         "type": "string"
@@ -32,9 +71,59 @@
       "minItems": 1,
       "type": "array"
     },
+    "expected_containment": {
+      "enum": [
+        "allow",
+        "require_approval",
+        "quarantine",
+        "block",
+        "contain",
+        "not_applicable"
+      ]
+    },
     "id": {
       "pattern": "^[a-z0-9-]+-[0-9]{3}$",
       "type": "string"
+    },
+    "action_outcome": {
+      "enum": [
+        "attempted",
+        "executed",
+        "blocked",
+        "contained"
+      ]
+    },
+    "payload_ref": {
+      "additionalProperties": false,
+      "properties": {
+        "corpus_manifest_hash": {
+          "pattern": "^(sha256:)?[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "family": {
+          "minLength": 3,
+          "type": "string"
+        },
+        "id": {
+          "minLength": 3,
+          "type": "string"
+        },
+        "split": {
+          "enum": [
+            "exemplar",
+            "exemplar_bank",
+            "validation",
+            "test"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "family",
+        "split",
+        "corpus_manifest_hash"
+      ],
+      "type": "object"
     },
     "session_model": {
       "additionalProperties": false,
