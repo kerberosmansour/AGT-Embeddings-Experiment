@@ -72,7 +72,7 @@
 | 2 | Indirect-injection one-family end-to-end slice | `done` | 2026-07-08 | 2026-07-08 | `docs/slo/lessons/agtrtc-m2.md` | `docs/slo/completion/agtrtc-m2.md` |
 | 3 | L1 full-corpus static detector tier | `done` | 2026-07-08 | 2026-07-08 | `docs/slo/lessons/agtrtc-m3.md` | `docs/slo/completion/agtrtc-m3.md` |
 | 4 | L3 stratified live sample + benign utility arm | `done` | 2026-07-08 | 2026-07-08 | `docs/slo/lessons/agtrtc-m4.md` | `docs/slo/completion/agtrtc-m4.md` |
-| 5 | Joint outcome reporting + frozen release gate | `not_started` | | | `docs/slo/lessons/agtrtc-m5.md` | `docs/slo/completion/agtrtc-m5.md` |
+| 5 | Joint outcome reporting + frozen release gate | `in_progress` | 2026-07-08 | | `docs/slo/lessons/agtrtc-m5.md` | `docs/slo/completion/agtrtc-m5.md` |
 
 <!-- Status values: not_started | in_progress | blocked | done -->
 <!-- Fail-safe: unknown status MUST be treated as blocked, never done. -->
