@@ -72,7 +72,7 @@
 | 2 | Indirect-injection one-family end-to-end slice | `done` | 2026-07-08 | 2026-07-08 | `docs/slo/lessons/agtrtc-m2.md` | `docs/slo/completion/agtrtc-m2.md` |
 | 3 | L1 full-corpus static detector tier | `done` | 2026-07-08 | 2026-07-08 | `docs/slo/lessons/agtrtc-m3.md` | `docs/slo/completion/agtrtc-m3.md` |
 | 4 | L3 stratified live sample + benign utility arm | `done` | 2026-07-08 | 2026-07-08 | `docs/slo/lessons/agtrtc-m4.md` | `docs/slo/completion/agtrtc-m4.md` |
-| 5 | Joint outcome reporting + frozen release gate | `in_progress` | 2026-07-08 | | `docs/slo/lessons/agtrtc-m5.md` | `docs/slo/completion/agtrtc-m5.md` |
+| 5 | Joint outcome reporting + frozen release gate | `done` | 2026-07-08 | 2026-07-08 | `docs/slo/lessons/agtrtc-m5.md` | `docs/slo/completion/agtrtc-m5.md` |
 
 <!-- Status values: not_started | in_progress | blocked | done -->
 <!-- Fail-safe: unknown status MUST be treated as blocked, never done. -->
@@ -775,12 +775,12 @@ bad cells behind aggregate score.
 
 | Capability | Must still pass | Evidence path | Resolution |
 |---|---|---|---|
-| Existing AGT redteam smoke | yes | `bash benchmarks/agent-redteam/run-smoke.sh` | pending |
-| Scenario validator compatibility | yes | M1 tests | pending |
-| Raw-free hygiene | yes | M2-M5 raw-free scan | pending |
-| No-certification scorecard | yes | M5 report tests | pending |
-| Round-7 2x2 harness compatibility | yes | M3 validation | pending |
-| Live adapter sandbox refusal | yes before L3 | M4 tests | pending |
+| Existing AGT redteam smoke | yes | `bash benchmarks/agent-redteam/run-smoke.sh` | pass - Mac and Linux smoke OK in M5 verification |
+| Scenario validator compatibility | yes | M1 tests | pass - full benchmark discovery OK |
+| Raw-free hygiene | yes | M2-M5 raw-free scan | pass - release output raw-free OK |
+| No-certification scorecard | yes | M5 report tests | pass - `certification_claim=false`, no badge/certified terms |
+| Round-7 2x2 harness compatibility | yes | M3 validation | pass - fresh full L1 54,034 rows and release join OK |
+| Live adapter sandbox refusal | yes before L3 | M4 tests | pass - Linux sandbox tests OK; macOS non-bwrap path remains skipped/refused |
 
 ---
 
