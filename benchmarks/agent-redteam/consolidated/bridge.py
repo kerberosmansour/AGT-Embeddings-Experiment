@@ -239,8 +239,5 @@ def main(argv):
     return 0 if report["failure_bar_clear"] else 1
 
 
-DEFAULT_SAMPLE = load_sample(DEFAULT_SAMPLE_PATH)
-
-
 if __name__ == "__main__":
     raise SystemExit(main(sys.argv))

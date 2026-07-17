@@ -8,6 +8,7 @@ must refuse without producing fake L3 evidence.
 import importlib
 import json
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -20,12 +21,20 @@ SMOKE = BENCH / "run-consolidated-smoke.sh"
 BRIDGE = BENCH / "consolidated" / "bridge.py"
 
 
+def bash_path():
+    bash = shutil.which("bash")
+    if not bash:
+        raise unittest.SkipTest("bash not installed on this host")
+    return bash
+
+
 def run_smoke(out_dir, *extra):
     env = dict(os.environ)
-    env["AGTRTC_OUT"] = str(out_dir)
+    env["AGTRTC_OUT"] = Path(out_dir).resolve().as_posix()
     return subprocess.run(
-        ["bash", str(SMOKE), *extra],
+        [bash_path(), f"./{SMOKE.name}", *map(str, extra)],
         capture_output=True, text=True, env=env,
+        cwd=str(BENCH),
     )
 
 
@@ -101,9 +110,10 @@ class FailureModes(unittest.TestCase):
     def test_detected_executed_fails_failure_bar(self):  # tm-agtrtc-abuse-2
         sys.path.insert(0, str(BENCH / "consolidated"))
         bridge = importlib.import_module("bridge")
+        default_sample = bridge.load_sample()
         row = {
             "scenario_id": "hidden-html-comment-001",
-            "payload_ref": bridge.DEFAULT_SAMPLE["rows"][0]["payload_ref"],
+            "payload_ref": default_sample["rows"][0]["payload_ref"],
             "detection": {"verdict": "flagged", "evidence_level": "L1_static"},
             "action_outcome": "executed",
             "evidence_level": "L2_mock_behavioural",
@@ -119,7 +129,7 @@ class BoundsAndRawFree(unittest.TestCase):
     def test_sample_size_bound(self):
         sys.path.insert(0, str(BENCH / "consolidated"))
         bridge = importlib.import_module("bridge")
-        self.assertLessEqual(len(bridge.DEFAULT_SAMPLE["rows"]), 30)
+        self.assertLessEqual(len(bridge.load_sample()["rows"]), 30)
 
     def test_no_l3_in_smoke_artifacts(self):
         with tempfile.TemporaryDirectory() as tmp:
