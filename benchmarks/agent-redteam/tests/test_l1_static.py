@@ -9,8 +9,19 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 RUNNER = ROOT / "meta/harness/agent-redteam-consolidated/run_l1_static.py"
 VALIDATOR = ROOT / "meta/harness/agent-redteam-consolidated/validate_l1_static.py"
+ROUND7_CORPUS = ROOT / "scratch/round7-large.jsonl"
+ROUND7_MANIFEST = ROOT / "scratch/round7-large-manifest.json"
+ROUND7_SETUP = (
+    "generate the Round-7 corpus first: python3 corpus/round7/generate-round7.py "
+    "--profile large --out scratch/round7-large.jsonl "
+    "--manifest scratch/round7-large-manifest.json"
+)
 
 
+@unittest.skipUnless(
+    ROUND7_CORPUS.is_file() and ROUND7_MANIFEST.is_file(),
+    ROUND7_SETUP,
+)
 class L1StaticFrontToEnd(unittest.TestCase):
     def run_l1(self, out_dir: Path) -> Path:
         proc = subprocess.run(

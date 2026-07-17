@@ -97,6 +97,10 @@ def fake_runner(scenario, **kwargs):
         "status": "completed",
         "evidence_level": "L3_live",
         "stop_reason": "tool_use",
+        "decision_observed": True,
+        "decision_outcome": "tool_use",
+        "trace_complete": True,
+        "tool_call_count": 1,
         "traces": [fake_trace(kwargs.get("model", "fake-live-model"))],
     }
 
@@ -107,9 +111,26 @@ def false_block_utility_runner(scenario, **kwargs):
             "status": "completed",
             "evidence_level": "L3_live",
             "stop_reason": "end_turn",
+            "decision_observed": True,
+            "decision_outcome": "no_tool_use",
+            "trace_complete": True,
+            "tool_call_count": 0,
             "traces": [],
         }
     return fake_runner(scenario, **kwargs)
+
+
+def incomplete_trace_runner(scenario, **kwargs):
+    return {
+        "status": "completed",
+        "evidence_level": "L3_live",
+        "stop_reason": "tool_use",
+        "decision_observed": True,
+        "decision_outcome": "tool_use",
+        "trace_complete": False,
+        "tool_call_count": 1,
+        "traces": [],
+    }
 
 
 class FlakyTransportRunner:
@@ -171,6 +192,7 @@ class M4BatchContract(unittest.TestCase):
             self.assertEqual(errors, [], "\n".join(errors))
             self.assertTrue(summary["failure_bar_clear"])
             self.assertEqual(summary["skipped_rows"], 0)
+            self.assertEqual(summary["incomplete_rows"], 0)
             self.assertEqual(summary["utility_false_blocks"], 0)
             self.assertRegex(manifest["manifest_sha256"], r"^[0-9a-f]{64}$")
 
@@ -246,6 +268,39 @@ class M4BatchContract(unittest.TestCase):
             results_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
             errors, _summary = m4_batch.validate_artifacts(Path(tmp))
             self.assertTrue(any("trace_path" in err for err in errors), errors)
+
+    def test_completed_refusal_remains_a_valid_no_tool_use_outcome(self):
+        result = {
+            "status": "completed",
+            "decision_observed": True,
+            "decision_outcome": "no_tool_use",
+            "trace_complete": True,
+            "tool_call_count": 0,
+            "traces": [],
+        }
+        action = m4_batch.action_from_result({"sample_kind": "attack"}, result)
+        self.assertEqual(action["status"], "pass")
+        self.assertEqual(action["evidence_level"], "L3_live_behavioural")
+        self.assertEqual(action["action_outcome"], "no_tool_use")
+
+    def test_missing_trace_fails_closed_and_cannot_count_as_containment(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            self.build_and_run(tmp, runner=incomplete_trace_runner)
+            rows = m4_batch.load_jsonl(Path(tmp) / "m4_live_results.jsonl")
+            self.assertTrue(rows)
+            for row in rows:
+                self.assertEqual(row["status"], "fail")
+                self.assertEqual(row["evidence_level"], "L0_declared")
+                self.assertEqual(row["action_outcome"], "trace_missing")
+                self.assertNotIn("trace_path", row)
+
+            errors, summary = m4_batch.validate_artifacts(Path(tmp))
+            self.assertFalse(summary["failure_bar_clear"])
+            self.assertEqual(summary["incomplete_rows"], len(rows))
+            self.assertTrue(
+                any("incomplete decision or trace evidence" in err for err in errors),
+                errors,
+            )
 
     def test_transport_timeout_gets_one_retry_then_named_skip(self):
         runner = FlakyTransportRunner(always_fail=True)

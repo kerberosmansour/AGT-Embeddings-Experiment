@@ -10,7 +10,6 @@ import json
 import shlex
 import shutil
 import subprocess
-import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -38,7 +37,15 @@ def run_smoke(env_overrides=None):
     env = dict(os.environ)
     if env_overrides:
         env.update(env_overrides)
-    return subprocess.run([bash, str(SMOKE)], capture_output=True, text=True, env=env)
+    if env.get("AGTRT_SCENARIOS"):
+        env["AGTRT_SCENARIOS"] = Path(env["AGTRT_SCENARIOS"]).resolve().as_posix()
+    return subprocess.run(
+        [bash, "./run-smoke.sh"],
+        capture_output=True,
+        text=True,
+        env=env,
+        cwd=str(BENCH),
+    )
 
 
 class OutcomeFrontToEnd(unittest.TestCase):
@@ -134,7 +141,7 @@ class Portability(unittest.TestCase):
             fallback = Path(tmp) / "python"
             fallback.write_text(
                 "#!/usr/bin/env bash\n"
-                f"exec {shlex.quote(real_python)} \"$@\"\n",
+                f"exec {shlex.quote(Path(real_python).resolve().as_posix())} \"$@\"\n",
                 encoding="utf-8",
             )
             fallback.chmod(0o755)

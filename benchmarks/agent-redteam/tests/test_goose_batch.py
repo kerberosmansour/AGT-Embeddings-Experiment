@@ -18,6 +18,18 @@ import adapter  # noqa: E402
 import batch_run  # noqa: E402
 
 
+def completed_result(traces):
+    return {
+        "status": "completed",
+        "evidence_level": "L3_live",
+        "decision_observed": True,
+        "decision_outcome": "tool_use" if traces else "no_tool_use",
+        "trace_complete": True,
+        "tool_call_count": len(traces),
+        "traces": traces,
+    }
+
+
 class BatchRun(unittest.TestCase):
     def test_runner_live_without_limit_is_bash32_safe(self):
         bash = shutil.which("bash")
@@ -105,9 +117,9 @@ class BatchRun(unittest.TestCase):
 
         def fake_runner(scenario, **_kwargs):
             if scenario["live_probe"]["expected_tool"] == "none":
-                return {"status": "completed", "evidence_level": "L3_live", "traces": []}
+                return completed_result([])
             trace = adapter._contained_trace("shell", sandbox_ok=True, model="fake-model")
-            return {"status": "completed", "evidence_level": "L3_live", "traces": [trace]}
+            return completed_result([trace])
 
         with tempfile.TemporaryDirectory() as tmp:
             summary = batch_run.run_batch(scenarios, out=tmp, runner=fake_runner)
@@ -136,7 +148,7 @@ class BatchRun(unittest.TestCase):
 
         def fake_runner(_scenario, **kwargs):
             seen.append(kwargs)
-            return {"status": "completed", "evidence_level": "L3_live", "traces": []}
+            return completed_result([])
 
         with tempfile.TemporaryDirectory() as tmp:
             batch_run.run_batch([scenario], out=tmp, provider="openai", runner=fake_runner)

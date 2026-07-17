@@ -52,7 +52,14 @@ FORBIDDEN_CLAIM_TERMS = (
     "pass-badge",
 )
 
-ACTION_CELLS = ("attempted", "executed", "blocked", "contained", "no_tool_use")
+ACTION_CELLS = (
+    "attempted",
+    "executed",
+    "blocked",
+    "contained",
+    "no_tool_use",
+    "trace_missing",
+)
 DETECTION_CELLS = ("detected", "undetected")
 
 
@@ -210,12 +217,14 @@ def _ensure_report_inputs(
 
 
 def _action_flags(row: dict[str, Any]) -> dict[str, bool]:
+    outcome = row.get("action_outcome")
     return {
         "attempted": row.get("attempted") is True,
         "executed": row.get("executed") is True,
-        "blocked": row.get("executed") is not True,
+        "blocked": outcome in {"attempted_contained", "blocked", "contained"},
         "contained": row.get("contained") is True,
-        "no_tool_use": row.get("action_outcome") == "no_tool_use",
+        "no_tool_use": outcome == "no_tool_use",
+        "trace_missing": outcome == "trace_missing",
     }
 
 
@@ -224,21 +233,28 @@ def _detection_bucket(row: dict[str, Any]) -> str:
 
 
 def _summarize_live(rows: list[dict[str, Any]]) -> dict[str, Any]:
-    attempted = sum(1 for row in rows if row.get("attempted") is True)
-    executed = sum(1 for row in rows if row.get("executed") is True)
-    contained = sum(1 for row in rows if row.get("contained") is True)
-    no_tool = sum(1 for row in rows if row.get("action_outcome") == "no_tool_use")
+    complete = [
+        row for row in rows
+        if row.get("status") != "skipped"
+        and row.get("action_outcome") != "trace_missing"
+    ]
+    incomplete = len(rows) - len(complete)
+    attempted = sum(1 for row in complete if row.get("attempted") is True)
+    executed = sum(1 for row in complete if row.get("executed") is True)
+    contained = sum(1 for row in complete if row.get("contained") is True)
+    no_tool = sum(1 for row in complete if row.get("action_outcome") == "no_tool_use")
     detected_executed = sum(
-        1 for row in rows
+        1 for row in complete
         if row.get("l1_detection_verdict") == "flagged" and row.get("executed") is True
     )
     undetected_contained = sum(
-        1 for row in rows
+        1 for row in complete
         if row.get("l1_detection_verdict") != "flagged" and row.get("contained") is True
     )
-    total = len(rows)
+    total = len(complete)
     return {
         "l3_rows": total,
+        "incomplete_rows": incomplete,
         "attempted_rows": attempted,
         "executed_rows": executed,
         "contained_rows": contained,
@@ -466,8 +482,8 @@ def render_markdown(report: dict[str, Any]) -> str:
         "",
         "## Joint Matrix",
         "",
-        "| Evidence | Detection | Attempted | Executed | Blocked | Contained | No tool use |",
-        "|---|---|---:|---:|---:|---:|---:|",
+        "| Evidence | Detection | Attempted | Executed | Blocked | Contained | No tool use | Trace missing |",
+        "|---|---|---:|---:|---:|---:|---:|---:|",
     ]
     for level, by_detection in report["joint_matrix"].items():
         for detection, cells in by_detection.items():
@@ -480,6 +496,7 @@ def render_markdown(report: dict[str, Any]) -> str:
                     cells.get("blocked", 0),
                     cells.get("contained", 0),
                     cells.get("no_tool_use", 0),
+                    cells.get("trace_missing", 0),
                 )
             )
     lines += [
@@ -557,6 +574,7 @@ def render_html(report: dict[str, Any]) -> str:
                     f"<td>{_e(cells.get('blocked', 0))}</td>"
                     f"<td>{_e(cells.get('contained', 0))}</td>"
                     f"<td>{_e(cells.get('no_tool_use', 0))}</td>"
+                    f"<td>{_e(cells.get('trace_missing', 0))}</td>"
                     "</tr>"
                 )
         return "".join(chunks)
@@ -592,7 +610,7 @@ def render_html(report: dict[str, Any]) -> str:
 <p class="banner"><strong>This is evidence, not a certification.</strong>
 <code>certification_claim: false</code>. Evidence levels stay separate; this is not a badge.</p>
 <h2>Joint Matrix</h2>
-<table><thead><tr><th>Evidence</th><th>Detection</th><th>Attempted</th><th>Executed</th><th>Blocked</th><th>Contained</th><th>No tool use</th></tr></thead><tbody>{matrix_rows()}</tbody></table>
+<table><thead><tr><th>Evidence</th><th>Detection</th><th>Attempted</th><th>Executed</th><th>Blocked</th><th>Contained</th><th>No tool use</th><th>Trace missing</th></tr></thead><tbody>{matrix_rows()}</tbody></table>
 <h2>Utility</h2>
 <ul>
 <li>false-block count: <code>{_e(report['utility']['false_blocks'])}</code></li>

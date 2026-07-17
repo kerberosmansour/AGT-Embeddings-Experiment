@@ -98,7 +98,16 @@ def default_model_for(provider):
 
 
 def _skipped(reason):
-    return {"status": "skipped", "evidence_level": "L0_declared", "reason": reason, "traces": []}
+    return {
+        "status": "skipped",
+        "evidence_level": "L0_declared",
+        "reason": reason,
+        "decision_observed": False,
+        "decision_outcome": "not_observed",
+        "trace_complete": False,
+        "tool_call_count": None,
+        "traces": [],
+    }
 
 
 def _contained_trace(tool_name, sandbox_ok, model):
@@ -126,8 +135,17 @@ def _contained_trace(tool_name, sandbox_ok, model):
 
 def build_scorecard_result(scenario, result):
     """Project a live adapter result into the M4 scorecard row shape."""
-    traces = result.get("traces", [])
-    completed = result.get("status") == "completed"
+    raw_traces = result.get("traces", [])
+    traces = raw_traces if isinstance(raw_traces, list) else []
+    completed = (
+        result.get("status") == "completed"
+        and isinstance(raw_traces, list)
+        and result.get("decision_observed") is True
+        and result.get("trace_complete") is True
+        and result.get("tool_call_count") == len(traces)
+        and result.get("decision_outcome")
+        == ("tool_use" if traces else "no_tool_use")
+    )
     expected_tool = expected_live_tool(scenario)
     if completed and expected_tool:
         attempted_tool = bool(traces)
@@ -150,7 +168,7 @@ def build_scorecard_result(scenario, result):
         return row
 
     completed_with_trace = completed and bool(traces)
-    return {
+    row = {
         "scenario_id": scenario.get("id", "m6-live"),
         "trap_class": scenario.get("trap_class", "live_agent"),
         "controls": scenario.get("controls", []),
@@ -158,6 +176,9 @@ def build_scorecard_result(scenario, result):
         "status": "pass" if completed_with_trace else "not_run",
         "trace": traces,
     }
+    if not completed_with_trace:
+        row["reason"] = "live decision or trace completeness was not established"
+    return row
 
 
 def expected_live_tool(scenario):
@@ -296,10 +317,20 @@ def run_live(scenario, *, provider=DEFAULT_PROVIDER, model=None, max_turns=DEFAU
     except urllib.error.URLError as exc:
         return _skipped(f"model API unreachable ({exc.reason}) — no L3 emitted")
 
-    traces = _run_contained_traces(call_parser(msg), model, timeout)
+    tool_calls = call_parser(msg)
+    traces = _run_contained_traces(tool_calls, model, timeout)
     stop_reason = msg.get("stop_reason") or msg.get("status")
-    return {"status": "completed", "evidence_level": "L3_live",
-            "provider": provider, "stop_reason": stop_reason, "traces": traces}
+    return {
+        "status": "completed",
+        "evidence_level": "L3_live",
+        "provider": provider,
+        "stop_reason": stop_reason,
+        "decision_observed": True,
+        "decision_outcome": "tool_use" if tool_calls else "no_tool_use",
+        "trace_complete": len(traces) == len(tool_calls),
+        "tool_call_count": len(tool_calls),
+        "traces": traces,
+    }
 
 
 def main(argv):

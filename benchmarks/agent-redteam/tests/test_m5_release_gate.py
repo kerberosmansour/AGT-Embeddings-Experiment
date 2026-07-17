@@ -385,6 +385,19 @@ class M5ReleaseGateContract(unittest.TestCase):
             self.assertIn("Residual Backlog", md)
             self.assertIn("false-block", md)
 
+    def test_no_tool_use_and_missing_trace_are_not_reported_as_blocked(self):
+        no_tool = release_gate._action_flags(
+            {"action_outcome": "no_tool_use", "executed": False}
+        )
+        missing = release_gate._action_flags(
+            {"action_outcome": "trace_missing", "executed": False}
+        )
+        self.assertFalse(no_tool["blocked"])
+        self.assertTrue(no_tool["no_tool_use"])
+        self.assertFalse(missing["blocked"])
+        self.assertFalse(missing["no_tool_use"])
+        self.assertTrue(missing["trace_missing"])
+
     def test_release_manifest_hashes_and_tamper_fail_closed(self):
         with tempfile.TemporaryDirectory() as tmp:
             paths = self.build_release(tmp)
